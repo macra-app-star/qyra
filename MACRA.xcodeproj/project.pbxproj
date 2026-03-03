@@ -1,0 +1,826 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		003DD5A9E423B9ECF61332F6 /* MacroGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC728C501AD5FD454893E4 /* MacroGoal.swift */; };
+		0D1643F1AF3F1C5E47131AC5 /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF72105E9678DFD93421DE3 /* SocialView.swift */; };
+		0F3B3C6CCDE053F9E56E5044 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E25BD4E169E78B499A5F174 /* Assets.xcassets */; };
+		24962111586F8617ADC01373 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE2AEFF4D94D97F540B9300 /* InsightsView.swift */; };
+		4CD83FFDB6C6D2881C6BDBFB /* NutritionCardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56141ADB1466BA665DFA05C5 /* NutritionCardComponent.swift */; };
+		6B14DDC89251F5AFD74223A5 /* MealItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3018E438231C6C69EF30D383 /* MealItem.swift */; };
+		6C4B52617A2CEC283B7A973D /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F868BB4590680197BC0CEB8 /* MainTabView.swift */; };
+		782E9F3CD0E6C201A95F0A7F /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978229B38E9D76980F5A58E /* LogView.swift */; };
+		81E2C9477A9DEF53820570DD /* MacroRingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150DF6D9962F0791B7A6CD8 /* MacroRingComponent.swift */; };
+		86F075DD910F7A51D1F86CBD /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E000CD6ADF8F94329EDBF /* UserProfile.swift */; };
+		8C22CB26E5AB4CB1257041FE /* MonochromeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3201AE15518840C986D7346 /* MonochromeButton.swift */; };
+		8CC2C65FDA70DC9E87C850B5 /* MACRATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF21C3464FCB1437AE6FE11 /* MACRATests.swift */; };
+		97429B6D82F4164C0EFAD5AE /* MACRAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB36487759CCB219334079 /* MACRAApp.swift */; };
+		B400321033EE69B26164E1F1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96755EA229CE47C769E93863 /* AppState.swift */; };
+		C864433BC4B9EF9412560F59 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162E25FCED4F0ABC1E5604A9 /* SettingsView.swift */; };
+		CAF4645107B2005CAA88479B /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9320FF0580EB953BB58FFE77 /* DesignTokens.swift */; };
+		D05B50E1F5CAFA7645CD7393 /* AppGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1081C8C6CA40DB0B5CAB64 /* AppGateView.swift */; };
+		E202635508B9973D396279ED /* MACRAUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25697B73434C473E9FFB0A /* MACRAUITests.swift */; };
+		E8EEE89607480E3CD7ADC08E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AC63C6D0D0664E5434C01A /* DashboardView.swift */; };
+		F5A8985DFAFE1C25162AEA2E /* MealLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CBE0F5DBE4AB7F8C2B45F1 /* MealLog.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		39644813C0A88DD947428B7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFCD2D2111DF689B9379B975 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 60B78C77BAAD38D790EFF0B2;
+			remoteInfo = MACRA;
+		};
+		B62419FF494F28073BDFED7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFCD2D2111DF689B9379B975 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 60B78C77BAAD38D790EFF0B2;
+			remoteInfo = MACRA;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		13CBE0F5DBE4AB7F8C2B45F1 /* MealLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLog.swift; sourceTree = "<group>"; };
+		162E25FCED4F0ABC1E5604A9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		193A2C5F418A5DADF660E1F7 /* MACRATests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MACRATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DBB36487759CCB219334079 /* MACRAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACRAApp.swift; sourceTree = "<group>"; };
+		1F868BB4590680197BC0CEB8 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		3018E438231C6C69EF30D383 /* MealItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealItem.swift; sourceTree = "<group>"; };
+		3A25697B73434C473E9FFB0A /* MACRAUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACRAUITests.swift; sourceTree = "<group>"; };
+		56141ADB1466BA665DFA05C5 /* NutritionCardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionCardComponent.swift; sourceTree = "<group>"; };
+		8CE2AEFF4D94D97F540B9300 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		8E25BD4E169E78B499A5F174 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		91AC63C6D0D0664E5434C01A /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		9320FF0580EB953BB58FFE77 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
+		96755EA229CE47C769E93863 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		9AEF79994D8F5745551BFB1F /* MACRA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MACRA.entitlements; sourceTree = "<group>"; };
+		9D3E000CD6ADF8F94329EDBF /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		A334B348CCE12DDCA412A788 /* MACRAUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MACRAUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A978229B38E9D76980F5A58E /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		ADF72105E9678DFD93421DE3 /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		BCF21C3464FCB1437AE6FE11 /* MACRATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACRATests.swift; sourceTree = "<group>"; };
+		C0CC728C501AD5FD454893E4 /* MacroGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroGoal.swift; sourceTree = "<group>"; };
+		D110049CD381F3ED4A2F01BF /* MACRA.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MACRA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D150DF6D9962F0791B7A6CD8 /* MacroRingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroRingComponent.swift; sourceTree = "<group>"; };
+		E3201AE15518840C986D7346 /* MonochromeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonochromeButton.swift; sourceTree = "<group>"; };
+		EA1081C8C6CA40DB0B5CAB64 /* AppGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGateView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		067B18E125EBA1FDCA18D8B5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0B48BB5AB3BB398B8C3E1A99 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		1F333F605E18302691617421 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scanner;
+			sourceTree = "<group>";
+		};
+		1FCE56D2B6CD3B4B22B119E9 = {
+			isa = PBXGroup;
+			children = (
+				4A399217E85E0CE5621DCF6F /* MACRA */,
+				7F2A78D8F057A7265DFEED2C /* MACRATests */,
+				36C6C9F9EDDA4895DF32B0F3 /* MACRAUITests */,
+				221840A54DB8C0ED399160DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		21C5F8A239DA537157ED8907 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				66DEF455BD718E4B4BA6B35E /* Camera */,
+				466878D7DE1B47AFF368AA19 /* Dashboard */,
+				EA31D0E881F42ADF17729B5E /* HealthKit */,
+				D84823856F70A596F0972FB6 /* Logging */,
+				B9715AD580C74EC39AB07852 /* Onboarding */,
+				A720F7B67D28E6A1A4E594E8 /* Paywall */,
+				1F333F605E18302691617421 /* Scanner */,
+				D20292C5C6F8D57A1152B640 /* Settings */,
+				A5F1A4D98B416A1B1D8FFCE4 /* Social */,
+				2395EBCCDB647A5FF249EED9 /* Voice */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		221840A54DB8C0ED399160DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D110049CD381F3ED4A2F01BF /* MACRA.app */,
+				193A2C5F418A5DADF660E1F7 /* MACRATests.xctest */,
+				A334B348CCE12DDCA412A788 /* MACRAUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2395EBCCDB647A5FF249EED9 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Voice;
+			sourceTree = "<group>";
+		};
+		36C6C9F9EDDA4895DF32B0F3 /* MACRAUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3A25697B73434C473E9FFB0A /* MACRAUITests.swift */,
+			);
+			path = MACRAUITests;
+			sourceTree = "<group>";
+		};
+		43CA5329E0F22D1C08F7DEBD /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D150DF6D9962F0791B7A6CD8 /* MacroRingComponent.swift */,
+				E3201AE15518840C986D7346 /* MonochromeButton.swift */,
+				56141ADB1466BA665DFA05C5 /* NutritionCardComponent.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		466878D7DE1B47AFF368AA19 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				91AC63C6D0D0664E5434C01A /* DashboardView.swift */,
+				8CE2AEFF4D94D97F540B9300 /* InsightsView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		4A399217E85E0CE5621DCF6F /* MACRA */ = {
+			isa = PBXGroup;
+			children = (
+				E43DAEBA80F8A3CB45F69A35 /* App */,
+				43CA5329E0F22D1C08F7DEBD /* Components */,
+				70F5A9719FC5F91494B31493 /* Data */,
+				574574E6D93DC40F5A78DD5A /* Domain */,
+				776CD00E2E82EC77815CACB8 /* Extensions */,
+				DB13352A82AF7306E60A0A00 /* Resources */,
+				92457E6A5C1D1C1190E6C529 /* Services */,
+				21C5F8A239DA537157ED8907 /* UI */,
+				067B18E125EBA1FDCA18D8B5 /* ViewModels */,
+			);
+			path = MACRA;
+			sourceTree = "<group>";
+		};
+		574574E6D93DC40F5A78DD5A /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				70217A0307FDEDF0E33F6F09 /* Models */,
+				937F580B1DE414D2F99D3654 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		66DEF455BD718E4B4BA6B35E /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		70217A0307FDEDF0E33F6F09 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C0CC728C501AD5FD454893E4 /* MacroGoal.swift */,
+				3018E438231C6C69EF30D383 /* MealItem.swift */,
+				13CBE0F5DBE4AB7F8C2B45F1 /* MealLog.swift */,
+				9D3E000CD6ADF8F94329EDBF /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		70F5A9719FC5F91494B31493 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				0B48BB5AB3BB398B8C3E1A99 /* Local */,
+				9B827E807FE8CF8DDB90141E /* Remote */,
+				9FA3DFE3A4E87927B05D14C2 /* Sync */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		776CD00E2E82EC77815CACB8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7F2A78D8F057A7265DFEED2C /* MACRATests */ = {
+			isa = PBXGroup;
+			children = (
+				BCF21C3464FCB1437AE6FE11 /* MACRATests.swift */,
+				FCFFF40BFD9FEF90E06BB694 /* RepositoryTests */,
+				D4EDE4408D8D650DF6DC8E95 /* ServiceTests */,
+				B0C431247DC77868015EB526 /* ViewModelTests */,
+			);
+			path = MACRATests;
+			sourceTree = "<group>";
+		};
+		92457E6A5C1D1C1190E6C529 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		937F580B1DE414D2F99D3654 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		9B827E807FE8CF8DDB90141E /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		9FA3DFE3A4E87927B05D14C2 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sync;
+			sourceTree = "<group>";
+		};
+		A5F1A4D98B416A1B1D8FFCE4 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				ADF72105E9678DFD93421DE3 /* SocialView.swift */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
+		A720F7B67D28E6A1A4E594E8 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
+		B0C431247DC77868015EB526 /* ViewModelTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModelTests;
+			sourceTree = "<group>";
+		};
+		B9715AD580C74EC39AB07852 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		CCA374CE722F52B0619658FF /* {StoreKit} */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "{StoreKit}";
+			sourceTree = "<group>";
+		};
+		D20292C5C6F8D57A1152B640 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				162E25FCED4F0ABC1E5604A9 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D4EDE4408D8D650DF6DC8E95 /* ServiceTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ServiceTests;
+			sourceTree = "<group>";
+		};
+		D84823856F70A596F0972FB6 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				A978229B38E9D76980F5A58E /* LogView.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
+		DB13352A82AF7306E60A0A00 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8E25BD4E169E78B499A5F174 /* Assets.xcassets */,
+				9320FF0580EB953BB58FFE77 /* DesignTokens.swift */,
+				9AEF79994D8F5745551BFB1F /* MACRA.entitlements */,
+				CCA374CE722F52B0619658FF /* {StoreKit} */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E43DAEBA80F8A3CB45F69A35 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EA1081C8C6CA40DB0B5CAB64 /* AppGateView.swift */,
+				96755EA229CE47C769E93863 /* AppState.swift */,
+				1DBB36487759CCB219334079 /* MACRAApp.swift */,
+				1F868BB4590680197BC0CEB8 /* MainTabView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		EA31D0E881F42ADF17729B5E /* HealthKit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HealthKit;
+			sourceTree = "<group>";
+		};
+		FCFFF40BFD9FEF90E06BB694 /* RepositoryTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RepositoryTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3B2D809086515DB96C2C2B27 /* MACRATests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04ADF53509E6ACD20973C22B /* Build configuration list for PBXNativeTarget "MACRATests" */;
+			buildPhases = (
+				D763989B5A810563BE5C9772 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65DA80779186A41DA12314AC /* PBXTargetDependency */,
+			);
+			name = MACRATests;
+			packageProductDependencies = (
+			);
+			productName = MACRATests;
+			productReference = 193A2C5F418A5DADF660E1F7 /* MACRATests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5F7E3C95FE1A74DB8A8BC3D7 /* MACRAUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEB5C4CE7DBE3BF6BDDC78DF /* Build configuration list for PBXNativeTarget "MACRAUITests" */;
+			buildPhases = (
+				6A6899771FD2BAD24A1DE12A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D22A5DB7F2EB727726ED6B1E /* PBXTargetDependency */,
+			);
+			name = MACRAUITests;
+			packageProductDependencies = (
+			);
+			productName = MACRAUITests;
+			productReference = A334B348CCE12DDCA412A788 /* MACRAUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		60B78C77BAAD38D790EFF0B2 /* MACRA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EFC6E0E5B79D14159A5D1744 /* Build configuration list for PBXNativeTarget "MACRA" */;
+			buildPhases = (
+				B2D3D87B70F079FFCA134449 /* Sources */,
+				717BE3B8A91E2F5095E0FB10 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MACRA;
+			packageProductDependencies = (
+			);
+			productName = MACRA;
+			productReference = D110049CD381F3ED4A2F01BF /* MACRA.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFCD2D2111DF689B9379B975 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					3B2D809086515DB96C2C2B27 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					5F7E3C95FE1A74DB8A8BC3D7 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						TestTargetID = 60B78C77BAAD38D790EFF0B2;
+					};
+					60B78C77BAAD38D790EFF0B2 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 7A2AA3CD856F15ED9993120C /* Build configuration list for PBXProject "MACRA" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 1FCE56D2B6CD3B4B22B119E9;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 54;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				60B78C77BAAD38D790EFF0B2 /* MACRA */,
+				3B2D809086515DB96C2C2B27 /* MACRATests */,
+				5F7E3C95FE1A74DB8A8BC3D7 /* MACRAUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		717BE3B8A91E2F5095E0FB10 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F3B3C6CCDE053F9E56E5044 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A6899771FD2BAD24A1DE12A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E202635508B9973D396279ED /* MACRAUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2D3D87B70F079FFCA134449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05B50E1F5CAFA7645CD7393 /* AppGateView.swift in Sources */,
+				B400321033EE69B26164E1F1 /* AppState.swift in Sources */,
+				E8EEE89607480E3CD7ADC08E /* DashboardView.swift in Sources */,
+				CAF4645107B2005CAA88479B /* DesignTokens.swift in Sources */,
+				24962111586F8617ADC01373 /* InsightsView.swift in Sources */,
+				782E9F3CD0E6C201A95F0A7F /* LogView.swift in Sources */,
+				97429B6D82F4164C0EFAD5AE /* MACRAApp.swift in Sources */,
+				003DD5A9E423B9ECF61332F6 /* MacroGoal.swift in Sources */,
+				81E2C9477A9DEF53820570DD /* MacroRingComponent.swift in Sources */,
+				6C4B52617A2CEC283B7A973D /* MainTabView.swift in Sources */,
+				6B14DDC89251F5AFD74223A5 /* MealItem.swift in Sources */,
+				F5A8985DFAFE1C25162AEA2E /* MealLog.swift in Sources */,
+				8C22CB26E5AB4CB1257041FE /* MonochromeButton.swift in Sources */,
+				4CD83FFDB6C6D2881C6BDBFB /* NutritionCardComponent.swift in Sources */,
+				C864433BC4B9EF9412560F59 /* SettingsView.swift in Sources */,
+				0D1643F1AF3F1C5E47131AC5 /* SocialView.swift in Sources */,
+				86F075DD910F7A51D1F86CBD /* UserProfile.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D763989B5A810563BE5C9772 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CC2C65FDA70DC9E87C850B5 /* MACRATests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65DA80779186A41DA12314AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 60B78C77BAAD38D790EFF0B2 /* MACRA */;
+			targetProxy = 39644813C0A88DD947428B7F /* PBXContainerItemProxy */;
+		};
+		D22A5DB7F2EB727726ED6B1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 60B78C77BAAD38D790EFF0B2 /* MACRA */;
+			targetProxy = B62419FF494F28073BDFED7E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		35A969E154912C262C326127 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		5C4FA6C853FD449496C9487A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MACRA/Resources/MACRA.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_NSCameraUsageDescription = "MACRA uses the camera to scan barcodes and identify food for macro tracking.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "MACRA reads your health data to display steps, active energy, and workout summaries on your dashboard.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "MACRA may write nutrition data to Apple Health.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "MACRA uses the microphone for voice-based meal logging.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "MACRA uses speech recognition to transcribe voice-based meal entries.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.tamras.macra;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6DD27A77EBE42F5DC12147B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.tamras.macra.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MACRA.app/MACRA";
+			};
+			name = Release;
+		};
+		700F3F99FCE259D95243DFF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.tamras.macra.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MACRA;
+			};
+			name = Debug;
+		};
+		A1D0DD2DDE0567875162922F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		BA230B95BF419577FFE31BA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.tamras.macra.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MACRA.app/MACRA";
+			};
+			name = Debug;
+		};
+		BD2D94519A1F8CFC73015EEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.tamras.macra.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MACRA;
+			};
+			name = Release;
+		};
+		DC2AB878E71D37C5806FBF0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MACRA/Resources/MACRA.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_NSCameraUsageDescription = "MACRA uses the camera to scan barcodes and identify food for macro tracking.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "MACRA reads your health data to display steps, active energy, and workout summaries on your dashboard.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "MACRA may write nutrition data to Apple Health.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "MACRA uses the microphone for voice-based meal logging.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "MACRA uses speech recognition to transcribe voice-based meal entries.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.tamras.macra;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04ADF53509E6ACD20973C22B /* Build configuration list for PBXNativeTarget "MACRATests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA230B95BF419577FFE31BA0 /* Debug */,
+				6DD27A77EBE42F5DC12147B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7A2AA3CD856F15ED9993120C /* Build configuration list for PBXProject "MACRA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1D0DD2DDE0567875162922F /* Debug */,
+				35A969E154912C262C326127 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BEB5C4CE7DBE3BF6BDDC78DF /* Build configuration list for PBXNativeTarget "MACRAUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				700F3F99FCE259D95243DFF6 /* Debug */,
+				BD2D94519A1F8CFC73015EEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EFC6E0E5B79D14159A5D1744 /* Build configuration list for PBXNativeTarget "MACRA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC2AB878E71D37C5806FBF0B /* Debug */,
+				5C4FA6C853FD449496C9487A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AFCD2D2111DF689B9379B975 /* Project object */;
+}
