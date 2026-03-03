@@ -9,6 +9,7 @@ struct MACRAApp: App {
             MealItem.self,
             MacroGoal.self,
             UserProfile.self,
+            SyncRecord.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

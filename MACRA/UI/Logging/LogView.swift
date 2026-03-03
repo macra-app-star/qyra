@@ -1,6 +1,10 @@
 import SwiftUI
+import SwiftData
 
 struct LogView: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var showManualEntry = false
+
     var body: some View {
         ZStack {
             DesignTokens.Colors.background
@@ -24,12 +28,17 @@ struct LogView: View {
                     MonochromeButton("Scan Barcode", icon: "barcode.viewfinder", style: .primary) {}
                     MonochromeButton("Camera Scan", icon: "camera.fill", style: .secondary) {}
                     MonochromeButton("Voice Log", icon: "mic.fill", style: .secondary) {}
-                    MonochromeButton("Manual Entry", icon: "pencil", style: .ghost) {}
+                    MonochromeButton("Manual Entry", icon: "pencil", style: .ghost) {
+                        showManualEntry = true
+                    }
                 }
                 .padding(.horizontal, DesignTokens.Spacing.xl)
             }
         }
         .navigationTitle("Log")
+        .sheet(isPresented: $showManualEntry) {
+            ManualEntryView(modelContainer: modelContext.container)
+        }
     }
 }
 
@@ -37,4 +46,5 @@ struct LogView: View {
     NavigationStack {
         LogView()
     }
+    .modelContainer(for: [MealLog.self, MacroGoal.self, SyncRecord.self])
 }

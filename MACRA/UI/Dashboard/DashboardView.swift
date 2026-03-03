@@ -1,51 +1,57 @@
 import SwiftUI
+import SwiftData
 
 struct DashboardView: View {
-    // Phase 3: Replace with @State private var viewModel = DashboardViewModel()
-    // Mock data from existing export: 2000cal / 150P / 200C / 65F goals
-    private let calorieGoal: Double = 2000
-    private let proteinGoal: Double = 150
-    private let carbGoal: Double = 200
-    private let fatGoal: Double = 65
-
-    // Simulated current values
-    private let currentCalories: Double = 1450
-    private let currentProtein: Double = 95
-    private let currentCarbs: Double = 160
-    private let currentFat: Double = 40
+    @Environment(\.modelContext) private var modelContext
+    @State private var viewModel: DashboardViewModel?
+    @State private var showManualEntry = false
 
     var body: some View {
         ScrollView {
-            VStack(spacing: DesignTokens.Spacing.lg) {
-                // Header
-                headerSection
+            if let vm = viewModel {
+                VStack(spacing: DesignTokens.Spacing.lg) {
+                    headerSection
 
-                // Macro Rings
-                macroRingsSection
+                    macroRingsSection(vm)
 
-                // Nutrition Summary Card
-                NutritionCardComponent(
-                    calories: currentCalories,
-                    protein: currentProtein,
-                    carbs: currentCarbs,
-                    fat: currentFat
-                )
+                    NutritionCardComponent(
+                        calories: vm.currentCalories,
+                        protein: vm.currentProtein,
+                        carbs: vm.currentCarbs,
+                        fat: vm.currentFat
+                    )
 
-                // Quick Actions
-                quickActionsSection
+                    quickActionsSection
 
-                // Recent Meals (stub)
-                recentMealsSection
+                    recentMealsSection(vm)
 
-                // HealthKit Summary (stub for Phase 9)
-                healthSummarySection
+                    healthSummarySection
+                }
+                .padding(.horizontal, DesignTokens.Spacing.md)
+                .padding(.bottom, DesignTokens.Spacing.xl)
+            } else {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.top, 100)
             }
-            .padding(.horizontal, DesignTokens.Spacing.md)
-            .padding(.bottom, DesignTokens.Spacing.xl)
         }
         .background(DesignTokens.Colors.background)
         .navigationTitle("Today")
         .navigationBarTitleDisplayMode(.large)
+        .task {
+            if viewModel == nil {
+                let vm = DashboardViewModel(modelContainer: modelContext.container)
+                viewModel = vm
+                await vm.loadDay()
+            }
+        }
+        .sheet(isPresented: $showManualEntry, onDismiss: {
+            Task {
+                await viewModel?.refresh()
+            }
+        }) {
+            ManualEntryView(modelContainer: modelContext.container)
+        }
     }
 
     // MARK: - Sections
@@ -66,12 +72,12 @@ struct DashboardView: View {
         }
     }
 
-    private var macroRingsSection: some View {
+    private func macroRingsSection(_ vm: DashboardViewModel) -> some View {
         HStack(spacing: DesignTokens.Spacing.md) {
             MacroRingComponent(
                 label: "Calories",
-                current: currentCalories,
-                goal: calorieGoal,
+                current: vm.currentCalories,
+                goal: vm.calorieGoal,
                 unit: "cal",
                 ringColor: DesignTokens.Colors.ringCalories,
                 lineWidth: 10
@@ -79,24 +85,24 @@ struct DashboardView: View {
 
             MacroRingComponent(
                 label: "Protein",
-                current: currentProtein,
-                goal: proteinGoal,
+                current: vm.currentProtein,
+                goal: vm.proteinGoal,
                 unit: "g",
                 ringColor: DesignTokens.Colors.ringProtein
             )
 
             MacroRingComponent(
                 label: "Carbs",
-                current: currentCarbs,
-                goal: carbGoal,
+                current: vm.currentCarbs,
+                goal: vm.carbGoal,
                 unit: "g",
                 ringColor: DesignTokens.Colors.ringCarbs
             )
 
             MacroRingComponent(
                 label: "Fat",
-                current: currentFat,
-                goal: fatGoal,
+                current: vm.currentFat,
+                goal: vm.fatGoal,
                 unit: "g",
                 ringColor: DesignTokens.Colors.ringFat
             )
@@ -111,17 +117,20 @@ struct DashboardView: View {
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
 
             HStack(spacing: DesignTokens.Spacing.sm) {
-                quickActionTile(icon: "barcode.viewfinder", label: "Barcode")
-                quickActionTile(icon: "camera.fill", label: "Camera")
-                quickActionTile(icon: "mic.fill", label: "Voice")
-                quickActionTile(icon: "pencil", label: "Manual")
+                quickActionTile(icon: "barcode.viewfinder", label: "Barcode") {}
+                quickActionTile(icon: "camera.fill", label: "Camera") {}
+                quickActionTile(icon: "mic.fill", label: "Voice") {}
+                quickActionTile(icon: "pencil", label: "Manual") {
+                    showManualEntry = true
+                }
             }
         }
     }
 
-    private func quickActionTile(icon: String, label: String) -> some View {
+    private func quickActionTile(icon: String, label: String, action: @escaping () -> Void) -> some View {
         Button {
             DesignTokens.Haptics.light()
+            action()
         } label: {
             VStack(spacing: DesignTokens.Spacing.sm) {
                 Image(systemName: icon)
@@ -139,36 +148,55 @@ struct DashboardView: View {
         }
     }
 
-    private var recentMealsSection: some View {
+    private func recentMealsSection(_ vm: DashboardViewModel) -> some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             Text("Recent Meals")
                 .font(DesignTokens.Typography.headline)
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
 
-            ForEach(sampleMeals, id: \.name) { meal in
+            if vm.meals.isEmpty {
                 HStack {
-                    Image(systemName: meal.icon)
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
-                        .frame(width: 32)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(meal.name)
-                            .font(DesignTokens.Typography.body)
-                            .foregroundStyle(DesignTokens.Colors.textPrimary)
-                        Text(meal.detail)
-                            .font(DesignTokens.Typography.caption)
+                    Spacer()
+                    VStack(spacing: DesignTokens.Spacing.sm) {
+                        Image(systemName: "fork.knife")
+                            .font(.system(size: 28))
+                            .foregroundStyle(DesignTokens.Colors.textTertiary)
+                        Text("No meals logged yet")
+                            .font(DesignTokens.Typography.callout)
                             .foregroundStyle(DesignTokens.Colors.textTertiary)
                     }
-
+                    .padding(.vertical, DesignTokens.Spacing.lg)
                     Spacer()
-
-                    Text("\(meal.calories) cal")
-                        .font(DesignTokens.Typography.subheadline)
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
                 }
-                .padding(DesignTokens.Spacing.md)
                 .background(DesignTokens.Colors.surface)
                 .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+            } else {
+                ForEach(vm.meals) { meal in
+                    HStack {
+                        Image(systemName: meal.mealType.icon)
+                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .frame(width: 32)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(meal.mealType.displayName)
+                                .font(DesignTokens.Typography.body)
+                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                            Text(meal.displayDetail)
+                                .font(DesignTokens.Typography.caption)
+                                .foregroundStyle(DesignTokens.Colors.textTertiary)
+                                .lineLimit(1)
+                        }
+
+                        Spacer()
+
+                        Text("\(Int(meal.totalCalories)) cal")
+                            .font(DesignTokens.Typography.subheadline)
+                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                    }
+                    .padding(DesignTokens.Spacing.md)
+                    .background(DesignTokens.Colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+                }
             }
         }
     }
@@ -180,8 +208,8 @@ struct DashboardView: View {
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
 
             HStack(spacing: DesignTokens.Spacing.sm) {
-                healthTile(icon: "figure.walk", label: "Steps", value: "8,432")
-                healthTile(icon: "flame.fill", label: "Active", value: "340 cal")
+                healthTile(icon: "figure.walk", label: "Steps", value: "—")
+                healthTile(icon: "flame.fill", label: "Active", value: "— cal")
             }
         }
     }
@@ -216,18 +244,11 @@ struct DashboardView: View {
         formatter.dateFormat = "EEEE, MMM d"
         return formatter.string(from: Date())
     }
-
-    private var sampleMeals: [(name: String, detail: String, calories: Int, icon: String)] {
-        [
-            (name: "Breakfast", detail: "Greek Yogurt, Granola", calories: 380, icon: "sunrise.fill"),
-            (name: "Lunch", detail: "Chicken Breast, Rice, Broccoli", calories: 620, icon: "sun.max.fill"),
-            (name: "Snack", detail: "Quest Protein Bar", calories: 200, icon: "leaf.fill"),
-        ]
-    }
 }
 
 #Preview {
     NavigationStack {
         DashboardView()
     }
+    .modelContainer(for: [MealLog.self, MacroGoal.self, SyncRecord.self])
 }
