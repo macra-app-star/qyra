@@ -5,7 +5,19 @@ struct SettingsView: View {
         List {
             Section("Account") {
                 settingsRow(icon: "person.fill", title: "Profile")
-                settingsRow(icon: "star.fill", title: "My Subscription")
+                NavigationLink {
+                    MySubscriptionView()
+                } label: {
+                    HStack(spacing: DesignTokens.Spacing.md) {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .frame(width: 24)
+
+                        Text("My Subscription")
+                            .font(DesignTokens.Typography.body)
+                            .foregroundStyle(DesignTokens.Colors.textPrimary)
+                    }
+                }
             }
 
             Section("Health") {

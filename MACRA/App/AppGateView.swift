@@ -12,8 +12,7 @@ struct AppGateView: View {
                 // Phase 4: SignInView()
                 PlaceholderView(title: "Sign In", icon: "person.circle")
             case .needsSubscription:
-                // Phase 2: PaywallView()
-                PlaceholderView(title: "Subscribe", icon: "star.circle")
+                PaywallView()
             case .needsOnboarding:
                 // Phase 3: OnboardingFlowView()
                 PlaceholderView(title: "Onboarding", icon: "arrow.right.circle")
@@ -24,8 +23,7 @@ struct AppGateView: View {
         .animation(DesignTokens.Anim.standard, value: appState.gateStatus)
         .environment(appState)
         .task {
-            // Phase 1 stub: go straight to dashboard
-            appState.skipToReady()
+            await appState.evaluateGate()
         }
     }
 }

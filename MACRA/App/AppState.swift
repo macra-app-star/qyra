@@ -10,13 +10,27 @@ enum GateStatus: Equatable {
 }
 
 @Observable
+@MainActor
 final class AppState {
     var gateStatus: GateStatus = .loading
     var isAuthenticated: Bool = false
     var isSubscribed: Bool = false
     var hasCompletedOnboarding: Bool = false
 
-    func evaluateGate() {
+    private let subscriptionService: SubscriptionService
+
+    init(subscriptionService: SubscriptionService = SubscriptionService()) {
+        self.subscriptionService = subscriptionService
+    }
+
+    func evaluateGate() async {
+        // Phase 2: Skip auth (Phase 4) and onboarding (Phase 3) — go straight to subscription check
+        isAuthenticated = true
+        hasCompletedOnboarding = true
+
+        let subscribed = await subscriptionService.isSubscribed
+        isSubscribed = subscribed
+
         if !isAuthenticated {
             gateStatus = .needsAuth
             return
@@ -32,11 +46,16 @@ final class AppState {
         gateStatus = .ready
     }
 
-    // For Phase 1 stub: skip auth and subscription checks
+    func handleSubscriptionChange() async {
+        await evaluateGate()
+    }
+
+    #if DEBUG
     func skipToReady() {
         isAuthenticated = true
         isSubscribed = true
         hasCompletedOnboarding = true
         gateStatus = .ready
     }
+    #endif
 }
