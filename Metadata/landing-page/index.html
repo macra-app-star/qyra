@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACRA — Precision Macro Tracking</title>
+    <meta name="description" content="Track your macros with surgical precision. Personalized goals, weekly insights, Apple Health integration. No ads, no clutter.">
+    <meta property="og:title" content="MACRA — Precision Macro Tracking">
+    <meta property="og:description" content="The macro tracking app for people who are serious about their nutrition.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tamras.co/macra">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #000000;
+            --surface: #141414;
+            --border: #2e2e2e;
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --text-tertiary: #666666;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Nav */
+        nav {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        nav a:hover { color: var(--text-primary); }
+        .nav-links { display: flex; gap: 32px; }
+
+        /* Hero */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto 40px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: var(--text-primary);
+            color: var(--bg);
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .cta-button:hover { opacity: 0.85; }
+        .cta-sub {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .pricing h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .pricing > p {
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .price-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        .price-card.featured {
+            border-color: var(--text-primary);
+        }
+        .price-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .price-card .price {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 12px 0 4px;
+        }
+        .price-card .period {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+        }
+        .price-card .savings {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .price-card ul {
+            list-style: none;
+            margin-top: 24px;
+            text-align: left;
+        }
+        .price-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .price-card li::before {
+            content: "✓ ";
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        footer p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        footer a:hover { color: var(--text-primary); }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .hero { padding: 80px 0 60px; }
+            .nav-links { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <div class="logo">MACRA</div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="/macra/privacy">Privacy</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <h1>Track your macros<br>with precision.</h1>
+        <p>The macro tracking app for people who are serious about their nutrition. Personalized goals. Weekly insights. No ads, no clutter.</p>
+        <a href="https://apps.apple.com/app/macra/id0000000000" class="cta-button">Download on the App Store</a>
+        <div class="cta-sub">Requires iOS 17+. Subscription required.</div>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">◎</div>
+                <h3>Animated Progress Rings</h3>
+                <p>Watch your daily calories, protein, carbs, and fat fill up in real time. Always know exactly where you stand.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Smart Goal Calculation</h3>
+                <p>Your macros are calculated using the Mifflin-St Jeor equation, tailored to your body, activity, and goals.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Weekly Insights</h3>
+                <p>Visual charts showing your adherence, streak tracking, and weekly averages. See the bigger picture.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">❤️</div>
+                <h3>Apple Health</h3>
+                <p>Steps and active calories pulled from HealthKit, displayed right on your dashboard. No extra setup.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Privacy First</h3>
+                <p>All data stored on-device. No analytics. No tracking. No third-party SDKs. Your macros are your business.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌙</div>
+                <h3>Dark Mode Native</h3>
+                <p>Monochrome design system built for OLED. Every pixel is intentional. Your eyes will thank you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pricing" id="pricing">
+    <div class="container">
+        <h2>Simple pricing.</h2>
+        <p>One plan. Everything included. No feature gates.</p>
+        <div class="pricing-cards">
+            <div class="price-card">
+                <h3>Monthly</h3>
+                <div class="price">$9.99</div>
+                <div class="period">per month</div>
+                <ul>
+                    <li>Unlimited meal logging</li>
+                    <li>Personalized macro goals</li>
+                    <li>Weekly insights</li>
+                    <li>Apple Health integration</li>
+                </ul>
+            </div>
+            <div class="price-card featured">
+                <h3>Annual</h3>
+                <div class="price">$79.99</div>
+                <div class="period">per year</div>
+                <span class="savings">Save 33%</span>
+                <ul>
+                    <li>Everything in Monthly</li>
+                    <li>Best value at $6.67/mo</li>
+                    <li>Priority feature access</li>
+                    <li>Support indie development</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="/macra/privacy">Privacy Policy</a>
+            <a href="/macra/terms">Terms of Service</a>
+            <a href="mailto:support@tamras.co">Support</a>
+        </div>
+        <p>&copy; 2026 Tamras Co. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
