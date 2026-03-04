@@ -4,6 +4,8 @@ import SwiftData
 struct LogView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var showManualEntry = false
+    @State private var showComingSoon = false
+    @State private var comingSoonFeature = ""
 
     var body: some View {
         ZStack {
@@ -25,9 +27,18 @@ struct LogView: View {
                     .multilineTextAlignment(.center)
 
                 VStack(spacing: DesignTokens.Spacing.sm) {
-                    MonochromeButton("Scan Barcode", icon: "barcode.viewfinder", style: .primary) {}
-                    MonochromeButton("Camera Scan", icon: "camera.fill", style: .secondary) {}
-                    MonochromeButton("Voice Log", icon: "mic.fill", style: .secondary) {}
+                    MonochromeButton("Scan Barcode", icon: "barcode.viewfinder", style: .primary) {
+                        comingSoonFeature = "Barcode scanning"
+                        showComingSoon = true
+                    }
+                    MonochromeButton("Camera Scan", icon: "camera.fill", style: .secondary) {
+                        comingSoonFeature = "Camera scanning"
+                        showComingSoon = true
+                    }
+                    MonochromeButton("Voice Log", icon: "mic.fill", style: .secondary) {
+                        comingSoonFeature = "Voice logging"
+                        showComingSoon = true
+                    }
                     MonochromeButton("Manual Entry", icon: "pencil", style: .ghost) {
                         showManualEntry = true
                     }
@@ -38,6 +49,11 @@ struct LogView: View {
         .navigationTitle("Log")
         .sheet(isPresented: $showManualEntry) {
             ManualEntryView(modelContainer: modelContext.container)
+        }
+        .alert(comingSoonFeature, isPresented: $showComingSoon) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("\(comingSoonFeature) is coming in a future update.")
         }
     }
 }

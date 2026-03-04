@@ -5,6 +5,8 @@ struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel: DashboardViewModel?
     @State private var showManualEntry = false
+    @State private var showComingSoon = false
+    @State private var comingSoonFeature = ""
 
     var body: some View {
         ScrollView {
@@ -25,7 +27,7 @@ struct DashboardView: View {
 
                     recentMealsSection(vm)
 
-                    healthSummarySection
+                    healthSummarySection(vm)
                 }
                 .padding(.horizontal, DesignTokens.Spacing.md)
                 .padding(.bottom, DesignTokens.Spacing.xl)
@@ -79,6 +81,11 @@ struct DashboardView: View {
             }
         }) {
             ManualEntryView(modelContainer: modelContext.container)
+        }
+        .alert(comingSoonFeature, isPresented: $showComingSoon) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("\(comingSoonFeature) is coming in a future update.")
         }
     }
 
@@ -145,9 +152,18 @@ struct DashboardView: View {
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
 
             HStack(spacing: DesignTokens.Spacing.sm) {
-                quickActionTile(icon: "barcode.viewfinder", label: "Barcode") {}
-                quickActionTile(icon: "camera.fill", label: "Camera") {}
-                quickActionTile(icon: "mic.fill", label: "Voice") {}
+                quickActionTile(icon: "barcode.viewfinder", label: "Barcode") {
+                    comingSoonFeature = "Barcode scanning"
+                    showComingSoon = true
+                }
+                quickActionTile(icon: "camera.fill", label: "Camera") {
+                    comingSoonFeature = "Camera scanning"
+                    showComingSoon = true
+                }
+                quickActionTile(icon: "mic.fill", label: "Voice") {
+                    comingSoonFeature = "Voice logging"
+                    showComingSoon = true
+                }
                 quickActionTile(icon: "pencil", label: "Manual") {
                     showManualEntry = true
                 }
@@ -236,15 +252,15 @@ struct DashboardView: View {
         }
     }
 
-    private var healthSummarySection: some View {
+    private func healthSummarySection(_ vm: DashboardViewModel) -> some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             Text("Activity")
                 .font(DesignTokens.Typography.headline)
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
 
             HStack(spacing: DesignTokens.Spacing.sm) {
-                healthTile(icon: "figure.walk", label: "Steps", value: "—")
-                healthTile(icon: "flame.fill", label: "Active", value: "— cal")
+                healthTile(icon: "figure.walk", label: "Steps", value: vm.steps > 0 ? "\(vm.steps)" : "—")
+                healthTile(icon: "flame.fill", label: "Active", value: vm.activeCalories > 0 ? "\(vm.activeCalories) cal" : "— cal")
             }
         }
     }

@@ -18,7 +18,11 @@ final class DashboardViewModel {
     var isLoading = false
     var selectedDate = Date()
 
+    var steps: Int = 0
+    var activeCalories: Int = 0
+
     private let reconcileDay: ReconcileDayUseCase
+    private let healthKit = HealthKitService.shared
 
     convenience init(modelContainer: ModelContainer) {
         let mealRepo = MealRepository(modelContainer: modelContainer)
@@ -56,6 +60,9 @@ final class DashboardViewModel {
         } catch {
             // Keep existing values on error
         }
+
+        steps = await healthKit.steps(for: selectedDate)
+        activeCalories = await healthKit.activeCalories(for: selectedDate)
     }
 
     func refresh() async {
