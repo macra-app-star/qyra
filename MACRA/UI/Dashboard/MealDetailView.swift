@@ -2,17 +2,26 @@ import SwiftUI
 import SwiftData
 
 struct MealDetailView: View {
-    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     let meal: MealSummary
+    let modelContainer: ModelContainer
     var onDelete: (() -> Void)?
 
     @State private var showDeleteConfirm = false
+    @State private var showAddItem = false
+    @State private var items: [MealItemSummary]
+
+    init(meal: MealSummary, modelContainer: ModelContainer, onDelete: (() -> Void)? = nil) {
+        self.meal = meal
+        self.modelContainer = modelContainer
+        self.onDelete = onDelete
+        self._items = State(initialValue: meal.items)
+    }
 
     var body: some View {
         List {
             Section("Items") {
-                ForEach(meal.items) { item in
+                ForEach(items) { item in
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
                         Text(item.foodName)
                             .font(DesignTokens.Typography.headline)
@@ -33,33 +42,25 @@ struct MealDetailView: View {
                     }
                     .padding(.vertical, DesignTokens.Spacing.xs)
                 }
+                .onDelete { indexSet in
+                    let idsToDelete = indexSet.map { items[$0].id }
+                    items.remove(atOffsets: indexSet)
+                    Task {
+                        let repo = MealRepository(modelContainer: modelContainer)
+                        for id in idsToDelete {
+                            try? await repo.deleteMealItem(id: id)
+                        }
+                        onDelete?()
+                    }
+                    DesignTokens.Haptics.medium()
+                }
             }
 
             Section("Totals") {
-                HStack {
-                    Text("Calories")
-                    Spacer()
-                    Text("\(Int(meal.totalCalories)) cal")
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
-                }
-                HStack {
-                    Text("Protein")
-                    Spacer()
-                    Text("\(Int(meal.totalProtein)) g")
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
-                }
-                HStack {
-                    Text("Carbs")
-                    Spacer()
-                    Text("\(Int(meal.totalCarbs)) g")
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
-                }
-                HStack {
-                    Text("Fat")
-                    Spacer()
-                    Text("\(Int(meal.totalFat)) g")
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
-                }
+                totalRow("Calories", value: items.reduce(0) { $0 + $1.calories }, unit: "cal")
+                totalRow("Protein", value: items.reduce(0) { $0 + $1.protein }, unit: "g")
+                totalRow("Carbs", value: items.reduce(0) { $0 + $1.carbs }, unit: "g")
+                totalRow("Fat", value: items.reduce(0) { $0 + $1.fat }, unit: "g")
             }
 
             Section {
@@ -79,18 +80,44 @@ struct MealDetailView: View {
         .background(DesignTokens.Colors.background)
         .navigationTitle(meal.mealType.displayName)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showAddItem = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
         .alert("Delete Meal?", isPresented: $showDeleteConfirm) {
             Button("Cancel", role: .cancel) {}
             Button("Delete", role: .destructive) {
                 Task {
-                    let repo = MealRepository(modelContainer: modelContext.container)
+                    let repo = MealRepository(modelContainer: modelContainer)
                     try? await repo.deleteMeal(id: meal.id)
+                    DesignTokens.Haptics.medium()
                     onDelete?()
                     dismiss()
                 }
             }
         } message: {
             Text("This will permanently remove this meal and all its items.")
+        }
+        .sheet(isPresented: $showAddItem, onDismiss: {
+            onDelete?() // Trigger refresh in parent
+        }) {
+            AddItemToMealView(mealId: meal.id, modelContainer: modelContainer) { newItem in
+                items.append(newItem)
+            }
+        }
+    }
+
+    private func totalRow(_ label: String, value: Double, unit: String) -> some View {
+        HStack {
+            Text(label)
+            Spacer()
+            Text("\(Int(value)) \(unit)")
+                .foregroundStyle(DesignTokens.Colors.textSecondary)
         }
     }
 
@@ -102,6 +129,125 @@ struct MealDetailView: View {
             Text(unit)
                 .font(DesignTokens.Typography.caption)
                 .foregroundStyle(DesignTokens.Colors.textTertiary)
+        }
+    }
+}
+
+// MARK: - Add Item to Existing Meal
+
+struct AddItemToMealView: View {
+    @Environment(\.dismiss) private var dismiss
+    let mealId: UUID
+    let modelContainer: ModelContainer
+    var onAdd: ((MealItemSummary) -> Void)?
+
+    @State private var foodName = ""
+    @State private var caloriesText = ""
+    @State private var proteinText = ""
+    @State private var carbsText = ""
+    @State private var fatText = ""
+
+    private var canSave: Bool {
+        !foodName.trimmingCharacters(in: .whitespaces).isEmpty &&
+        (Double(caloriesText) ?? 0) > 0
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("Food") {
+                    TextField("Food name", text: $foodName)
+                }
+
+                Section("Macros") {
+                    HStack {
+                        Text("Calories")
+                        Spacer()
+                        TextField("0", text: $caloriesText)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 80)
+                    }
+                    HStack {
+                        Text("Protein (g)")
+                        Spacer()
+                        TextField("0", text: $proteinText)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 80)
+                    }
+                    HStack {
+                        Text("Carbs (g)")
+                        Spacer()
+                        TextField("0", text: $carbsText)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 80)
+                    }
+                    HStack {
+                        Text("Fat (g)")
+                        Spacer()
+                        TextField("0", text: $fatText)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 80)
+                    }
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(DesignTokens.Colors.background)
+            .navigationTitle("Add Item")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Add") {
+                        save()
+                    }
+                    .disabled(!canSave)
+                }
+            }
+        }
+    }
+
+    private func save() {
+        let calories = Double(caloriesText) ?? 0
+        let protein = Double(proteinText) ?? 0
+        let carbs = Double(carbsText) ?? 0
+        let fat = Double(fatText) ?? 0
+        let name = foodName.trimmingCharacters(in: .whitespaces)
+        let itemId = UUID()
+
+        Task {
+            let repo = MealRepository(modelContainer: modelContainer)
+            try? await repo.addItemToMeal(
+                mealId: mealId,
+                item: NewMealItem(
+                    foodName: name,
+                    calories: calories,
+                    protein: protein,
+                    carbs: carbs,
+                    fat: fat,
+                    servingSize: nil,
+                    entryMethod: .manual
+                )
+            )
+
+            let summary = MealItemSummary(
+                id: itemId,
+                foodName: name,
+                calories: calories,
+                protein: protein,
+                carbs: carbs,
+                fat: fat,
+                servingSize: nil,
+                entryMethod: .manual
+            )
+            onAdd?(summary)
+            DesignTokens.Haptics.success()
+            dismiss()
         }
     }
 }

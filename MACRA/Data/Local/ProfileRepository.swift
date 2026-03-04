@@ -35,6 +35,14 @@ actor ProfileRepository {
         try modelContext.save()
     }
 
+    func fetchDisplayName() async throws -> String? {
+        var descriptor = FetchDescriptor<UserProfile>(
+            sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+        return try modelContext.fetch(descriptor).first?.displayName
+    }
+
     func hasCompletedOnboarding() async throws -> Bool {
         var descriptor = FetchDescriptor<UserProfile>(
             sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]

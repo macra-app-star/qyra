@@ -39,6 +39,7 @@ struct MockMealRepository: MealRepositoryProtocol {
     func addMeal(date: Date, mealType: MealType, items: [NewMealItem]) async throws {}
     func deleteMeal(id: UUID) async throws {}
     func deleteMealItem(id: UUID) async throws {}
+    func addItemToMeal(mealId: UUID, item: NewMealItem) async throws {}
 }
 
 struct MockGoalRepository: GoalRepositoryProtocol {

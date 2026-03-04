@@ -93,6 +93,34 @@ actor MealRepository: MealRepositoryProtocol {
         try modelContext.save()
     }
 
+    func addItemToMeal(mealId: UUID, item: NewMealItem) async throws {
+        let descriptor = FetchDescriptor<MealLog>(
+            predicate: #Predicate<MealLog> { $0.id == mealId }
+        )
+        guard let mealLog = try modelContext.fetch(descriptor).first else { return }
+
+        let mealItem = MealItem(
+            foodName: item.foodName,
+            calories: item.calories,
+            protein: item.protein,
+            carbs: item.carbs,
+            fat: item.fat,
+            servingSize: item.servingSize,
+            entryMethod: item.entryMethod,
+            userVerified: true
+        )
+        mealItem.mealLog = mealLog
+        mealLog.items.append(mealItem)
+
+        let syncRecord = SyncRecord(
+            entityType: "MealItem",
+            entityId: mealItem.id,
+            operation: .insert
+        )
+        modelContext.insert(syncRecord)
+        try modelContext.save()
+    }
+
     func deleteMealItem(id: UUID) async throws {
         let descriptor = FetchDescriptor<MealItem>(
             predicate: #Predicate<MealItem> { $0.id == id }

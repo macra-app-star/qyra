@@ -9,6 +9,7 @@ protocol MealRepositoryProtocol: Sendable {
     ) async throws
     func deleteMeal(id: UUID) async throws
     func deleteMealItem(id: UUID) async throws
+    func addItemToMeal(mealId: UUID, item: NewMealItem) async throws
 }
 
 struct NewMealItem: Sendable {
