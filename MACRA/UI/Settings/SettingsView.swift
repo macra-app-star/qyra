@@ -20,6 +20,22 @@ struct SettingsView: View {
                 }
             }
 
+            Section("Nutrition") {
+                NavigationLink {
+                    GoalEditorView()
+                } label: {
+                    HStack(spacing: DesignTokens.Spacing.md) {
+                        Image(systemName: "target")
+                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .frame(width: 24)
+
+                        Text("Macro Goals")
+                            .font(DesignTokens.Typography.body)
+                            .foregroundStyle(DesignTokens.Colors.textPrimary)
+                    }
+                }
+            }
+
             Section("Health") {
                 settingsRow(icon: "heart.fill", title: "Health Permissions")
                 settingsRow(icon: "applewatch", title: "Apple Watch")

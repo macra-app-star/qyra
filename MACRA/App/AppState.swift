@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 import Observation
 
 enum GateStatus: Equatable {
@@ -18,18 +19,22 @@ final class AppState {
     var hasCompletedOnboarding: Bool = false
 
     private let subscriptionService: SubscriptionService
+    var modelContainer: ModelContainer?
 
     init(subscriptionService: SubscriptionService = SubscriptionService()) {
         self.subscriptionService = subscriptionService
     }
 
     func evaluateGate() async {
-        // Phase 2: Skip auth (Phase 4) and onboarding (Phase 3) — go straight to subscription check
         isAuthenticated = true
-        hasCompletedOnboarding = true
 
         let subscribed = await subscriptionService.isSubscribed
         isSubscribed = subscribed
+
+        if let container = modelContainer {
+            let profileRepo = ProfileRepository(modelContainer: container)
+            hasCompletedOnboarding = (try? await profileRepo.hasCompletedOnboarding()) ?? false
+        }
 
         if !isAuthenticated {
             gateStatus = .needsAuth
@@ -47,6 +52,11 @@ final class AppState {
     }
 
     func handleSubscriptionChange() async {
+        await evaluateGate()
+    }
+
+    func completeOnboarding() async {
+        hasCompletedOnboarding = true
         await evaluateGate()
     }
 

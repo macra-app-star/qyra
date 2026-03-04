@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AppGateView: View {
+    @Environment(\.modelContext) private var modelContext
     @State var appState = AppState()
 
     var body: some View {
@@ -9,13 +10,13 @@ struct AppGateView: View {
             case .loading:
                 LaunchScreenView()
             case .needsAuth:
-                // Phase 4: SignInView()
                 PlaceholderView(title: "Sign In", icon: "person.circle")
             case .needsSubscription:
                 PaywallView()
             case .needsOnboarding:
-                // Phase 3: OnboardingFlowView()
-                PlaceholderView(title: "Onboarding", icon: "arrow.right.circle")
+                OnboardingView {
+                    Task { await appState.completeOnboarding() }
+                }
             case .ready:
                 MainTabView()
             }
@@ -23,6 +24,7 @@ struct AppGateView: View {
         .animation(DesignTokens.Anim.standard, value: appState.gateStatus)
         .environment(appState)
         .task {
+            appState.modelContainer = modelContext.container
             await appState.evaluateGate()
         }
     }

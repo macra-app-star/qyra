@@ -36,8 +36,36 @@ struct DashboardView: View {
             }
         }
         .background(DesignTokens.Colors.background)
-        .navigationTitle("Today")
+        .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    changeDate(by: -1)
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(DesignTokens.Colors.textSecondary)
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                HStack(spacing: DesignTokens.Spacing.sm) {
+                    if !Calendar.current.isDateInToday(viewModel?.selectedDate ?? Date()) {
+                        Button("Today") {
+                            viewModel?.selectedDate = Date()
+                            Task { await viewModel?.loadDay() }
+                        }
+                        .font(DesignTokens.Typography.caption)
+                    }
+                    Button {
+                        changeDate(by: 1)
+                    } label: {
+                        Image(systemName: "chevron.right")
+                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                    }
+                    .disabled(Calendar.current.isDateInToday(viewModel?.selectedDate ?? Date()))
+                }
+            }
+        }
         .task {
             if viewModel == nil {
                 let vm = DashboardViewModel(modelContainer: modelContext.container)
@@ -172,30 +200,37 @@ struct DashboardView: View {
                 .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
             } else {
                 ForEach(vm.meals) { meal in
-                    HStack {
-                        Image(systemName: meal.mealType.icon)
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
-                            .frame(width: 32)
-
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(meal.mealType.displayName)
-                                .font(DesignTokens.Typography.body)
-                                .foregroundStyle(DesignTokens.Colors.textPrimary)
-                            Text(meal.displayDetail)
-                                .font(DesignTokens.Typography.caption)
-                                .foregroundStyle(DesignTokens.Colors.textTertiary)
-                                .lineLimit(1)
+                    NavigationLink {
+                        MealDetailView(meal: meal) {
+                            Task { await vm.refresh() }
                         }
+                    } label: {
+                        HStack {
+                            Image(systemName: meal.mealType.icon)
+                                .foregroundStyle(DesignTokens.Colors.textSecondary)
+                                .frame(width: 32)
 
-                        Spacer()
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(meal.mealType.displayName)
+                                    .font(DesignTokens.Typography.body)
+                                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                                Text(meal.displayDetail)
+                                    .font(DesignTokens.Typography.caption)
+                                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                                    .lineLimit(1)
+                            }
 
-                        Text("\(Int(meal.totalCalories)) cal")
-                            .font(DesignTokens.Typography.subheadline)
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            Spacer()
+
+                            Text("\(Int(meal.totalCalories)) cal")
+                                .font(DesignTokens.Typography.subheadline)
+                                .foregroundStyle(DesignTokens.Colors.textSecondary)
+                        }
+                        .padding(DesignTokens.Spacing.md)
+                        .background(DesignTokens.Colors.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
                     }
-                    .padding(DesignTokens.Spacing.md)
-                    .background(DesignTokens.Colors.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+                    .buttonStyle(.plain)
                 }
             }
         }
@@ -239,10 +274,27 @@ struct DashboardView: View {
 
     // MARK: - Helpers
 
+    private var navigationTitle: String {
+        guard let date = viewModel?.selectedDate else { return "Today" }
+        if Calendar.current.isDateInToday(date) { return "Today" }
+        if Calendar.current.isDateInYesterday(date) { return "Yesterday" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return formatter.string(from: date)
+    }
+
     private var dateString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMM d"
-        return formatter.string(from: Date())
+        return formatter.string(from: viewModel?.selectedDate ?? Date())
+    }
+
+    private func changeDate(by days: Int) {
+        guard let vm = viewModel,
+              let newDate = Calendar.current.date(byAdding: .day, value: days, to: vm.selectedDate) else { return }
+        guard newDate <= Date() else { return }
+        vm.selectedDate = newDate
+        Task { await vm.loadDay() }
     }
 }
 

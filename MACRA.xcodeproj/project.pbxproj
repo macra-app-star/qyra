@@ -13,12 +13,16 @@
 		0F3B3C6CCDE053F9E56E5044 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E25BD4E169E78B499A5F174 /* Assets.xcassets */; };
 		21B7B89B1999ECE1E91127D2 /* ReconcileDayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0F0D88714FBD45456149FA /* ReconcileDayUseCase.swift */; };
 		24962111586F8617ADC01373 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE2AEFF4D94D97F540B9300 /* InsightsView.swift */; };
+		2B982B7A6F31ABCDBAD5954E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4FCFAA50FA4018FAD27EC3 /* OnboardingView.swift */; };
 		2F8C061A001ACB11CD527245 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5F40826C5B8D29BDC11596 /* DashboardViewModel.swift */; };
+		39661E50D26C675DD185A87D /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C4F5F55F3BFED7AF5CE2D /* OnboardingViewModel.swift */; };
 		3B9C2A00AD9B5CE644F76CD6 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1F68391079991C2B1265F /* SubscriptionService.swift */; };
+		40D6FD1671FD4D37119435B0 /* GoalEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1266ECCAA1ECFA8A5D6666C0 /* GoalEditorViewModel.swift */; };
 		42CD53481B4854954B0B5073 /* SyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F53CEBF43BB6E96297845 /* SyncEngine.swift */; };
 		4908DC9280308209AF7124F7 /* GoalRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D04C8617C0049F70914A7CC /* GoalRepositoryProtocol.swift */; };
 		4CD83FFDB6C6D2881C6BDBFB /* NutritionCardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56141ADB1466BA665DFA05C5 /* NutritionCardComponent.swift */; };
 		4D1CC5FB0BFA5C6A40C6AF16 /* SubscriptionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A59B25A4E1331C06C631B16 /* SubscriptionCardView.swift */; };
+		5F36B1966CD06A604F9C77CA /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB915F5D825A9926D63023 /* MealDetailView.swift */; };
 		6B14DDC89251F5AFD74223A5 /* MealItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3018E438231C6C69EF30D383 /* MealItem.swift */; };
 		6C4B52617A2CEC283B7A973D /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F868BB4590680197BC0CEB8 /* MainTabView.swift */; };
 		782E9F3CD0E6C201A95F0A7F /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978229B38E9D76980F5A58E /* LogView.swift */; };
@@ -28,10 +32,13 @@
 		8CC2C65FDA70DC9E87C850B5 /* MACRATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF21C3464FCB1437AE6FE11 /* MACRATests.swift */; };
 		903A2CD92C43CFED6E258C12 /* MySubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76723F1EB796EEACE5FD6300 /* MySubscriptionView.swift */; };
 		90638C42C08B597737140C8D /* GoalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18F80B62441B8D781A516CA /* GoalRepository.swift */; };
+		941407A22FB25547B44046A0 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21382E4B82AB9632684BEA6 /* ProfileRepository.swift */; };
 		97429B6D82F4164C0EFAD5AE /* MACRAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB36487759CCB219334079 /* MACRAApp.swift */; };
 		B400321033EE69B26164E1F1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96755EA229CE47C769E93863 /* AppState.swift */; };
+		B7C6074EB2AE6CF50A0BD633 /* GoalEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684E4DC8A39C994CC392D29 /* GoalEditorView.swift */; };
 		C293C53284985A4A122DA45C /* ManualEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C51AA1F09806088E113B46 /* ManualEntryView.swift */; };
 		C3267D9F58EA44F6EF09D175 /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466385F9E82003A92B72B705 /* DailySummary.swift */; };
+		C4C6708876FC1FC5D9E2987A /* InsightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB74FEFD5DD1E105B7F1C25 /* InsightsViewModel.swift */; };
 		C864433BC4B9EF9412560F59 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162E25FCED4F0ABC1E5604A9 /* SettingsView.swift */; };
 		CAF4645107B2005CAA88479B /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9320FF0580EB953BB58FFE77 /* DesignTokens.swift */; };
 		D05B50E1F5CAFA7645CD7393 /* AppGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1081C8C6CA40DB0B5CAB64 /* AppGateView.swift */; };
@@ -63,11 +70,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0684E4DC8A39C994CC392D29 /* GoalEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditorView.swift; sourceTree = "<group>"; };
+		1266ECCAA1ECFA8A5D6666C0 /* GoalEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditorViewModel.swift; sourceTree = "<group>"; };
 		13CBE0F5DBE4AB7F8C2B45F1 /* MealLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLog.swift; sourceTree = "<group>"; };
 		162E25FCED4F0ABC1E5604A9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		193A2C5F418A5DADF660E1F7 /* MACRATests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MACRATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DBB36487759CCB219334079 /* MACRAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACRAApp.swift; sourceTree = "<group>"; };
 		1F868BB4590680197BC0CEB8 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		294C4F5F55F3BFED7AF5CE2D /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		3018E438231C6C69EF30D383 /* MealItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealItem.swift; sourceTree = "<group>"; };
 		3A25697B73434C473E9FFB0A /* MACRAUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACRAUITests.swift; sourceTree = "<group>"; };
 		43B1F68391079991C2B1265F /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
@@ -78,6 +88,8 @@
 		692E52200C0D61135C9EF93B /* SyncRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRecord.swift; sourceTree = "<group>"; };
 		69C51AA1F09806088E113B46 /* ManualEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualEntryView.swift; sourceTree = "<group>"; };
 		69C913EC20C6CE1C368A4544 /* MealRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRepository.swift; sourceTree = "<group>"; };
+		6DBB915F5D825A9926D63023 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
+		6FB74FEFD5DD1E105B7F1C25 /* InsightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewModel.swift; sourceTree = "<group>"; };
 		76723F1EB796EEACE5FD6300 /* MySubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubscriptionView.swift; sourceTree = "<group>"; };
 		8271BE363A2629A446E70D46 /* SubscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewModel.swift; sourceTree = "<group>"; };
 		8CE2AEFF4D94D97F540B9300 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
@@ -95,6 +107,7 @@
 		B945FBD1008388E2CB6D1B1C /* ManualEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualEntryViewModel.swift; sourceTree = "<group>"; };
 		BCF21C3464FCB1437AE6FE11 /* MACRATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACRATests.swift; sourceTree = "<group>"; };
 		C0CC728C501AD5FD454893E4 /* MacroGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroGoal.swift; sourceTree = "<group>"; };
+		C21382E4B82AB9632684BEA6 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		CA9DB1185B84C735C57B2424 /* MealRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRepositoryProtocol.swift; sourceTree = "<group>"; };
 		CD5F40826C5B8D29BDC11596 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		D110049CD381F3ED4A2F01BF /* MACRA.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MACRA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +116,7 @@
 		E3201AE15518840C986D7346 /* MonochromeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonochromeButton.swift; sourceTree = "<group>"; };
 		EA1081C8C6CA40DB0B5CAB64 /* AppGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGateView.swift; sourceTree = "<group>"; };
 		EA661C932C150C35D167FCCF /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		EC4FCFAA50FA4018FAD27EC3 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -110,7 +124,10 @@
 			isa = PBXGroup;
 			children = (
 				CD5F40826C5B8D29BDC11596 /* DashboardViewModel.swift */,
+				1266ECCAA1ECFA8A5D6666C0 /* GoalEditorViewModel.swift */,
+				6FB74FEFD5DD1E105B7F1C25 /* InsightsViewModel.swift */,
 				B945FBD1008388E2CB6D1B1C /* ManualEntryViewModel.swift */,
+				294C4F5F55F3BFED7AF5CE2D /* OnboardingViewModel.swift */,
 				8271BE363A2629A446E70D46 /* SubscriptionViewModel.swift */,
 			);
 			path = ViewModels;
@@ -121,6 +138,7 @@
 			children = (
 				D18F80B62441B8D781A516CA /* GoalRepository.swift */,
 				69C913EC20C6CE1C368A4544 /* MealRepository.swift */,
+				C21382E4B82AB9632684BEA6 /* ProfileRepository.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -199,6 +217,7 @@
 			children = (
 				91AC63C6D0D0664E5434C01A /* DashboardView.swift */,
 				8CE2AEFF4D94D97F540B9300 /* InsightsView.swift */,
+				6DBB915F5D825A9926D63023 /* MealDetailView.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -336,6 +355,7 @@
 		B9715AD580C74EC39AB07852 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				EC4FCFAA50FA4018FAD27EC3 /* OnboardingView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -350,6 +370,7 @@
 		D20292C5C6F8D57A1152B640 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				0684E4DC8A39C994CC392D29 /* GoalEditorView.swift */,
 				76723F1EB796EEACE5FD6300 /* MySubscriptionView.swift */,
 				162E25FCED4F0ABC1E5604A9 /* SettingsView.swift */,
 			);
@@ -540,9 +561,12 @@
 				E8EEE89607480E3CD7ADC08E /* DashboardView.swift in Sources */,
 				2F8C061A001ACB11CD527245 /* DashboardViewModel.swift in Sources */,
 				CAF4645107B2005CAA88479B /* DesignTokens.swift in Sources */,
+				B7C6074EB2AE6CF50A0BD633 /* GoalEditorView.swift in Sources */,
+				40D6FD1671FD4D37119435B0 /* GoalEditorViewModel.swift in Sources */,
 				90638C42C08B597737140C8D /* GoalRepository.swift in Sources */,
 				4908DC9280308209AF7124F7 /* GoalRepositoryProtocol.swift in Sources */,
 				24962111586F8617ADC01373 /* InsightsView.swift in Sources */,
+				C4C6708876FC1FC5D9E2987A /* InsightsViewModel.swift in Sources */,
 				782E9F3CD0E6C201A95F0A7F /* LogView.swift in Sources */,
 				97429B6D82F4164C0EFAD5AE /* MACRAApp.swift in Sources */,
 				003DD5A9E423B9ECF61332F6 /* MacroGoal.swift in Sources */,
@@ -550,6 +574,7 @@
 				6C4B52617A2CEC283B7A973D /* MainTabView.swift in Sources */,
 				C293C53284985A4A122DA45C /* ManualEntryView.swift in Sources */,
 				086B67033B1C4B50A99BD247 /* ManualEntryViewModel.swift in Sources */,
+				5F36B1966CD06A604F9C77CA /* MealDetailView.swift in Sources */,
 				6B14DDC89251F5AFD74223A5 /* MealItem.swift in Sources */,
 				F5A8985DFAFE1C25162AEA2E /* MealLog.swift in Sources */,
 				E260E30AECEB84FE4B680191 /* MealRepository.swift in Sources */,
@@ -557,7 +582,10 @@
 				8C22CB26E5AB4CB1257041FE /* MonochromeButton.swift in Sources */,
 				903A2CD92C43CFED6E258C12 /* MySubscriptionView.swift in Sources */,
 				4CD83FFDB6C6D2881C6BDBFB /* NutritionCardComponent.swift in Sources */,
+				2B982B7A6F31ABCDBAD5954E /* OnboardingView.swift in Sources */,
+				39661E50D26C675DD185A87D /* OnboardingViewModel.swift in Sources */,
 				DE41EF93F03C8F731721619C /* PaywallView.swift in Sources */,
+				941407A22FB25547B44046A0 /* ProfileRepository.swift in Sources */,
 				21B7B89B1999ECE1E91127D2 /* ReconcileDayUseCase.swift in Sources */,
 				C864433BC4B9EF9412560F59 /* SettingsView.swift in Sources */,
 				0D1643F1AF3F1C5E47131AC5 /* SocialView.swift in Sources */,
