@@ -1,0 +1,13 @@
+devices([
+  "iPhone 16 Pro Max",   # 6.7" (required)
+  "iPhone 16",           # 6.1"
+  "iPhone SE (3rd generation)" # 4.7"
+])
+
+languages(["en-US"])
+scheme("MACRAUITests")
+
+output_directory("./fastlane/screenshots")
+clear_previous_screenshots(true)
+
+override_status_bar(true)

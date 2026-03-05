@@ -1,0 +1,8 @@
+app_identifier("co.tamras.macra")
+# apple_id("your@email.com")  # Your Apple Developer email
+# team_id("XXXXXXXXXX")       # Your 10-character Team ID
+
+# For App Store Connect API (recommended over password auth)
+# key_id("XXXXXX")
+# issuer_id("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX")
+# key_filepath("./fastlane/AuthKey.p8")

@@ -26,6 +26,13 @@ final class AppState {
     }
 
     func evaluateGate() async {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("--skip-gate") {
+            skipToReady()
+            return
+        }
+        #endif
+
         isAuthenticated = true
 
         let subscribed = await subscriptionService.isSubscribed
