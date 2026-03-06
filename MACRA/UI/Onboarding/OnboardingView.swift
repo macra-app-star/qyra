@@ -6,6 +6,12 @@ struct OnboardingView: View {
     @State private var viewModel: OnboardingViewModel?
     var onComplete: () -> Void
 
+    // Welcome step animations
+    @State private var logoVisible = false
+    @State private var taglineVisible = false
+    @State private var featuresVisible = false
+    @State private var ctaVisible = false
+
     var body: some View {
         ZStack {
             DesignTokens.Colors.background
@@ -47,31 +53,40 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: - Steps
+    // MARK: - Welcome Step
 
     private func welcomeStep(_ vm: OnboardingViewModel) -> some View {
         VStack(spacing: DesignTokens.Spacing.xl) {
             Spacer()
 
-            Image(systemName: "chart.bar.fill")
-                .font(.system(size: 64))
-                .foregroundStyle(DesignTokens.Colors.textPrimary)
+            VStack(spacing: DesignTokens.Spacing.md) {
+                Image(systemName: "chart.bar.fill")
+                    .font(.system(size: 64))
+                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                    .scaleEffect(logoVisible ? 1 : 0.6)
+                    .opacity(logoVisible ? 1 : 0)
 
-            Text("Welcome to MACRA")
-                .font(DesignTokens.Typography.largeTitle)
-                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                Text("Welcome to MACRA")
+                    .font(DesignTokens.Typography.largeTitle)
+                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                    .opacity(logoVisible ? 1 : 0)
 
-            Text("Precision macro tracking powered by AI")
-                .font(DesignTokens.Typography.callout)
-                .foregroundStyle(DesignTokens.Colors.textTertiary)
+                Text("Precision macro tracking powered by AI")
+                    .font(DesignTokens.Typography.callout)
+                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                    .opacity(taglineVisible ? 1 : 0)
+                    .offset(y: taglineVisible ? 0 : 8)
+            }
 
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
                 featureRow(icon: "camera.fill", text: "Scan meals with your camera")
                 featureRow(icon: "mic.fill", text: "Log by voice in seconds")
                 featureRow(icon: "chart.line.uptrend.xyaxis", text: "AI-powered insights")
-                featureRow(icon: "person.2.fill", text: "Compete with friends")
+                featureRow(icon: "target", text: "Personalized nutrition goals")
             }
             .padding(.horizontal, DesignTokens.Spacing.xl)
+            .opacity(featuresVisible ? 1 : 0)
+            .offset(y: featuresVisible ? 0 : 12)
 
             Spacer()
 
@@ -80,8 +95,26 @@ struct OnboardingView: View {
             }
             .padding(.horizontal, DesignTokens.Spacing.xl)
             .padding(.bottom, DesignTokens.Spacing.xl)
+            .opacity(ctaVisible ? 1 : 0)
+            .offset(y: ctaVisible ? 0 : 16)
+        }
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.5)) {
+                logoVisible = true
+            }
+            withAnimation(.easeOut(duration: 0.4).delay(0.25)) {
+                taglineVisible = true
+            }
+            withAnimation(.easeOut(duration: 0.4).delay(0.5)) {
+                featuresVisible = true
+            }
+            withAnimation(.easeOut(duration: 0.4).delay(0.75)) {
+                ctaVisible = true
+            }
         }
     }
+
+    // MARK: - Profile Step (Imperial Units)
 
     private func profileStep(_ vm: OnboardingViewModel) -> some View {
         @Bindable var vm = vm
@@ -98,8 +131,45 @@ struct OnboardingView: View {
 
                 VStack(spacing: DesignTokens.Spacing.md) {
                     onboardingField("Name (optional)", text: $vm.displayName, keyboard: .default)
-                    onboardingField("Weight (kg)", text: $vm.weightText, keyboard: .decimalPad)
-                    onboardingField("Height (cm)", text: $vm.heightText, keyboard: .decimalPad)
+
+                    // Weight in pounds
+                    onboardingField("Weight (lbs)", text: $vm.weightLbsText, keyboard: .decimalPad)
+
+                    // Height in feet + inches
+                    VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
+                        Text("Height")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundStyle(DesignTokens.Colors.textTertiary)
+
+                        HStack(spacing: DesignTokens.Spacing.sm) {
+                            HStack(spacing: DesignTokens.Spacing.xs) {
+                                TextField("5", text: $vm.heightFeetText)
+                                    .keyboardType(.numberPad)
+                                    .padding(DesignTokens.Spacing.md)
+                                    .background(DesignTokens.Colors.surface)
+                                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+                                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+
+                                Text("ft")
+                                    .font(DesignTokens.Typography.caption)
+                                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                            }
+
+                            HStack(spacing: DesignTokens.Spacing.xs) {
+                                TextField("9", text: $vm.heightInchesText)
+                                    .keyboardType(.numberPad)
+                                    .padding(DesignTokens.Spacing.md)
+                                    .background(DesignTokens.Colors.surface)
+                                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+                                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+
+                                Text("in")
+                                    .font(DesignTokens.Typography.caption)
+                                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                            }
+                        }
+                    }
+
                     onboardingField("Age", text: $vm.ageText, keyboard: .numberPad)
 
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
@@ -132,6 +202,8 @@ struct OnboardingView: View {
             }
         }
     }
+
+    // MARK: - Goals Step
 
     private func goalsStep(_ vm: OnboardingViewModel) -> some View {
         ScrollView {
@@ -184,6 +256,8 @@ struct OnboardingView: View {
             }
         }
     }
+
+    // MARK: - Review Step
 
     private func reviewStep(_ vm: OnboardingViewModel) -> some View {
         ScrollView {

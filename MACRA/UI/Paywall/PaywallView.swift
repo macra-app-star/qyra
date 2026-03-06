@@ -4,6 +4,11 @@ import StoreKit
 struct PaywallView: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel = SubscriptionViewModel()
+    @State private var showTerms = false
+    @State private var showPrivacy = false
+
+    private let termsURL = URL(string: "https://macra-app-star.github.io/macra-landing/terms")!
+    private let privacyURL = URL(string: "https://macra-app-star.github.io/macra-landing/privacy")!
 
     var body: some View {
         ZStack {
@@ -13,6 +18,8 @@ struct PaywallView: View {
             if viewModel.isLoading {
                 ProgressView()
                     .tint(DesignTokens.Colors.textSecondary)
+            } else if viewModel.products.isEmpty {
+                emptyProductsView
             } else {
                 scrollContent
             }
@@ -27,6 +34,60 @@ struct PaywallView: View {
         .task {
             await viewModel.loadProducts()
         }
+        .sheet(isPresented: $showTerms) {
+            NavigationStack {
+                WebContentView(title: "Terms of Service", url: termsURL)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") { showTerms = false }
+                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        }
+                    }
+            }
+        }
+        .sheet(isPresented: $showPrivacy) {
+            NavigationStack {
+                WebContentView(title: "Privacy Policy", url: privacyURL)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") { showPrivacy = false }
+                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        }
+                    }
+            }
+        }
+    }
+
+    // MARK: - Empty Products
+
+    private var emptyProductsView: some View {
+        VStack(spacing: DesignTokens.Spacing.lg) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 40))
+                .foregroundStyle(DesignTokens.Colors.textTertiary)
+
+            Text("Couldn't load subscriptions")
+                .font(DesignTokens.Typography.headline)
+                .foregroundStyle(DesignTokens.Colors.textPrimary)
+
+            Text("Please check your connection and try again")
+                .font(DesignTokens.Typography.callout)
+                .foregroundStyle(DesignTokens.Colors.textTertiary)
+                .multilineTextAlignment(.center)
+
+            MonochromeButton("Retry", icon: "arrow.clockwise", style: .secondary) {
+                Task { await viewModel.loadProducts() }
+            }
+            .frame(maxWidth: 200)
+
+            #if DEBUG
+            MonochromeButton("Skip (Dev)", icon: "forward.fill", style: .ghost) {
+                appState.skipToReady()
+            }
+            .frame(maxWidth: 200)
+            #endif
+        }
+        .padding(.horizontal, DesignTokens.Spacing.xl)
     }
 
     // MARK: - Content
@@ -42,6 +103,13 @@ struct PaywallView: View {
                 subscriptionCards
                 purchaseButton
                 restoreButton
+
+                #if DEBUG
+                MonochromeButton("Skip Paywall (Dev)", icon: "forward.fill", style: .ghost) {
+                    appState.skipToReady()
+                }
+                #endif
+
                 legalLinks
 
                 Spacer()
@@ -159,7 +227,7 @@ struct PaywallView: View {
     private var legalLinks: some View {
         HStack(spacing: DesignTokens.Spacing.md) {
             Button("Terms of Service") {
-                // Link to terms URL
+                showTerms = true
             }
             .font(DesignTokens.Typography.caption)
             .foregroundStyle(DesignTokens.Colors.textTertiary)
@@ -168,7 +236,7 @@ struct PaywallView: View {
                 .foregroundStyle(DesignTokens.Colors.textTertiary)
 
             Button("Privacy Policy") {
-                // Link to privacy URL
+                showPrivacy = true
             }
             .font(DesignTokens.Typography.caption)
             .foregroundStyle(DesignTokens.Colors.textTertiary)

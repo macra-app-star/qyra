@@ -33,6 +33,11 @@ targets:
       - path: MACRA
         excludes:
           - "**/.DS_Store"
+          - "**/*.storekit"
+    scheme:
+      storeKitConfiguration: MACRA/Resources/MACRA.storekit
+      testTargets:
+        - MACRATests
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: co.tamras.macra

@@ -1,0 +1,123 @@
+{
+  "identifier" : "D8A3B5C1-4E2F-4A8B-9C1D-3E5F6A7B8C9D",
+  "type" : "com.apple.storekit.testing",
+  "version" : 3,
+  "subscriptionGroups" : [
+    {
+      "id" : "21184919",
+      "localizations" : [
+        {
+          "description" : "Unlock AI-powered macro tracking",
+          "displayName" : "MACRA Premium",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "MACRA Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "59.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "21184920",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "21184921",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to all MACRA features, billed annually",
+              "displayName" : "MACRA Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "macra.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "MACRA Yearly",
+          "subscriptionGroupID" : "21184919",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "7.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "21184922",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Full access to all MACRA features, billed monthly",
+              "displayName" : "MACRA Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "macra.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "MACRA Monthly",
+          "subscriptionGroupID" : "21184919",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6741234567",
+    "_developerTeamID" : "TEAM_ID",
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Renewal"
+      }
+    ],
+    "_timeRate" : 6
+  }
+}

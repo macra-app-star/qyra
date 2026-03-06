@@ -214,26 +214,32 @@ struct DashboardView: View {
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
 
             if vm.meals.isEmpty {
-                HStack {
-                    Spacer()
-                    VStack(spacing: DesignTokens.Spacing.sm) {
-                        Image(systemName: "fork.knife")
-                            .font(.system(size: 28))
-                            .foregroundStyle(DesignTokens.Colors.textTertiary)
-                        Text("No meals logged yet")
-                            .font(DesignTokens.Typography.callout)
-                            .foregroundStyle(DesignTokens.Colors.textTertiary)
-                        Button("Add your first meal") {
-                            showManualEntry = true
-                        }
-                        .font(DesignTokens.Typography.caption)
-                        .foregroundStyle(DesignTokens.Colors.accent)
+                VStack(spacing: DesignTokens.Spacing.md) {
+                    Image(systemName: "leaf.fill")
+                        .font(.system(size: 36))
+                        .foregroundStyle(DesignTokens.Colors.textSecondary)
+                        .padding(.top, DesignTokens.Spacing.md)
+
+                    Text("Your journey starts here")
+                        .font(DesignTokens.Typography.headline)
+                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+
+                    Text("Snap a photo, scan a barcode, or just say what you ate — MACRA makes logging effortless.")
+                        .font(DesignTokens.Typography.callout)
+                        .foregroundStyle(DesignTokens.Colors.textTertiary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, DesignTokens.Spacing.md)
+
+                    MonochromeButton("Log Your First Meal", icon: "plus", style: .primary) {
+                        showManualEntry = true
                     }
-                    .padding(.vertical, DesignTokens.Spacing.lg)
-                    Spacer()
+                    .padding(.horizontal, DesignTokens.Spacing.lg)
+                    .padding(.bottom, DesignTokens.Spacing.md)
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignTokens.Spacing.md)
                 .background(DesignTokens.Colors.surface)
-                .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+                .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.md))
             } else {
                 ForEach(vm.meals) { meal in
                     mealRow(meal: meal, vm: vm)

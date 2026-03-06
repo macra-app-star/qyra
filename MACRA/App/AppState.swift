@@ -31,6 +31,10 @@ final class AppState {
             skipToReady()
             return
         }
+        #if targetEnvironment(simulator)
+        skipToReady()
+        return
+        #endif
         #endif
 
         // Check real auth state via Sign in with Apple

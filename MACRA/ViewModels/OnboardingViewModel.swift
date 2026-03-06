@@ -8,10 +8,11 @@ final class OnboardingViewModel {
     var currentStep: OnboardingStep = .welcome
     var isComplete = false
 
-    // Profile fields
+    // Profile fields (imperial input)
     var displayName = ""
-    var weightText = ""
-    var heightText = ""
+    var weightLbsText = ""
+    var heightFeetText = ""
+    var heightInchesText = ""
     var ageText = ""
     var gender: Gender = .preferNotToSay
 
@@ -27,6 +28,19 @@ final class OnboardingViewModel {
 
     private let goalRepository: GoalRepositoryProtocol
     private let modelContainer: ModelContainer
+
+    // MARK: - Imperial → Metric Conversions
+
+    private var weightKg: Double {
+        let lbs = Double(weightLbsText) ?? 154
+        return lbs / 2.20462
+    }
+
+    private var heightCm: Double {
+        let feet = Double(heightFeetText) ?? 5
+        let inches = Double(heightInchesText) ?? 9
+        return (feet * 12 + inches) * 2.54
+    }
 
     convenience init(modelContainer: ModelContainer) {
         self.init(
@@ -78,12 +92,12 @@ final class OnboardingViewModel {
         )
         try? await goalRepository.saveGoal(goal)
 
-        // Save profile
+        // Save profile (convert imperial → metric for storage)
         let profileRepo = ProfileRepository(modelContainer: modelContainer)
         try? await profileRepo.saveProfile(
             displayName: displayName.isEmpty ? nil : displayName,
-            weightKg: Double(weightText),
-            heightCm: Double(heightText),
+            weightKg: weightKg,
+            heightCm: heightCm,
             age: Int(ageText),
             gender: gender.rawValue
         )
@@ -94,8 +108,8 @@ final class OnboardingViewModel {
     // MARK: - Macro Calculations (Mifflin-St Jeor)
 
     private func calculateCalories() -> Int {
-        let weight = Double(weightText) ?? 70
-        let height = Double(heightText) ?? 170
+        let weight = weightKg
+        let height = heightCm
         let age = Double(ageText) ?? 25
 
         // Mifflin-St Jeor base
@@ -116,7 +130,7 @@ final class OnboardingViewModel {
     }
 
     private func calculateProtein() -> Int {
-        let weight = Double(weightText) ?? 70
+        let weight = weightKg
         switch goalType {
         case .cut: return Int(weight * 2.2)
         case .maintain: return Int(weight * 1.8)

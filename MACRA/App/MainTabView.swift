@@ -7,7 +7,6 @@ struct MainTabView: View {
         case today
         case log
         case insights
-        case social
         case settings
 
         var title: String {
@@ -19,7 +18,6 @@ struct MainTabView: View {
             case .today: return "chart.bar.fill"
             case .log: return "plus.circle.fill"
             case .insights: return "chart.line.uptrend.xyaxis"
-            case .social: return "person.2.fill"
             case .settings: return "gearshape.fill"
             }
         }
@@ -49,8 +47,6 @@ struct MainTabView: View {
             LogView()
         case .insights:
             InsightsView()
-        case .social:
-            SocialView()
         case .settings:
             SettingsView()
         }
