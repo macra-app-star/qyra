@@ -35,6 +35,31 @@ actor ProfileRepository {
         try modelContext.save()
     }
 
+    struct ProfileSnapshot: Sendable {
+        let displayName: String?
+        let weight: Double // lbs
+        let height: Double // inches
+        let age: Int
+        let gender: String?
+    }
+
+    func fetchProfileSnapshot() async throws -> ProfileSnapshot? {
+        var descriptor = FetchDescriptor<UserProfile>(
+            sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+
+        guard let profile = try modelContext.fetch(descriptor).first else { return nil }
+
+        return ProfileSnapshot(
+            displayName: profile.displayName,
+            weight: (profile.weightKg ?? 0) * 2.20462,
+            height: (profile.heightCm ?? 0) / 2.54,
+            age: profile.age ?? 0,
+            gender: profile.gender
+        )
+    }
+
     func fetchDisplayName() async throws -> String? {
         var descriptor = FetchDescriptor<UserProfile>(
             sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]

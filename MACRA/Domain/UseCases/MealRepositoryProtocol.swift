@@ -18,8 +18,14 @@ struct NewMealItem: Sendable {
     let protein: Double
     let carbs: Double
     let fat: Double
+    let fiber: Double?
+    let sugar: Double?
+    let sodium: Double?
     let servingSize: String?
     let entryMethod: EntryMethod
+    let confidenceScore: Int?
+    let barcode: String?
+    let imageURL: String?
 
     init(
         foodName: String,
@@ -27,15 +33,27 @@ struct NewMealItem: Sendable {
         protein: Double,
         carbs: Double,
         fat: Double,
+        fiber: Double? = nil,
+        sugar: Double? = nil,
+        sodium: Double? = nil,
         servingSize: String? = nil,
-        entryMethod: EntryMethod = .manual
+        entryMethod: EntryMethod = .manual,
+        confidenceScore: Int? = nil,
+        barcode: String? = nil,
+        imageURL: String? = nil
     ) {
         self.foodName = foodName
         self.calories = calories
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
+        self.fiber = fiber
+        self.sugar = sugar
+        self.sodium = sodium
         self.servingSize = servingSize
         self.entryMethod = entryMethod
+        self.confidenceScore = confidenceScore
+        self.barcode = barcode
+        self.imageURL = imageURL
     }
 }

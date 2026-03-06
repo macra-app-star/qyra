@@ -4,8 +4,10 @@ import SwiftData
 struct LogView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var showManualEntry = false
-    @State private var showComingSoon = false
-    @State private var comingSoonFeature = ""
+    @State private var showCamera = false
+    @State private var showBarcodeScanner = false
+    @State private var showVoiceLog = false
+    @State private var showFoodSearch = false
 
     var body: some View {
         ZStack {
@@ -28,16 +30,16 @@ struct LogView: View {
 
                 VStack(spacing: DesignTokens.Spacing.sm) {
                     MonochromeButton("Scan Barcode", icon: "barcode.viewfinder", style: .primary) {
-                        comingSoonFeature = "Barcode scanning"
-                        showComingSoon = true
+                        showBarcodeScanner = true
                     }
                     MonochromeButton("Camera Scan", icon: "camera.fill", style: .secondary) {
-                        comingSoonFeature = "Camera scanning"
-                        showComingSoon = true
+                        showCamera = true
                     }
                     MonochromeButton("Voice Log", icon: "mic.fill", style: .secondary) {
-                        comingSoonFeature = "Voice logging"
-                        showComingSoon = true
+                        showVoiceLog = true
+                    }
+                    MonochromeButton("Search Food", icon: "magnifyingglass", style: .secondary) {
+                        showFoodSearch = true
                     }
                     MonochromeButton("Manual Entry", icon: "pencil", style: .ghost) {
                         showManualEntry = true
@@ -50,10 +52,17 @@ struct LogView: View {
         .sheet(isPresented: $showManualEntry) {
             ManualEntryView(modelContainer: modelContext.container)
         }
-        .alert(comingSoonFeature, isPresented: $showComingSoon) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("\(comingSoonFeature) is coming in a future update.")
+        .fullScreenCover(isPresented: $showCamera) {
+            CameraView()
+        }
+        .sheet(isPresented: $showBarcodeScanner) {
+            BarcodeScannerView()
+        }
+        .sheet(isPresented: $showVoiceLog) {
+            VoiceLogView(modelContainer: modelContext.container)
+        }
+        .sheet(isPresented: $showFoodSearch) {
+            FoodSearchView(modelContainer: modelContext.container)
         }
     }
 }

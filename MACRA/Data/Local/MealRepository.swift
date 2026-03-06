@@ -58,9 +58,15 @@ actor MealRepository: MealRepositoryProtocol {
                 protein: item.protein,
                 carbs: item.carbs,
                 fat: item.fat,
+                fiber: item.fiber,
+                sugar: item.sugar,
+                sodium: item.sodium,
                 servingSize: item.servingSize,
+                confidenceScore: item.confidenceScore,
                 entryMethod: item.entryMethod,
-                userVerified: true
+                barcode: item.barcode,
+                imageURL: item.imageURL,
+                userVerified: item.entryMethod == .manual
             )
             mealItem.mealLog = mealLog
             mealLog.items.append(mealItem)
@@ -105,9 +111,15 @@ actor MealRepository: MealRepositoryProtocol {
             protein: item.protein,
             carbs: item.carbs,
             fat: item.fat,
+            fiber: item.fiber,
+            sugar: item.sugar,
+            sodium: item.sodium,
             servingSize: item.servingSize,
+            confidenceScore: item.confidenceScore,
             entryMethod: item.entryMethod,
-            userVerified: true
+            barcode: item.barcode,
+            imageURL: item.imageURL,
+            userVerified: item.entryMethod == .manual
         )
         mealItem.mealLog = mealLog
         mealLog.items.append(mealItem)

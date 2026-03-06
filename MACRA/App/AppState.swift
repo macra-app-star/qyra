@@ -33,7 +33,9 @@ final class AppState {
         }
         #endif
 
-        isAuthenticated = true
+        // Check real auth state via Sign in with Apple
+        await AuthService.shared.checkCredentialState()
+        isAuthenticated = AuthService.shared.isSignedIn
 
         let subscribed = await subscriptionService.isSubscribed
         isSubscribed = subscribed
@@ -56,6 +58,12 @@ final class AppState {
             return
         }
         gateStatus = .ready
+    }
+
+    func signOut() {
+        AuthService.shared.signOut()
+        isAuthenticated = false
+        gateStatus = .needsAuth
     }
 
     func handleSubscriptionChange() async {

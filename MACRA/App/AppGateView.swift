@@ -10,7 +10,7 @@ struct AppGateView: View {
             case .loading:
                 LaunchScreenView()
             case .needsAuth:
-                PlaceholderView(title: "Sign In", icon: "person.circle")
+                SignInView()
             case .needsSubscription:
                 PaywallView()
             case .needsOnboarding:

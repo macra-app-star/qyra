@@ -57,3 +57,6 @@ vendor/
 build_output/
 build/
 *.xcarchive
+
+# Secrets
+MACRA/Resources/Secrets.plist

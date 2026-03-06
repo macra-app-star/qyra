@@ -1,25 +1,25 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var showComingSoon = false
-    @State private var comingSoonFeature = ""
+    @Environment(AppState.self) private var appState
+    @State private var showSignOutConfirmation = false
+
+    private let termsURL = URL(string: "https://macra-app-star.github.io/macra-landing/terms.html")!
+    private let privacyURL = URL(string: "https://macra-app-star.github.io/macra-landing/privacy.html")!
 
     var body: some View {
         List {
             Section("Account") {
-                comingSoonRow(icon: "person.fill", title: "Profile", feature: "Profile editing")
+                NavigationLink {
+                    ProfileEditorView()
+                } label: {
+                    settingsLabel(icon: "person.fill", title: "Profile")
+                }
+
                 NavigationLink {
                     MySubscriptionView()
                 } label: {
-                    HStack(spacing: DesignTokens.Spacing.md) {
-                        Image(systemName: "star.fill")
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
-                            .frame(width: 24)
-
-                        Text("My Subscription")
-                            .font(DesignTokens.Typography.body)
-                            .foregroundStyle(DesignTokens.Colors.textPrimary)
-                    }
+                    settingsLabel(icon: "star.fill", title: "My Subscription")
                 }
             }
 
@@ -27,15 +27,7 @@ struct SettingsView: View {
                 NavigationLink {
                     GoalEditorView()
                 } label: {
-                    HStack(spacing: DesignTokens.Spacing.md) {
-                        Image(systemName: "target")
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
-                            .frame(width: 24)
-
-                        Text("Macro Goals")
-                            .font(DesignTokens.Typography.body)
-                            .foregroundStyle(DesignTokens.Colors.textPrimary)
-                    }
+                    settingsLabel(icon: "target", title: "Macro Goals")
                 }
             }
 
@@ -43,33 +35,37 @@ struct SettingsView: View {
                 NavigationLink {
                     HealthPermissionsView()
                 } label: {
-                    HStack(spacing: DesignTokens.Spacing.md) {
-                        Image(systemName: "heart.fill")
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
-                            .frame(width: 24)
-
-                        Text("Health Permissions")
-                            .font(DesignTokens.Typography.body)
-                            .foregroundStyle(DesignTokens.Colors.textPrimary)
-                    }
+                    settingsLabel(icon: "heart.fill", title: "Health Permissions")
                 }
-                comingSoonRow(icon: "applewatch", title: "Apple Watch", feature: "Apple Watch companion")
             }
 
-            Section("Privacy") {
-                comingSoonRow(icon: "lock.fill", title: "Privacy Controls", feature: "Privacy controls")
-                comingSoonRow(icon: "square.and.arrow.up", title: "Export Data", feature: "Data export")
+            Section("Data") {
+                NavigationLink {
+                    DataExportView()
+                } label: {
+                    settingsLabel(icon: "square.and.arrow.up", title: "Export Data")
+                }
             }
 
             Section("About") {
-                comingSoonRow(icon: "doc.text", title: "Terms of Service", feature: "Terms of Service")
-                comingSoonRow(icon: "hand.raised.fill", title: "Privacy Policy", feature: "Privacy Policy")
+                NavigationLink {
+                    WebContentView(title: "Terms of Service", url: termsURL)
+                } label: {
+                    settingsLabel(icon: "doc.text", title: "Terms of Service")
+                }
+
+                NavigationLink {
+                    WebContentView(title: "Privacy Policy", url: privacyURL)
+                } label: {
+                    settingsLabel(icon: "hand.raised.fill", title: "Privacy Policy")
+                }
+
                 settingsRow(icon: "info.circle", title: "Version 1.0.0")
             }
 
             Section {
                 Button(role: .destructive) {
-                    // Future: Sign out
+                    showSignOutConfirmation = true
                 } label: {
                     HStack {
                         Spacer()
@@ -83,10 +79,25 @@ struct SettingsView: View {
         .scrollContentBackground(.hidden)
         .background(DesignTokens.Colors.background)
         .navigationTitle("Settings")
-        .alert(comingSoonFeature, isPresented: $showComingSoon) {
-            Button("OK", role: .cancel) {}
+        .alert("Sign Out", isPresented: $showSignOutConfirmation) {
+            Button("Sign Out", role: .destructive) {
+                appState.signOut()
+            }
+            Button("Cancel", role: .cancel) {}
         } message: {
-            Text("\(comingSoonFeature) is coming in a future update.")
+            Text("Are you sure you want to sign out?")
+        }
+    }
+
+    private func settingsLabel(icon: String, title: String) -> some View {
+        HStack(spacing: DesignTokens.Spacing.md) {
+            Image(systemName: icon)
+                .foregroundStyle(DesignTokens.Colors.textSecondary)
+                .frame(width: 24)
+
+            Text(title)
+                .font(DesignTokens.Typography.body)
+                .foregroundStyle(DesignTokens.Colors.textPrimary)
         }
     }
 
@@ -103,33 +114,11 @@ struct SettingsView: View {
             Spacer()
         }
     }
-
-    private func comingSoonRow(icon: String, title: String, feature: String) -> some View {
-        Button {
-            comingSoonFeature = feature
-            showComingSoon = true
-        } label: {
-            HStack(spacing: DesignTokens.Spacing.md) {
-                Image(systemName: icon)
-                    .foregroundStyle(DesignTokens.Colors.textSecondary)
-                    .frame(width: 24)
-
-                Text(title)
-                    .font(DesignTokens.Typography.body)
-                    .foregroundStyle(DesignTokens.Colors.textPrimary)
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(DesignTokens.Colors.textTertiary)
-            }
-        }
-    }
 }
 
 #Preview {
     NavigationStack {
         SettingsView()
     }
+    .environment(AppState())
 }

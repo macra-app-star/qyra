@@ -5,8 +5,9 @@ struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel: DashboardViewModel?
     @State private var showManualEntry = false
-    @State private var showComingSoon = false
-    @State private var comingSoonFeature = ""
+    @State private var showCamera = false
+    @State private var showBarcodeScanner = false
+    @State private var showVoiceLog = false
 
     var body: some View {
         ScrollView {
@@ -85,10 +86,20 @@ struct DashboardView: View {
         }) {
             ManualEntryView(modelContainer: modelContext.container)
         }
-        .alert(comingSoonFeature, isPresented: $showComingSoon) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("\(comingSoonFeature) is coming in a future update.")
+        .fullScreenCover(isPresented: $showCamera, onDismiss: {
+            Task { await viewModel?.refresh() }
+        }) {
+            CameraView()
+        }
+        .sheet(isPresented: $showBarcodeScanner, onDismiss: {
+            Task { await viewModel?.refresh() }
+        }) {
+            BarcodeScannerView()
+        }
+        .sheet(isPresented: $showVoiceLog, onDismiss: {
+            Task { await viewModel?.refresh() }
+        }) {
+            VoiceLogView(modelContainer: modelContext.container)
         }
     }
 
@@ -160,16 +171,13 @@ struct DashboardView: View {
 
             HStack(spacing: DesignTokens.Spacing.sm) {
                 quickActionTile(icon: "barcode.viewfinder", label: "Barcode") {
-                    comingSoonFeature = "Barcode scanning"
-                    showComingSoon = true
+                    showBarcodeScanner = true
                 }
                 quickActionTile(icon: "camera.fill", label: "Camera") {
-                    comingSoonFeature = "Camera scanning"
-                    showComingSoon = true
+                    showCamera = true
                 }
                 quickActionTile(icon: "mic.fill", label: "Voice") {
-                    comingSoonFeature = "Voice logging"
-                    showComingSoon = true
+                    showVoiceLog = true
                 }
                 quickActionTile(icon: "pencil", label: "Manual") {
                     showManualEntry = true
