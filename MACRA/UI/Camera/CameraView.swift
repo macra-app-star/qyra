@@ -53,7 +53,7 @@ struct CameraView: View {
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
-                            .font(.system(size: 20, weight: .medium))
+                            .font(QyraFont.medium(20))
                             .foregroundStyle(.white)
                             .frame(width: 44, height: 44)
                     }
@@ -64,7 +64,7 @@ struct CameraView: View {
                         cameraVM.isFlashOn.toggle()
                     } label: {
                         Image(systemName: cameraVM.isFlashOn ? "bolt.fill" : "bolt.slash.fill")
-                            .font(.system(size: 20, weight: .medium))
+                            .font(QyraFont.medium(20))
                             .foregroundStyle(cameraVM.isFlashOn ? .yellow : .white)
                             .frame(width: 44, height: 44)
                     }
@@ -112,7 +112,7 @@ struct CameraView: View {
                         cameraVM.flipCamera()
                     } label: {
                         Image(systemName: "camera.rotate.fill")
-                            .font(.system(size: 24))
+                            .font(QyraFont.regular(24))
                             .foregroundStyle(.white)
                             .frame(width: 44, height: 44)
                     }
@@ -125,7 +125,7 @@ struct CameraView: View {
     private var permissionDeniedView: some View {
         VStack(spacing: DesignTokens.Spacing.lg) {
             Image(systemName: "camera.fill")
-                .font(.system(size: 48))
+                .font(QyraFont.regular(48))
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
 
             Text("Camera Access Required")

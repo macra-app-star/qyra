@@ -4,16 +4,26 @@ import SwiftData
 struct FoodDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    let food: USDAFoodResult
+    let food: FoodAnalysisResult
     @State var mealType: MealType
-    @State private var quantity: Int = 1
+    @State private var quantity: Double = 1.0
     @State private var didSave = false
     @State private var errorMessage: String?
     let onSaved: (() -> Void)?
 
-    init(food: USDAFoodResult, mealType: MealType, modelContainer: ModelContainer?, onSaved: (() -> Void)? = nil) {
+    static var defaultMealType: MealType {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch hour {
+        case 0..<10: return .breakfast
+        case 10..<14: return .lunch
+        case 14..<17: return .snack
+        default: return .dinner
+        }
+    }
+
+    init(food: FoodAnalysisResult, mealType: MealType? = nil, modelContainer: ModelContainer? = nil, onSaved: (() -> Void)? = nil) {
         self.food = food
-        _mealType = State(initialValue: mealType)
+        _mealType = State(initialValue: mealType ?? FoodDetailView.defaultMealType)
         self.onSaved = onSaved
     }
 
@@ -33,13 +43,15 @@ struct FoodDetailView: View {
                             .foregroundStyle(DesignTokens.Colors.textSecondary)
                     }
 
-                    Text(food.dataType)
-                        .font(DesignTokens.Typography.caption)
-                        .foregroundStyle(DesignTokens.Colors.textTertiary)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 2)
-                        .background(DesignTokens.Colors.surfaceElevated)
-                        .clipShape(Capsule())
+                    if food.confidence < 80 {
+                        Text("AI Estimated")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundStyle(DesignTokens.Colors.textTertiary)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 2)
+                            .background(DesignTokens.Colors.surfaceElevated)
+                            .clipShape(Capsule())
+                    }
                 }
 
                 // Macros
@@ -63,6 +75,14 @@ struct FoodDetailView: View {
                 }
                 .padding(.horizontal, DesignTokens.Spacing.md)
 
+                Button {
+                    Task { await addToLog(asFavorite: true) }
+                } label: {
+                    Text("Save to Favorites")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.accentColor)
+                }
+
                 if let error = errorMessage {
                     Text(error)
                         .font(DesignTokens.Typography.caption)
@@ -82,34 +102,29 @@ struct FoodDetailView: View {
     private var nutritionGrid: some View {
         VStack(spacing: DesignTokens.Spacing.md) {
             HStack(spacing: DesignTokens.Spacing.md) {
-                macroCard("Calories", value: food.calories * Double(quantity), unit: "", large: true)
-                macroCard("Protein", value: food.protein * Double(quantity), unit: "g", large: true)
+                macroCard("Calories", value: food.calories * quantity, unit: "", large: true)
+                macroCard("Protein", value: food.protein * quantity, unit: "g", large: true)
             }
 
             HStack(spacing: DesignTokens.Spacing.md) {
-                macroCard("Carbs", value: food.carbs * Double(quantity), unit: "g", large: false)
-                macroCard("Fat", value: food.fat * Double(quantity), unit: "g", large: false)
+                macroCard("Carbs", value: food.carbs * quantity, unit: "g", large: false)
+                macroCard("Fat", value: food.fat * quantity, unit: "g", large: false)
             }
 
             if food.fiber != nil || food.sugar != nil || food.sodium != nil {
                 HStack(spacing: DesignTokens.Spacing.md) {
                     if let fiber = food.fiber {
-                        macroCard("Fiber", value: fiber * Double(quantity), unit: "g", large: false)
+                        macroCard("Fiber", value: fiber * quantity, unit: "g", large: false)
                     }
                     if let sugar = food.sugar {
-                        macroCard("Sugar", value: sugar * Double(quantity), unit: "g", large: false)
+                        macroCard("Sugar", value: sugar * quantity, unit: "g", large: false)
                     }
                     if let sodium = food.sodium {
-                        macroCard("Sodium", value: sodium * 1000 * Double(quantity), unit: "mg", large: false)
+                        macroCard("Sodium", value: sodium * 1000 * quantity, unit: "mg", large: false)
                     }
                 }
             }
 
-            if let serving = food.servingSize {
-                Text("Per serving: \(serving)")
-                    .font(DesignTokens.Typography.caption)
-                    .foregroundStyle(DesignTokens.Colors.textTertiary)
-            }
         }
         .padding(DesignTokens.Spacing.md)
         .background(DesignTokens.Colors.surface)
@@ -133,35 +148,65 @@ struct FoodDetailView: View {
 
     // MARK: - Quantity
 
+    private static let quantitySteps: [Double] = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+
     private var quantitySelector: some View {
-        HStack {
-            Text("Servings")
-                .font(DesignTokens.Typography.body)
-                .foregroundStyle(DesignTokens.Colors.textPrimary)
-
-            Spacer()
-
-            HStack(spacing: DesignTokens.Spacing.md) {
-                Button {
-                    if quantity > 1 { quantity -= 1 }
-                } label: {
-                    Image(systemName: "minus.circle.fill")
-                        .font(.system(size: 28))
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
-                }
-
-                Text("\(quantity)")
-                    .font(DesignTokens.Typography.title3)
+        VStack(spacing: DesignTokens.Spacing.sm) {
+            HStack {
+                Text("Servings")
+                    .font(DesignTokens.Typography.body)
                     .foregroundStyle(DesignTokens.Colors.textPrimary)
-                    .frame(width: 40)
 
-                Button {
-                    if quantity < 10 { quantity += 1 }
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 28))
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
+                Spacer()
+
+                HStack(spacing: DesignTokens.Spacing.md) {
+                    Button {
+                        if let idx = Self.quantitySteps.firstIndex(of: quantity), idx > 0 {
+                            withAnimation(DesignTokens.Anim.quick) {
+                                quantity = Self.quantitySteps[idx - 1]
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "minus.circle.fill")
+                            .font(QyraFont.regular(28))
+                            .foregroundStyle(quantity <= Self.quantitySteps.first ?? 0.5
+                                             ? DesignTokens.Colors.textTertiary
+                                             : DesignTokens.Colors.textSecondary)
+                    }
+                    .disabled(quantity <= Self.quantitySteps.first ?? 0.5)
+
+                    Text(quantity.truncatingRemainder(dividingBy: 1) == 0
+                         ? "\(Int(quantity))"
+                         : String(format: "%.1f", quantity))
+                        .font(DesignTokens.Typography.title3)
+                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        .frame(width: 44)
+                        .contentTransition(.numericText())
+
+                    Button {
+                        if let idx = Self.quantitySteps.firstIndex(of: quantity),
+                           idx < Self.quantitySteps.count - 1 {
+                            withAnimation(DesignTokens.Anim.quick) {
+                                quantity = Self.quantitySteps[idx + 1]
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(QyraFont.regular(28))
+                            .foregroundStyle(quantity >= Self.quantitySteps.last ?? 3.0
+                                             ? DesignTokens.Colors.textTertiary
+                                             : DesignTokens.Colors.textSecondary)
+                    }
+                    .disabled(quantity >= Self.quantitySteps.last ?? 3.0)
                 }
+            }
+
+            // Serving size display
+            if let serving = food.servingSize {
+                Text("Serving: \(serving)")
+                    .font(DesignTokens.Typography.caption)
+                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
         .padding(DesignTokens.Spacing.md)
@@ -172,26 +217,29 @@ struct FoodDetailView: View {
 
     // MARK: - Save
 
-    private func addToLog() async {
-        var result = food.toFoodAnalysisResult()
+    private func addToLog(asFavorite: Bool = false) async {
+        var result = food
 
-        if quantity > 1 {
+        if quantity != 1.0 {
+            let qtyLabel = quantity.truncatingRemainder(dividingBy: 1) == 0
+                ? "\(Int(quantity))"
+                : String(format: "%.1f", quantity)
             result = FoodAnalysisResult(
                 name: result.name,
-                calories: result.calories * Double(quantity),
-                protein: result.protein * Double(quantity),
-                carbs: result.carbs * Double(quantity),
-                fat: result.fat * Double(quantity),
-                fiber: result.fiber.map { $0 * Double(quantity) },
-                sugar: result.sugar.map { $0 * Double(quantity) },
-                sodium: result.sodium.map { $0 * Double(quantity) },
-                servingSize: quantity > 1 ? "\(quantity)x \(result.servingSize ?? "serving")" : result.servingSize,
+                calories: result.calories * quantity,
+                protein: result.protein * quantity,
+                carbs: result.carbs * quantity,
+                fat: result.fat * quantity,
+                fiber: result.fiber.map { $0 * quantity },
+                sugar: result.sugar.map { $0 * quantity },
+                sodium: result.sodium.map { $0 * quantity },
+                servingSize: "\(qtyLabel)x \(result.servingSize ?? "serving")",
                 confidence: result.confidence,
                 brand: result.brand
             )
         }
 
-        let item = result.toNewMealItem(entryMethod: .manual)
+        let item = result.toNewMealItem(entryMethod: .manual, isFavorite: asFavorite)
         let repo = MealRepository(modelContainer: modelContext.container)
 
         do {

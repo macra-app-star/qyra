@@ -6,11 +6,14 @@ enum EntryMethod: String, Codable, CaseIterable {
     case photo
     case barcode
     case voice
+    case ai
+    case quick
 }
 
 @Model
 final class MealItem {
     @Attribute(.unique) var id: UUID
+    var userId: String = ""
     var foodName: String
     var detailedBreakdown: String?
     var calories: Double
@@ -22,11 +25,12 @@ final class MealItem {
     var sodium: Double?
     var servingSize: String?
     var confidenceScore: Int?
-    var entryMethod: EntryMethod
+    var entryMethod: EntryMethod?
     var barcode: String?
     var imageURL: String?
     var analysisNotes: String?
     var userVerified: Bool
+    var isFavorite: Bool
     var createdAt: Date
 
     var mealLog: MealLog?
@@ -43,12 +47,13 @@ final class MealItem {
         sodium: Double? = nil,
         servingSize: String? = nil,
         confidenceScore: Int? = nil,
-        entryMethod: EntryMethod = .manual,
+        entryMethod: EntryMethod? = .manual,
         barcode: String? = nil,
         imageURL: String? = nil,
         analysisNotes: String? = nil,
         detailedBreakdown: String? = nil,
-        userVerified: Bool = false
+        userVerified: Bool = false,
+        isFavorite: Bool = false
     ) {
         self.id = id
         self.foodName = foodName
@@ -67,6 +72,7 @@ final class MealItem {
         self.analysisNotes = analysisNotes
         self.detailedBreakdown = detailedBreakdown
         self.userVerified = userVerified
+        self.isFavorite = isFavorite
         self.createdAt = .now
     }
 }

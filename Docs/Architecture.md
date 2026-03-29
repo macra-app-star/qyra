@@ -1,7 +1,7 @@
-# MACRA Architecture
+# Qyra Architecture
 
 ## Overview
-MACRA is a premium-only iOS macro tracking app with AI intelligence. Built with SwiftUI, SwiftData, and Supabase.
+Qyra is a premium-only iOS macro tracking app with AI intelligence. Built with SwiftUI, SwiftData, and Supabase.
 
 - **Platforms:** iOS 17+ (primary), watchOS 10+, WidgetKit, ActivityKit, AppIntents
 - **Language:** Swift 5.9+
@@ -34,7 +34,7 @@ MACRA is a premium-only iOS macro tracking app with AI intelligence. Built with 
 - **Rationale:** Monochrome Apple/Tesla aesthetic requires precise control. Third-party libraries add visual inconsistency and binary size.
 
 ### ADR-005: App Group for Widget Data
-- **Container ID:** `group.co.tamras.macra`
+- **Container ID:** `group.co.tamras.qyra`
 - **Usage:** Main app writes daily macro totals to shared UserDefaults/SwiftData. Widgets read from shared container.
 
 ### ADR-006: Offline-First with Last-Write-Wins Sync
@@ -65,8 +65,8 @@ Services Layer (HealthKit, StoreKit, Camera, Speech, Barcode)
 ```
 
 ## Bundle & Entitlements
-- **Bundle ID:** `co.tamras.macra`
-- **App Group:** `group.co.tamras.macra`
+- **Bundle ID:** `co.tamras.qyra`
+- **App Group:** `group.co.tamras.qyra`
 - **Entitlements:** HealthKit, Sign in with Apple, In-App Purchases, App Groups
 
 ## Performance Targets

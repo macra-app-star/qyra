@@ -15,6 +15,16 @@ final class UserProfile {
     var createdAt: Date
     var updatedAt: Date
 
+    // Phase 17 additions — nutrition targets
+    var goalWeightKg: Double?
+    var birthDate: Date?
+    var fiberTarget: Int?
+    var sugarTarget: Int?
+    var sodiumTarget: Int? // mg
+    var waterTargetOz: Int?
+    var stepsTarget: Int?
+    @Attribute(.externalStorage) var profilePhotoData: Data?
+
     init(
         id: UUID = UUID(),
         userId: String = "",
@@ -24,7 +34,14 @@ final class UserProfile {
         heightCm: Double? = nil,
         age: Int? = nil,
         gender: String? = nil,
-        hasCompletedOnboarding: Bool = false
+        hasCompletedOnboarding: Bool = false,
+        goalWeightKg: Double? = nil,
+        birthDate: Date? = nil,
+        fiberTarget: Int? = 30,
+        sugarTarget: Int? = 50,
+        sodiumTarget: Int? = 2300,
+        waterTargetOz: Int? = 64,
+        stepsTarget: Int? = 10000
     ) {
         self.id = id
         self.userId = userId
@@ -37,5 +54,12 @@ final class UserProfile {
         self.hasCompletedOnboarding = hasCompletedOnboarding
         self.createdAt = .now
         self.updatedAt = .now
+        self.goalWeightKg = goalWeightKg
+        self.birthDate = birthDate
+        self.fiberTarget = fiberTarget
+        self.sugarTarget = sugarTarget
+        self.sodiumTarget = sodiumTarget
+        self.waterTargetOz = waterTargetOz
+        self.stepsTarget = stepsTarget
     }
 }

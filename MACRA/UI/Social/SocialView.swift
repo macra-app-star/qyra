@@ -8,7 +8,7 @@ struct SocialView: View {
                     .frame(height: DesignTokens.Spacing.xxl)
 
                 Image(systemName: "person.2.fill")
-                    .font(.system(size: 56))
+                    .font(QyraFont.regular(56))
                     .foregroundStyle(DesignTokens.Colors.textTertiary)
 
                 VStack(spacing: DesignTokens.Spacing.sm) {
@@ -39,7 +39,7 @@ struct SocialView: View {
     private func featurePreview(icon: String, title: String, description: String) -> some View {
         HStack(spacing: DesignTokens.Spacing.md) {
             Image(systemName: icon)
-                .font(.system(size: 22))
+                .font(QyraFont.regular(22))
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
                 .frame(width: 32)
 

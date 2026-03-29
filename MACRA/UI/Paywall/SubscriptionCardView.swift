@@ -24,10 +24,10 @@ struct SubscriptionCardView: View {
                                 Text(savings)
                                     .font(DesignTokens.Typography.caption)
                                     .fontWeight(.bold)
-                                    .foregroundStyle(.black)
+                                    .foregroundStyle(.white)
                                     .padding(.horizontal, DesignTokens.Spacing.sm)
                                     .padding(.vertical, DesignTokens.Spacing.xxs)
-                                    .background(Color.white)
+                                    .background(DesignTokens.Colors.brandAccent)
                                     .clipShape(Capsule())
                             }
                         }
@@ -46,7 +46,7 @@ struct SubscriptionCardView: View {
                            intro.paymentMode == .freeTrial {
                             HStack(spacing: DesignTokens.Spacing.xs) {
                                 Image(systemName: "gift.fill")
-                                    .font(.system(size: 12))
+                                    .font(QyraFont.regular(12))
                                 Text("\(intro.period.value)-day free trial")
                                     .font(DesignTokens.Typography.caption)
                             }
@@ -60,14 +60,14 @@ struct SubscriptionCardView: View {
                     ZStack {
                         Circle()
                             .strokeBorder(
-                                isSelected ? DesignTokens.Colors.accent : DesignTokens.Colors.border,
+                                isSelected ? DesignTokens.Colors.brandAccent : DesignTokens.Colors.border,
                                 lineWidth: 2
                             )
                             .frame(width: 24, height: 24)
 
                         if isSelected {
                             Circle()
-                                .fill(DesignTokens.Colors.accent)
+                                .fill(DesignTokens.Colors.brandAccent)
                                 .frame(width: 14, height: 14)
                         }
                     }
@@ -79,7 +79,7 @@ struct SubscriptionCardView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: DesignTokens.Radius.md)
                     .strokeBorder(
-                        isSelected ? DesignTokens.Colors.accent : DesignTokens.Colors.border,
+                        isSelected ? DesignTokens.Colors.brandAccent : DesignTokens.Colors.border,
                         lineWidth: isSelected ? 1.5 : 0.5
                     )
             )

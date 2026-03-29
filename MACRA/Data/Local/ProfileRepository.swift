@@ -41,6 +41,9 @@ actor ProfileRepository {
         let height: Double // inches
         let age: Int
         let gender: String?
+        let birthDate: Date?
+        let stepsTarget: Int?
+        let goalWeightKg: Double?
     }
 
     func fetchProfileSnapshot() async throws -> ProfileSnapshot? {
@@ -56,7 +59,10 @@ actor ProfileRepository {
             weight: (profile.weightKg ?? 0) * 2.20462,
             height: (profile.heightCm ?? 0) / 2.54,
             age: profile.age ?? 0,
-            gender: profile.gender
+            gender: profile.gender,
+            birthDate: profile.birthDate,
+            stepsTarget: profile.stepsTarget,
+            goalWeightKg: profile.goalWeightKg
         )
     }
 
@@ -66,6 +72,27 @@ actor ProfileRepository {
         )
         descriptor.fetchLimit = 1
         return try modelContext.fetch(descriptor).first?.displayName
+    }
+
+    func saveProfilePhoto(_ data: Data?) async throws {
+        var descriptor = FetchDescriptor<UserProfile>(
+            sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+
+        if let profile = try modelContext.fetch(descriptor).first {
+            profile.profilePhotoData = data
+            profile.updatedAt = .now
+            try modelContext.save()
+        }
+    }
+
+    func fetchProfilePhoto() async throws -> Data? {
+        var descriptor = FetchDescriptor<UserProfile>(
+            sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+        return try modelContext.fetch(descriptor).first?.profilePhotoData
     }
 
     func hasCompletedOnboarding() async throws -> Bool {
@@ -78,5 +105,26 @@ actor ProfileRepository {
             return false
         }
         return profile.hasCompletedOnboarding
+    }
+
+    /// Force-set hasCompletedOnboarding = true on the most recent profile.
+    /// Creates a minimal profile if none exists.
+    func markOnboardingComplete() async throws {
+        var descriptor = FetchDescriptor<UserProfile>(
+            sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+
+        if let profile = try modelContext.fetch(descriptor).first {
+            profile.hasCompletedOnboarding = true
+            profile.updatedAt = .now
+        } else {
+            // No profile exists — create a minimal one with the flag set
+            let profile = UserProfile()
+            profile.hasCompletedOnboarding = true
+            profile.updatedAt = .now
+            modelContext.insert(profile)
+        }
+        try modelContext.save()
     }
 }

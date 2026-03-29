@@ -44,6 +44,8 @@ struct PaywallView: View {
                         }
                     }
             }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showPrivacy) {
             NavigationStack {
@@ -55,6 +57,8 @@ struct PaywallView: View {
                         }
                     }
             }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
         }
     }
 
@@ -63,7 +67,7 @@ struct PaywallView: View {
     private var emptyProductsView: some View {
         VStack(spacing: DesignTokens.Spacing.lg) {
             Image(systemName: "exclamationmark.triangle")
-                .font(.system(size: 40))
+                .font(QyraFont.regular(40))
                 .foregroundStyle(DesignTokens.Colors.textTertiary)
 
             Text("Couldn't load subscriptions")
@@ -124,14 +128,10 @@ struct PaywallView: View {
 
     private var logoSection: some View {
         VStack(spacing: DesignTokens.Spacing.sm) {
-            Image(systemName: "chart.bar.fill")
-                .font(.system(size: 56))
+            Text("Qyra")
+                .font(QyraFont.bold(48))
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
                 .padding(.bottom, DesignTokens.Spacing.sm)
-
-            Text("MACRA")
-                .font(DesignTokens.Typography.largeTitle)
-                .foregroundStyle(DesignTokens.Colors.textPrimary)
 
             Text("Premium Macro Intelligence")
                 .font(DesignTokens.Typography.callout)
@@ -143,10 +143,10 @@ struct PaywallView: View {
 
     private var valuePropositions: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
-            valueProp(icon: "camera.fill", text: "Instant food scanning with AI")
-            valueProp(icon: "mic.fill", text: "Voice-powered meal logging")
-            valueProp(icon: "heart.fill", text: "HealthKit activity integration")
-            valueProp(icon: "chart.line.uptrend.xyaxis", text: "Smart insights and coaching")
+            valueProp(icon: "camera.fill", text: "Instant food scanning with AI", color: DesignTokens.Colors.brandAccent)
+            valueProp(icon: "mic.fill", text: "Voice-powered meal logging", color: DesignTokens.Colors.fat)
+            valueProp(icon: "heart.fill", text: "HealthKit activity integration", color: DesignTokens.Colors.protein)
+            valueProp(icon: "chart.line.uptrend.xyaxis", text: "Smart insights and coaching", color: DesignTokens.Colors.aiAccent)
         }
         .padding(DesignTokens.Spacing.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -154,12 +154,14 @@ struct PaywallView: View {
         .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.md))
     }
 
-    private func valueProp(icon: String, text: String) -> some View {
+    private func valueProp(icon: String, text: String, color: Color = DesignTokens.Colors.brandAccent) -> some View {
         HStack(spacing: DesignTokens.Spacing.md) {
             Image(systemName: icon)
-                .font(.system(size: 18))
-                .foregroundStyle(DesignTokens.Colors.textPrimary)
-                .frame(width: 28)
+                .font(QyraFont.semibold(16))
+                .foregroundStyle(color)
+                .frame(width: 32, height: 32)
+                .background(color.opacity(0.12))
+                .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
 
             Text(text)
                 .font(DesignTokens.Typography.body)

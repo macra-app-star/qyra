@@ -52,6 +52,7 @@ struct GoalEditorView: View {
                         }
                     }
                 }
+                .scrollDismissesKeyboard(.interactively)
                 .navigationTitle("Edit Goals")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {

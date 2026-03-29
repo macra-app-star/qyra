@@ -1,12 +1,24 @@
 import Foundation
 import SwiftData
 
+extension Notification.Name {
+    static let mealLogged = Notification.Name("mealLogged")
+    static let exerciseLogged = Notification.Name("exerciseLogged")
+    static let waterLogged = Notification.Name("waterLogged")
+    static let caffeineLogged = Notification.Name("caffeineLogged")
+    static let weightLogged = Notification.Name("weightLogged")
+    static let appBecameActive = Notification.Name("appBecameActive")
+    static let openFoodDatabase = Notification.Name("openFoodDatabase")
+}
+
 @ModelActor
 actor MealRepository: MealRepositoryProtocol {
 
     func fetchDailySummary(for date: Date) async throws -> DailySummary {
         let startOfDay = Calendar.current.startOfDay(for: date)
-        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+        guard let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) else {
+            return DailySummary(date: startOfDay, totalCalories: 0, totalProtein: 0, totalCarbs: 0, totalFat: 0, totalFiber: 0, totalSugar: 0, totalSodium: 0, meals: [])
+        }
 
         let descriptor = FetchDescriptor<MealLog>(
             predicate: #Predicate<MealLog> { meal in
@@ -21,7 +33,7 @@ actor MealRepository: MealRepositoryProtocol {
             MealSummary(
                 id: log.id,
                 mealType: log.mealType,
-                date: log.date,
+                date: log.createdAt,  // Use actual creation time, not start-of-day
                 items: log.items.map { item in
                     MealItemSummary(
                         id: item.id,
@@ -30,8 +42,11 @@ actor MealRepository: MealRepositoryProtocol {
                         protein: item.protein,
                         carbs: item.carbs,
                         fat: item.fat,
+                        fiber: item.fiber,
+                        sugar: item.sugar,
+                        sodium: item.sodium,
                         servingSize: item.servingSize,
-                        entryMethod: item.entryMethod
+                        entryMethod: item.entryMethod ?? .manual
                     )
                 }
             )
@@ -43,6 +58,9 @@ actor MealRepository: MealRepositoryProtocol {
             totalProtein: meals.reduce(0) { $0 + $1.totalProtein },
             totalCarbs: meals.reduce(0) { $0 + $1.totalCarbs },
             totalFat: meals.reduce(0) { $0 + $1.totalFat },
+            totalFiber: meals.reduce(0) { $0 + $1.totalFiber },
+            totalSugar: meals.reduce(0) { $0 + $1.totalSugar },
+            totalSodium: meals.reduce(0) { $0 + $1.totalSodium },
             meals: meals
         )
     }
@@ -66,7 +84,8 @@ actor MealRepository: MealRepositoryProtocol {
                 entryMethod: item.entryMethod,
                 barcode: item.barcode,
                 imageURL: item.imageURL,
-                userVerified: item.entryMethod == .manual
+                userVerified: item.entryMethod == .manual,
+                isFavorite: item.isFavorite
             )
             mealItem.mealLog = mealLog
             mealLog.items.append(mealItem)
@@ -80,6 +99,23 @@ actor MealRepository: MealRepositoryProtocol {
         modelContext.insert(syncRecord)
 
         try modelContext.save()
+
+        // Aggregate nutrition totals for HealthKit write-back
+        let totalCalories = items.reduce(0.0) { $0 + $1.calories }
+        let totalProtein = items.reduce(0.0) { $0 + $1.protein }
+        let totalCarbs = items.reduce(0.0) { $0 + $1.carbs }
+        let totalFat = items.reduce(0.0) { $0 + $1.fat }
+
+        Task { @MainActor in
+            NotificationCenter.default.post(name: .mealLogged, object: nil)
+            await HealthKitService.shared.saveNutrition(
+                calories: totalCalories,
+                protein: totalProtein,
+                carbs: totalCarbs,
+                fat: totalFat,
+                date: date
+            )
+        }
     }
 
     func deleteMeal(id: UUID) async throws {
@@ -119,7 +155,8 @@ actor MealRepository: MealRepositoryProtocol {
             entryMethod: item.entryMethod,
             barcode: item.barcode,
             imageURL: item.imageURL,
-            userVerified: item.entryMethod == .manual
+            userVerified: item.entryMethod == .manual,
+            isFavorite: item.isFavorite
         )
         mealItem.mealLog = mealLog
         mealLog.items.append(mealItem)

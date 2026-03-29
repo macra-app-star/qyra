@@ -111,7 +111,6 @@ final class SubscriptionViewModel {
     }
 
     func selectProduct(_ product: Product) {
-        DesignTokens.Haptics.selection()
         selectedProduct = product
     }
 

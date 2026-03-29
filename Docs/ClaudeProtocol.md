@@ -1,4 +1,4 @@
-# MACRA Claude Code Protocol
+# Qyra Claude Code Protocol
 
 ## File Output Rules
 - Every file output MUST be complete and compilable. No snippets, no pseudocode, no `// TODO: implement` stubs.
@@ -47,7 +47,7 @@ When build errors occur:
 5. No partial edits, no diffs
 
 ## Testing Rules
-- Every ViewModel gets a test file in `MACRATests/ViewModelTests/`
-- Every Service gets a test file in `MACRATests/ServiceTests/`
+- Every ViewModel gets a test file in `QyraTests/ViewModelTests/`
+- Every Service gets a test file in `QyraTests/ServiceTests/`
 - Every View gets a SwiftUI Preview
 - Use protocol-based mocks for testing

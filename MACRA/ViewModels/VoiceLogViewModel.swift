@@ -15,6 +15,7 @@ final class VoiceLogViewModel {
 
     private let speechService = SpeechService()
     private let mealRepository: MealRepositoryProtocol
+    private let nutritionService = NutritionService.shared
     private var listenTask: Task<Void, Never>?
 
     convenience init(modelContainer: ModelContainer) {
@@ -78,7 +79,7 @@ final class VoiceLogViewModel {
         errorMessage = nil
 
         do {
-            let results = try await GeminiService.shared.parseNaturalLanguage(text: transcription)
+            let results = try await nutritionService.parseVoiceLog(transcript: transcription)
             items = results
             if items.isEmpty {
                 errorMessage = "Could not identify food items. Try describing again."

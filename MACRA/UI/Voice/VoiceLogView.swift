@@ -101,7 +101,7 @@ struct VoiceLogView: View {
                         .frame(width: 80, height: 80)
 
                     Image(systemName: viewModel.isRecording ? "stop.fill" : "mic.fill")
-                        .font(.system(size: 32))
+                        .font(QyraFont.regular(32))
                         .foregroundStyle(viewModel.isRecording ? .white : .black)
                 }
             }
@@ -237,7 +237,7 @@ struct VoiceLogView: View {
     private var permissionView: some View {
         VStack(spacing: DesignTokens.Spacing.lg) {
             Image(systemName: "mic.slash.fill")
-                .font(.system(size: 48))
+                .font(QyraFont.regular(48))
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
 
             Text("Microphone Access Required")

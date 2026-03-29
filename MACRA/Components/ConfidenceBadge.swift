@@ -24,7 +24,7 @@ struct ConfidenceBadge: View {
             .font(DesignTokens.Typography.caption2)
             .fontWeight(.semibold)
             .foregroundStyle(.black)
-            .padding(.horizontal, 8)
+            .padding(.horizontal, DesignTokens.Layout.tightGap)
             .padding(.vertical, 3)
             .background(color)
             .clipShape(Capsule())

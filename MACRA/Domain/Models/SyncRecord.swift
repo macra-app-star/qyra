@@ -17,6 +17,7 @@ enum SyncStatus: String, Codable {
 @Model
 final class SyncRecord {
     @Attribute(.unique) var id: UUID
+    var userId: String = ""
     var entityType: String
     var entityId: UUID
     var operationRaw: String

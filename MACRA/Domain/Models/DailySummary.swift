@@ -6,10 +6,13 @@ struct DailySummary: Sendable, Equatable {
     let totalProtein: Double
     let totalCarbs: Double
     let totalFat: Double
+    let totalFiber: Double
+    let totalSugar: Double
+    let totalSodium: Double
     let meals: [MealSummary]
 }
 
-struct MealSummary: Sendable, Equatable, Identifiable {
+struct MealSummary: Sendable, Equatable, Identifiable, Hashable {
     let id: UUID
     let mealType: MealType
     let date: Date
@@ -19,21 +22,27 @@ struct MealSummary: Sendable, Equatable, Identifiable {
     var totalProtein: Double { items.reduce(0) { $0 + $1.protein } }
     var totalCarbs: Double { items.reduce(0) { $0 + $1.carbs } }
     var totalFat: Double { items.reduce(0) { $0 + $1.fat } }
+    var totalFiber: Double { items.reduce(0) { $0 + ($1.fiber ?? 0) } }
+    var totalSugar: Double { items.reduce(0) { $0 + ($1.sugar ?? 0) } }
+    var totalSodium: Double { items.reduce(0) { $0 + ($1.sodium ?? 0) } }
 
     var displayDetail: String {
         items.map(\.foodName).joined(separator: ", ")
     }
 }
 
-struct MealItemSummary: Sendable, Equatable, Identifiable {
+struct MealItemSummary: Sendable, Equatable, Identifiable, Hashable {
     let id: UUID
     let foodName: String
     let calories: Double
     let protein: Double
     let carbs: Double
     let fat: Double
+    let fiber: Double?
+    let sugar: Double?
+    let sodium: Double?
     let servingSize: String?
-    let entryMethod: EntryMethod
+    let entryMethod: EntryMethod?
 }
 
 struct MacroGoalSnapshot: Sendable, Equatable {

@@ -76,6 +76,7 @@ struct MealDetailView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollDismissesKeyboard(.interactively)
         .scrollContentBackground(.hidden)
         .background(DesignTokens.Colors.background)
         .navigationTitle(meal.mealType.displayName)
@@ -109,6 +110,8 @@ struct MealDetailView: View {
             AddItemToMealView(mealId: meal.id, modelContainer: modelContainer) { newItem in
                 items.append(newItem)
             }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
         }
     }
 
@@ -194,6 +197,7 @@ struct AddItemToMealView: View {
                     }
                 }
             }
+            .scrollDismissesKeyboard(.interactively)
             .scrollContentBackground(.hidden)
             .background(DesignTokens.Colors.background)
             .navigationTitle("Add Item")
@@ -242,6 +246,9 @@ struct AddItemToMealView: View {
                 protein: protein,
                 carbs: carbs,
                 fat: fat,
+                fiber: nil,
+                sugar: nil,
+                sodium: nil,
                 servingSize: nil,
                 entryMethod: .manual
             )

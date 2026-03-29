@@ -4,8 +4,11 @@ import SwiftData
 struct FoodSearchView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: FoodSearchViewModel
+    @State private var showManualEntry = false
+    private let modelContainer: ModelContainer
 
     init(modelContainer: ModelContainer) {
+        self.modelContainer = modelContainer
         _viewModel = State(initialValue: FoodSearchViewModel(modelContainer: modelContainer))
     }
 
@@ -54,6 +57,20 @@ struct FoodSearchView: View {
                     dismiss()
                 }
             }
+            .sheet(isPresented: $showManualEntry) {
+                ManualEntryView(modelContainer: modelContainer)
+            }
+        }
+    }
+
+    private var addManuallyButton: some View {
+        Button {
+            showManualEntry = true
+        } label: {
+            Text("Can't find it? Add manually")
+                .font(.subheadline)
+                .foregroundStyle(Color.accentColor)
+                .frame(maxWidth: .infinity)
         }
     }
 
@@ -75,8 +92,7 @@ struct FoodSearchView: View {
                 NavigationLink {
                     FoodDetailView(
                         food: result,
-                        mealType: viewModel.selectedMealType,
-                        modelContainer: viewModel.didSave ? nil : nil // forces re-eval
+                        mealType: viewModel.selectedMealType
                     ) {
                         viewModel.didSave = true
                     }
@@ -100,12 +116,16 @@ struct FoodSearchView: View {
                     .foregroundStyle(DesignTokens.Colors.destructive)
                     .listRowBackground(DesignTokens.Colors.surface)
             }
+
+            addManuallyButton
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
     }
 
-    private func foodResultRow(_ result: USDAFoodResult) -> some View {
+    private func foodResultRow(_ result: FoodAnalysisResult) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(result.name)
                 .font(DesignTokens.Typography.body)
@@ -177,21 +197,11 @@ struct FoodSearchView: View {
                         }
                     }
                 } else {
-                    VStack(spacing: DesignTokens.Spacing.md) {
-                        Image(systemName: "magnifyingglass")
-                            .font(.system(size: 40))
-                            .foregroundStyle(DesignTokens.Colors.textTertiary)
-
-                        Text("Search millions of foods")
-                            .font(DesignTokens.Typography.callout)
-                            .foregroundStyle(DesignTokens.Colors.textTertiary)
-
-                        Text("Data from USDA FoodData Central")
-                            .font(DesignTokens.Typography.caption)
-                            .foregroundStyle(DesignTokens.Colors.textTertiary)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.top, 80)
+                    EmptyDataView(
+                        title: "Search Foods",
+                        subtitle: "Search millions of foods from USDA FoodData Central."
+                    )
+                    .padding(.top, 48)
                 }
             }
             .padding(DesignTokens.Spacing.md)
@@ -200,19 +210,14 @@ struct FoodSearchView: View {
 
     private var emptyResultsView: some View {
         VStack(spacing: DesignTokens.Spacing.md) {
-            Image(systemName: "fork.knife")
-                .font(.system(size: 40))
-                .foregroundStyle(DesignTokens.Colors.textTertiary)
+            EmptyDataView(
+                title: "No Results",
+                subtitle: "Try a different search term."
+            )
+            .padding(.top, 48)
 
-            Text("No results found")
-                .font(DesignTokens.Typography.callout)
-                .foregroundStyle(DesignTokens.Colors.textTertiary)
-
-            Text("Try a different search term")
-                .font(DesignTokens.Typography.caption)
-                .foregroundStyle(DesignTokens.Colors.textTertiary)
+            addManuallyButton
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.top, 80)
     }
 }

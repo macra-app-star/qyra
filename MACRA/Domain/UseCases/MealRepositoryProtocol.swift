@@ -26,6 +26,7 @@ struct NewMealItem: Sendable {
     let confidenceScore: Int?
     let barcode: String?
     let imageURL: String?
+    let isFavorite: Bool
 
     init(
         foodName: String,
@@ -40,7 +41,8 @@ struct NewMealItem: Sendable {
         entryMethod: EntryMethod = .manual,
         confidenceScore: Int? = nil,
         barcode: String? = nil,
-        imageURL: String? = nil
+        imageURL: String? = nil,
+        isFavorite: Bool = false
     ) {
         self.foodName = foodName
         self.calories = calories
@@ -55,5 +57,6 @@ struct NewMealItem: Sendable {
         self.confidenceScore = confidenceScore
         self.barcode = barcode
         self.imageURL = imageURL
+        self.isFavorite = isFavorite
     }
 }

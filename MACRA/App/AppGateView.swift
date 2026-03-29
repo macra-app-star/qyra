@@ -10,11 +10,11 @@ struct AppGateView: View {
             case .loading:
                 LaunchScreenView()
             case .needsAuth:
-                SignInView()
+                LandingView()
             case .needsSubscription:
                 PaywallView()
             case .needsOnboarding:
-                OnboardingView {
+                OnboardingContainerView {
                     Task { await appState.completeOnboarding() }
                 }
             case .ready:
@@ -25,32 +25,39 @@ struct AppGateView: View {
         .environment(appState)
         .task {
             appState.modelContainer = modelContext.container
+            appState.subscriptionService.startListening()
             await appState.evaluateGate()
         }
     }
 }
 
+// MARK: - Splash Screen
+
 struct LaunchScreenView: View {
+    @State private var visible = false
+
     var body: some View {
         ZStack {
-            DesignTokens.Colors.background
+            DesignTokens.Colors.neutral100
                 .ignoresSafeArea()
 
-            VStack(spacing: DesignTokens.Spacing.md) {
-                Image(systemName: "chart.bar.fill")
-                    .font(.system(size: 48))
-                    .foregroundStyle(DesignTokens.Colors.textPrimary)
-
-                Text("MACRA")
-                    .font(DesignTokens.Typography.largeTitle)
-                    .foregroundStyle(DesignTokens.Colors.textPrimary)
-
-                ProgressView()
-                    .tint(DesignTokens.Colors.textSecondary)
+            (Text("Qyra.")
+                .font(QyraFont.bold(38))
+            + Text("®")
+                .font(QyraFont.regular(16))
+                .baselineOffset(16))
+                .foregroundStyle(DesignTokens.Colors.ink)
+                .opacity(visible ? 1 : 0)
+        }
+        .onAppear {
+            withAnimation(.easeIn(duration: 0.3)) {
+                visible = true
             }
         }
     }
 }
+
+// MARK: - Placeholder
 
 struct PlaceholderView: View {
     let title: String
@@ -63,7 +70,7 @@ struct PlaceholderView: View {
 
             VStack(spacing: DesignTokens.Spacing.md) {
                 Image(systemName: icon)
-                    .font(.system(size: 48))
+                    .font(DesignTokens.Typography.icon(48))
                     .foregroundStyle(DesignTokens.Colors.textSecondary)
 
                 Text(title)

@@ -6,6 +6,7 @@ import SwiftData
 final class BarcodeScannerViewModel {
     var scannedBarcode: String?
     var product: FoodAnalysisResult?
+    var productAnalysis: ProductAnalysis?
     var isLookingUp = false
     var errorMessage: String?
     var quantity: Int = 1
@@ -14,6 +15,7 @@ final class BarcodeScannerViewModel {
     var isScanning = true
 
     private let mealRepository: MealRepositoryProtocol
+    private let nutritionService = NutritionService.shared
     private var processedBarcodes: Set<String> = []
 
     convenience init(modelContainer: ModelContainer) {
@@ -37,27 +39,12 @@ final class BarcodeScannerViewModel {
         errorMessage = nil
 
         do {
-            if let result = try await OpenFoodFactsService.shared.lookupBarcode(barcode) {
-                product = result
+            // Try rich product lookup first
+            if let analysis = try await OpenFoodFactsService.shared.lookupProduct(barcode) {
+                productAnalysis = analysis
+                product = analysis.toFoodAnalysisResult()
             } else {
-                // Fallback: ask Gemini to identify by barcode
-                let results = try await GeminiService.shared.parseNaturalLanguage(
-                    text: "Product with barcode \(barcode)"
-                )
-                if let first = results.first {
-                    product = FoodAnalysisResult(
-                        name: first.name,
-                        calories: first.calories,
-                        protein: first.protein,
-                        carbs: first.carbs,
-                        fat: first.fat,
-                        servingSize: first.servingSize,
-                        confidence: 50,
-                        barcode: barcode
-                    )
-                } else {
-                    errorMessage = "Product not found. Try searching manually."
-                }
+                errorMessage = "Product not found. Try searching manually."
             }
         } catch {
             errorMessage = "Lookup failed: \(error.localizedDescription)"
@@ -106,6 +93,7 @@ final class BarcodeScannerViewModel {
 
     func rescan() {
         product = nil
+        productAnalysis = nil
         scannedBarcode = nil
         errorMessage = nil
         isScanning = true
@@ -115,10 +103,10 @@ final class BarcodeScannerViewModel {
     private func autoSelectMealType() {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
-        case 5..<11: selectedMealType = .breakfast
-        case 11..<15: selectedMealType = .lunch
-        case 15..<21: selectedMealType = .dinner
-        default: selectedMealType = .snack
+        case 0..<10: selectedMealType = .breakfast
+        case 10..<14: selectedMealType = .lunch
+        case 14..<17: selectedMealType = .snack
+        default: selectedMealType = .dinner
         }
     }
 }

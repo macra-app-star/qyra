@@ -1,23 +1,26 @@
 import SwiftUI
 
-enum MonochromeButtonStyle {
+enum QyraButtonStyle {
     case primary
     case secondary
     case ghost
     case destructive
 }
 
+// Keep typealias for backward compatibility
+typealias MonochromeButtonStyle = QyraButtonStyle
+
 struct MonochromeButton: View {
     let title: String
     let icon: String?
-    let style: MonochromeButtonStyle
+    let style: QyraButtonStyle
     let isLoading: Bool
     let action: () -> Void
 
     init(
         _ title: String,
         icon: String? = nil,
-        style: MonochromeButtonStyle = .primary,
+        style: QyraButtonStyle = .primary,
         isLoading: Bool = false,
         action: @escaping () -> Void
     ) {
@@ -30,7 +33,6 @@ struct MonochromeButton: View {
 
     var body: some View {
         Button {
-            DesignTokens.Haptics.light()
             action()
         } label: {
             HStack(spacing: DesignTokens.Spacing.sm) {
@@ -40,14 +42,14 @@ struct MonochromeButton: View {
                 } else {
                     if let icon {
                         Image(systemName: icon)
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(QyraFont.semibold(16))
                     }
                     Text(title)
                         .font(DesignTokens.Typography.headline)
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 52)
+            .frame(minHeight: 52)
             .foregroundStyle(textColor)
             .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.md))
@@ -62,7 +64,7 @@ struct MonochromeButton: View {
 
     private var textColor: Color {
         switch style {
-        case .primary: return .black
+        case .primary: return DesignTokens.Colors.buttonPrimaryText
         case .secondary: return DesignTokens.Colors.textPrimary
         case .ghost: return DesignTokens.Colors.textPrimary
         case .destructive: return .white
@@ -71,7 +73,7 @@ struct MonochromeButton: View {
 
     private var backgroundColor: Color {
         switch style {
-        case .primary: return .white
+        case .primary: return DesignTokens.Colors.buttonPrimary
         case .secondary: return .clear
         case .ghost: return .clear
         case .destructive: return DesignTokens.Colors.destructive
@@ -93,7 +95,7 @@ struct MonochromeButton: View {
 }
 
 #Preview {
-    VStack(spacing: 16) {
+    VStack(spacing: DesignTokens.Layout.cardGap) {
         MonochromeButton("Subscribe", icon: "star.fill", style: .primary) {}
         MonochromeButton("Restore Purchases", style: .secondary) {}
         MonochromeButton("Skip", style: .ghost) {}

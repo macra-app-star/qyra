@@ -110,9 +110,22 @@ actor APIClient {
 
         switch httpResponse.statusCode {
         case 200...299: return data
-        case 401: throw APIError.unauthorized
-        case 429: throw APIError.rateLimited
-        default: throw APIError.invalidResponse(statusCode: httpResponse.statusCode)
+        case 401:
+            #if DEBUG
+            print("[APIClient] 401 Unauthorized. Body: \(String(data: data, encoding: .utf8)?.prefix(300) ?? "nil")")
+            #endif
+            throw APIError.unauthorized
+        case 429:
+            #if DEBUG
+            print("[APIClient] 429 Rate limited")
+            #endif
+            throw APIError.rateLimited
+        default:
+            let body = String(data: data, encoding: .utf8) ?? "<binary>"
+            #if DEBUG
+            print("[APIClient] HTTP \(httpResponse.statusCode). Body: \(body.prefix(500))")
+            #endif
+            throw APIError.invalidResponse(statusCode: httpResponse.statusCode)
         }
     }
 

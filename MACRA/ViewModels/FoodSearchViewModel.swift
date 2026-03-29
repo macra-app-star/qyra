@@ -5,7 +5,7 @@ import SwiftData
 @MainActor
 final class FoodSearchViewModel {
     var searchText = ""
-    var results: [USDAFoodResult] = []
+    var results: [FoodAnalysisResult] = []
     var isSearching = false
     var errorMessage: String?
     var recentSearches: [String] = []
@@ -13,6 +13,7 @@ final class FoodSearchViewModel {
     var didSave = false
 
     private let mealRepository: MealRepositoryProtocol
+    private let nutritionService = NutritionService.shared
     private var searchTask: Task<Void, Never>?
 
     convenience init(modelContainer: ModelContainer) {
@@ -50,11 +51,13 @@ final class FoodSearchViewModel {
         errorMessage = nil
 
         do {
-            let searchResults = try await USDAService.shared.search(query: query)
+            let searchResults = try await nutritionService.searchFoods(query: query)
             results = searchResults
             saveRecentSearch(query)
+        } catch is URLError {
+            errorMessage = "Search unavailable. Check your connection and try again."
         } catch {
-            errorMessage = "Search failed: \(error.localizedDescription)"
+            errorMessage = "Search unavailable. Try again later."
         }
 
         isSearching = false
@@ -62,8 +65,8 @@ final class FoodSearchViewModel {
 
     // MARK: - Quick Add
 
-    func quickAdd(_ result: USDAFoodResult) async {
-        let item = result.toFoodAnalysisResult().toNewMealItem(entryMethod: .manual)
+    func quickAdd(_ result: FoodAnalysisResult) async {
+        let item = result.toNewMealItem(entryMethod: .manual)
 
         do {
             try await mealRepository.addMeal(
@@ -85,7 +88,7 @@ final class FoodSearchViewModel {
     // MARK: - Recent Searches
 
     private func loadRecentSearches() {
-        recentSearches = UserDefaults.standard.stringArray(forKey: "macra_recent_searches") ?? []
+        recentSearches = UserDefaults.standard.stringArray(forKey: "qyra_recent_searches") ?? []
     }
 
     private func saveRecentSearch(_ query: String) {
@@ -94,21 +97,21 @@ final class FoodSearchViewModel {
         recent.insert(query, at: 0)
         if recent.count > 10 { recent = Array(recent.prefix(10)) }
         recentSearches = recent
-        UserDefaults.standard.set(recent, forKey: "macra_recent_searches")
+        UserDefaults.standard.set(recent, forKey: "qyra_recent_searches")
     }
 
     func clearRecentSearches() {
         recentSearches = []
-        UserDefaults.standard.removeObject(forKey: "macra_recent_searches")
+        UserDefaults.standard.removeObject(forKey: "qyra_recent_searches")
     }
 
     private func autoSelectMealType() {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
-        case 5..<11: selectedMealType = .breakfast
-        case 11..<15: selectedMealType = .lunch
-        case 15..<21: selectedMealType = .dinner
-        default: selectedMealType = .snack
+        case 0..<10: selectedMealType = .breakfast
+        case 10..<14: selectedMealType = .lunch
+        case 14..<17: selectedMealType = .snack
+        default: selectedMealType = .dinner
         }
     }
 }

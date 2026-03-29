@@ -3,157 +3,117 @@ import AuthenticationServices
 
 struct SignInView: View {
     @Environment(AppState.self) private var appState
-
-    // MARK: - Animation State
-
-    @State private var logoVisible = false
-    @State private var taglineVisible = false
-    @State private var featuresVisible = false
-    @State private var buttonsVisible = false
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        ZStack {
-            DesignTokens.Colors.background
-                .ignoresSafeArea()
+        VStack(spacing: 0) {
+            // Header
+            ZStack {
+                Text("Sign In")
+                    .font(QyraFont.semibold(20))
+                    .foregroundStyle(DesignTokens.Colors.ink)
 
-            VStack(spacing: 0) {
-                Spacer()
+                HStack {
+                    Spacer()
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(QyraFont.semibold(13))
+                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .frame(width: 30, height: 30)
+                            .background(DesignTokens.Colors.neutral90)
+                            .clipShape(Circle())
+                    }
+                }
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 24)
+            .padding(.bottom, 16)
 
-                // MARK: - Logo + Branding
+            // Divider
+            Rectangle()
+                .fill(OnboardingTheme.divider)
+                .frame(height: 1)
 
-                VStack(spacing: DesignTokens.Spacing.md) {
-                    Image(systemName: "chart.bar.fill")
-                        .font(.system(size: 64))
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
-                        .scaleEffect(logoVisible ? 1 : 0.5)
-                        .opacity(logoVisible ? 1 : 0)
-
-                    Text("MACRA")
-                        .font(DesignTokens.Typography.largeTitle)
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
-                        .opacity(logoVisible ? 1 : 0)
-
-                    Text("AI-Powered Macro Tracking")
-                        .font(DesignTokens.Typography.callout)
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
-                        .opacity(taglineVisible ? 1 : 0)
-                        .offset(y: taglineVisible ? 0 : 8)
+            // Auth buttons
+            VStack(spacing: 12) {
+                // Sign in with Apple
+                Button {
+                    handleAppleSignIn()
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: "apple.logo")
+                            .font(QyraFont.regular(18))
+                        Text("Sign in with Apple")
+                            .font(QyraFont.semibold(17))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: 56)
+                    .background(Color.black)
+                    .clipShape(Capsule())
                 }
 
-                Spacer()
-                    .frame(height: DesignTokens.Spacing.xxl)
-
-                // MARK: - Feature Highlights
-
-                VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
-                    featureHighlight(
-                        icon: "camera.fill",
-                        title: "Snap & Track",
-                        subtitle: "Photo-powered meal logging"
-                    )
-                    featureHighlight(
-                        icon: "mic.fill",
-                        title: "Voice Log",
-                        subtitle: "Describe meals naturally"
-                    )
-                    featureHighlight(
-                        icon: "chart.line.uptrend.xyaxis",
-                        title: "Smart Insights",
-                        subtitle: "AI-driven nutrition coaching"
-                    )
-                }
-                .padding(.horizontal, DesignTokens.Spacing.xxl)
-                .opacity(featuresVisible ? 1 : 0)
-                .offset(y: featuresVisible ? 0 : 16)
-
-                Spacer()
-
-                // MARK: - Sign In Buttons
-
-                VStack(spacing: DesignTokens.Spacing.md) {
-
-                    // Error message
-                    if let error = AuthService.shared.errorMessage {
-                        Text(error)
-                            .font(DesignTokens.Typography.caption)
-                            .foregroundStyle(DesignTokens.Colors.destructive)
-                            .lineLimit(2)
-                            .multilineTextAlignment(.center)
-                    }
-
-                    #if DEBUG
-                    MonochromeButton("Skip Sign In (Dev)", icon: "forward.fill", style: .secondary) {
-                        appState.skipToReady()
-                    }
-                    #endif
-
-                    // Apple Sign In
-                    SignInWithAppleButton(.signIn) { request in
-                        request.requestedScopes = [.fullName, .email]
-                    } onCompletion: { _ in }
-                    .signInWithAppleButtonStyle(.white)
-                    .frame(height: 50)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
-                    .overlay {
-                        Button {
-                            Task {
-                                let success = await AuthService.shared.signIn()
-                                if success {
-                                    await appState.evaluateGate()
-                                }
-                            }
-                        } label: {
-                            Color.clear
-                        }
-                    }
-
-                    Text("By continuing, you agree to our Terms of Service and Privacy Policy")
-                        .font(DesignTokens.Typography.caption)
-                        .foregroundStyle(DesignTokens.Colors.textTertiary)
-                        .multilineTextAlignment(.center)
-                }
-                .padding(.horizontal, DesignTokens.Spacing.xl)
-                .padding(.bottom, DesignTokens.Spacing.xxl)
-                .opacity(buttonsVisible ? 1 : 0)
-                .offset(y: buttonsVisible ? 0 : 20)
             }
-        }
-        .onAppear {
-            withAnimation(.easeOut(duration: 0.6)) {
-                logoVisible = true
-            }
-            withAnimation(.easeOut(duration: 0.5).delay(0.3)) {
-                taglineVisible = true
-            }
-            withAnimation(.easeOut(duration: 0.5).delay(0.6)) {
-                featuresVisible = true
-            }
-            withAnimation(.easeOut(duration: 0.5).delay(0.9)) {
-                buttonsVisible = true
-            }
-        }
-    }
+            .padding(.horizontal, 24)
+            .padding(.top, 24)
 
-    // MARK: - Feature Highlight
+            Spacer(minLength: 16)
 
-    private func featureHighlight(icon: String, title: String, subtitle: String) -> some View {
-        HStack(spacing: DesignTokens.Spacing.md) {
-            Image(systemName: icon)
-                .font(.system(size: 20))
-                .foregroundStyle(DesignTokens.Colors.textPrimary)
-                .frame(width: 36, height: 36)
-                .background(DesignTokens.Colors.surface)
-                .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+            // Error message
+            if let error = AuthService.shared.errorMessage {
+                Text(error)
+                    .font(QyraFont.regular(13))
+                    .foregroundStyle(DesignTokens.Colors.destructive)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+            }
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(DesignTokens.Typography.headline)
-                    .foregroundStyle(DesignTokens.Colors.textPrimary)
-
-                Text(subtitle)
-                    .font(DesignTokens.Typography.caption)
+            #if DEBUG
+            Button {
+                appState.skipToReady()
+                dismiss()
+            } label: {
+                Text("Skip (Dev)")
+                    .font(QyraFont.medium(13))
                     .foregroundStyle(DesignTokens.Colors.textTertiary)
             }
+            .padding(.bottom, 4)
+            #endif
+
+            // Terms
+            (Text("By continuing you agree to Qyra's")
+                .foregroundStyle(OnboardingTheme.textSecondary)
+            + Text("Terms and Conditions")
+                .foregroundStyle(OnboardingTheme.textPrimary)
+                .underline()
+            + Text(" and ")
+                .foregroundStyle(OnboardingTheme.textSecondary)
+            + Text("Privacy Policy")
+                .foregroundStyle(OnboardingTheme.textPrimary)
+                .underline())
+                .font(QyraFont.regular(13))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+                .padding(.bottom, 20)
+        }
+        .background(OnboardingTheme.background)
+    }
+
+    // MARK: - Auth
+
+    private func handleAppleSignIn() {
+        Task {
+            let success = await AuthService.shared.signIn()
+            if success {
+                await appState.evaluateGate()
+            }
         }
     }
+}
+
+#Preview {
+    SignInView()
+        .environment(AppState())
 }

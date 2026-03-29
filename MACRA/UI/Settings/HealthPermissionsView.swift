@@ -8,7 +8,7 @@ struct HealthPermissionsView: View {
         List {
             Section {
                 VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
-                    Text("MACRA can read your step count and active calories from Apple Health to show your daily activity on the dashboard.")
+                    Text("Qyra can read your step count and active calories from Apple Health to show your daily activity on the dashboard.")
                         .font(DesignTokens.Typography.callout)
                         .foregroundStyle(DesignTokens.Colors.textSecondary)
                 }

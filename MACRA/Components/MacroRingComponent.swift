@@ -75,7 +75,7 @@ struct MacroRingComponent: View {
 }
 
 #Preview {
-    HStack(spacing: 24) {
+    HStack(spacing: DesignTokens.Spacing.lg) {
         MacroRingComponent(
             label: "Calories",
             current: 1450,

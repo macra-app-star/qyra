@@ -15,6 +15,8 @@ struct FoodAnalysisResult: Sendable, Identifiable, Equatable {
     var brand: String?
     var barcode: String?
     var imageURL: String?
+    var explanation: String?
+    var assumptions: [String]?
 
     init(
         id: UUID = UUID(),
@@ -30,7 +32,9 @@ struct FoodAnalysisResult: Sendable, Identifiable, Equatable {
         confidence: Int = 80,
         brand: String? = nil,
         barcode: String? = nil,
-        imageURL: String? = nil
+        imageURL: String? = nil,
+        explanation: String? = nil,
+        assumptions: [String]? = nil
     ) {
         self.id = id
         self.name = name
@@ -46,9 +50,22 @@ struct FoodAnalysisResult: Sendable, Identifiable, Equatable {
         self.brand = brand
         self.barcode = barcode
         self.imageURL = imageURL
+        self.explanation = explanation
+        self.assumptions = assumptions
     }
 
-    func toNewMealItem(entryMethod: EntryMethod) -> NewMealItem {
+    // Food verdict based on macro balance
+    var verdict: (String, String) { // (label, systemColor)
+        let proteinRatio = protein * 4 / max(calories, 1)
+        if proteinRatio > 0.3 { return ("High protein", "green") }
+        if calories > 500 && proteinRatio < 0.15 { return ("Low protein density", "orange") }
+        if carbs > 60 { return ("High carb load", "orange") }
+        if fat > 30 && calories > 400 { return ("Calorie dense", "orange") }
+        if calories < 200 && protein > 15 { return ("Lean choice", "green") }
+        return ("Balanced", "blue")
+    }
+
+    func toNewMealItem(entryMethod: EntryMethod, isFavorite: Bool = false) -> NewMealItem {
         NewMealItem(
             foodName: name,
             calories: calories,
@@ -62,7 +79,8 @@ struct FoodAnalysisResult: Sendable, Identifiable, Equatable {
             entryMethod: entryMethod,
             confidenceScore: confidence,
             barcode: barcode,
-            imageURL: imageURL
+            imageURL: imageURL,
+            isFavorite: isFavorite
         )
     }
 }

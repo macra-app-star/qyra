@@ -34,7 +34,18 @@ struct ManualEntryView: View {
                 }
 
                 Section("Optional") {
+                    macroField("Fiber", text: $viewModel.fiberText, unit: "g")
+                    macroField("Sugar", text: $viewModel.sugarText, unit: "g")
+                    macroField("Sodium", text: $viewModel.sodiumText, unit: "mg")
                     TextField("Serving size (e.g. 1 cup)", text: $viewModel.servingSize)
+                }
+
+                if let warning = viewModel.validationWarning {
+                    Section {
+                        Text(warning)
+                            .foregroundStyle(.orange)
+                            .font(DesignTokens.Typography.caption)
+                    }
                 }
 
                 if let error = viewModel.errorMessage {
@@ -45,6 +56,7 @@ struct ManualEntryView: View {
                     }
                 }
             }
+            .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Manual Entry")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

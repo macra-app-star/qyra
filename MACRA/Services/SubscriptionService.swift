@@ -51,11 +51,13 @@ protocol SubscriptionServiceProtocol: AnyObject, Sendable {
 @Observable
 @MainActor
 final class SubscriptionService: SubscriptionServiceProtocol {
+    static let shared = SubscriptionService()
+
     private(set) var products: [Product] = []
     private(set) var purchasedProductIDs: Set<String> = []
     private(set) var subscriptionInfo: SubscriptionInfo?
 
-    private let productIDs = ["macra.monthly", "macra.yearly"]
+    private let productIDs = ["qyra.monthly", "qyra.yearly"]
     private var transactionListenerTask: Task<Void, Error>?
 
     nonisolated init() {}
@@ -139,6 +141,20 @@ final class SubscriptionService: SubscriptionServiceProtocol {
             await transaction.finish()
             purchasedProductIDs.insert(transaction.productID)
             await updateSubscriptionStatus()
+
+            // Sync subscription event to Supabase
+            syncSubscriptionEvent(
+                event: "subscription_started",
+                productId: transaction.productID,
+                transactionId: String(transaction.id)
+            )
+
+            // Track in analytics
+            AnalyticsService.shared.track(.subscriptionStarted, properties: [
+                "product_id": transaction.productID,
+                "transaction_id": String(transaction.id)
+            ])
+
             return transaction
 
         case .userCancelled:
@@ -149,7 +165,7 @@ final class SubscriptionService: SubscriptionServiceProtocol {
 
         @unknown default:
             throw SubscriptionError.unknown(
-                NSError(domain: "MACRA", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unknown purchase result"])
+                NSError(domain: "Qyra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unknown purchase result"])
             )
         }
     }
@@ -173,6 +189,37 @@ final class SubscriptionService: SubscriptionServiceProtocol {
             return value
         case .unverified:
             throw SubscriptionError.verificationFailed
+        }
+    }
+
+    // MARK: - Supabase Sync
+
+    /// Fire-and-forget subscription event to Supabase for business analytics
+    private func syncSubscriptionEvent(event: String, productId: String, transactionId: String) {
+        guard let userId = CurrentUserProvider.shared.userId else { return }
+
+        Task.detached {
+            let baseURL = "https://oqjmxdxcwsajawesyspa.supabase.co"
+            let anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xam14ZHhjd3NhamF3ZXN5c3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NTAyMTQsImV4cCI6MjA4ODIyNjIxNH0.m5tLk5asnA9Jb-lZ64Tg9RiKNbSk3gH6QE8qbBPBRG4"
+
+            guard let url = URL(string: "\(baseURL)/rest/v1/macra_subscription_events") else { return }
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue(anonKey, forHTTPHeaderField: "apikey")
+            request.setValue("Bearer \(userId)", forHTTPHeaderField: "Authorization")
+
+            let body: [String: Any] = [
+                "user_id": userId,
+                "event_type": event,
+                "product_id": productId,
+                "transaction_id": transactionId,
+                "timestamp": ISO8601DateFormatter().string(from: Date())
+            ]
+            request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+            _ = try? await URLSession.shared.data(for: request)
         }
     }
 }

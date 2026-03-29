@@ -103,6 +103,8 @@ struct DataExportView: View {
         .sheet(isPresented: $showShareSheet) {
             if let url = exportURL {
                 ShareSheet(items: [url])
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
             }
         }
     }
@@ -148,14 +150,14 @@ struct DataExportView: View {
                         String(format: "%.1f", item.carbs),
                         String(format: "%.1f", item.fat),
                         "\"\(item.servingSize ?? "")\"",
-                        item.entryMethod.rawValue
+                        (item.entryMethod ?? .manual).rawValue
                     ].joined(separator: ",")
                     csv += row + "\n"
                 }
             }
 
             let tempDir = FileManager.default.temporaryDirectory
-            let fileURL = tempDir.appendingPathComponent("macra_export_\(Int(Date().timeIntervalSince1970)).csv")
+            let fileURL = tempDir.appendingPathComponent("qyra_export_\(Int(Date().timeIntervalSince1970)).csv")
             try csv.write(to: fileURL, atomically: true, encoding: .utf8)
 
             exportURL = fileURL

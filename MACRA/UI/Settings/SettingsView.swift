@@ -17,6 +17,12 @@ struct SettingsView: View {
                 }
 
                 NavigationLink {
+                    PersonalDetailsView()
+                } label: {
+                    settingsLabel(icon: "person.text.rectangle", title: "Personal Details")
+                }
+
+                NavigationLink {
                     MySubscriptionView()
                 } label: {
                     settingsLabel(icon: "star.fill", title: "My Subscription")
@@ -31,12 +37,55 @@ struct SettingsView: View {
                 }
             }
 
+            Section("Preferences") {
+                NavigationLink {
+                    PreferencesView()
+                } label: {
+                    settingsLabel(icon: "slider.horizontal.3", title: "Preferences")
+                }
+
+                NavigationLink {
+                    TrackingRemindersView()
+                } label: {
+                    settingsLabel(icon: "bell.fill", title: "Tracking Reminders")
+                }
+            }
+
+            Section("Connected Devices") {
+                NavigationLink {
+                    WearableSettingsView()
+                } label: {
+                    settingsLabel(icon: "applewatch", title: "Connected Devices")
+                }
+            }
+
             Section("Health") {
                 NavigationLink {
                     HealthPermissionsView()
                 } label: {
                     settingsLabel(icon: "heart.fill", title: "Health Permissions")
                 }
+
+                NavigationLink {
+                    WeightHistoryView()
+                } label: {
+                    settingsLabel(icon: "scalemass.fill", title: "Weight History")
+                }
+
+                NavigationLink {
+                    RingColorsExplainedView()
+                } label: {
+                    settingsLabel(icon: "circle.dotted", title: "Ring Colors Explained")
+                }
+            }
+
+            Section("Intelligence") {
+                NavigationLink {
+                    AIDataSettingsView()
+                } label: {
+                    settingsLabel(icon: "brain", title: "AI & Offline Data")
+                }
+
             }
 
             Section("Data") {
@@ -44,6 +93,20 @@ struct SettingsView: View {
                     DataExportView()
                 } label: {
                     settingsLabel(icon: "square.and.arrow.up", title: "Export Data")
+                }
+
+                NavigationLink {
+                    PDFReportView()
+                } label: {
+                    settingsLabel(icon: "doc.richtext", title: "PDF Summary Report")
+                }
+            }
+
+            Section("Help") {
+                NavigationLink {
+                    WidgetsView()
+                } label: {
+                    settingsLabel(icon: "square.grid.2x2", title: "Widgets")
                 }
             }
 

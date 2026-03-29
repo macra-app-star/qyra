@@ -18,11 +18,11 @@ final class AppState {
     var isSubscribed: Bool = false
     var hasCompletedOnboarding: Bool = false
 
-    private let subscriptionService: SubscriptionService
+    let subscriptionService: SubscriptionService
     var modelContainer: ModelContainer?
 
-    init(subscriptionService: SubscriptionService = SubscriptionService()) {
-        self.subscriptionService = subscriptionService
+    init(subscriptionService: SubscriptionService? = nil) {
+        self.subscriptionService = subscriptionService ?? SubscriptionService.shared
     }
 
     func evaluateGate() async {
@@ -31,10 +31,6 @@ final class AppState {
             skipToReady()
             return
         }
-        #if targetEnvironment(simulator)
-        skipToReady()
-        return
-        #endif
         #endif
 
         // Check real auth state via Sign in with Apple
@@ -46,19 +42,45 @@ final class AppState {
 
         if let container = modelContainer {
             let profileRepo = ProfileRepository(modelContainer: container)
-            hasCompletedOnboarding = (try? await profileRepo.hasCompletedOnboarding()) ?? false
+            let swiftDataOnboarded = (try? await profileRepo.hasCompletedOnboarding()) ?? false
+            let userDefaultsOnboarded = UserDefaults.standard.string(forKey: "onboarding_completed_at") != nil
+            hasCompletedOnboarding = swiftDataOnboarded || userDefaultsOnboarded
+
+            // Configure services with cache access
+            NutritionService.shared.configure(modelContainer: container)
+            ExerciseImportService.shared.configure(modelContainer: container)
+            FoodAnalysisPipeline.shared.configure(modelContainer: container)
+            AnalyticsService.shared.configure(modelContainer: container)
+            AchievementEngine.shared.configure(modelContainer: container)
+
+            // Auto-import exercise database on first launch (background)
+            Task.detached(priority: .background) {
+                await ExerciseImportService.shared.importIfNeeded()
+            }
+
+            // Retroactive data tagging — scope existing records to current user
+            if let userId = CurrentUserProvider.shared.userId {
+                Task.detached(priority: .background) {
+                    let migrator = DataMigrationService(modelContainer: container)
+                    await migrator.tagUnownedRecords(with: userId)
+                }
+            }
         }
 
+        // Onboarding first — new users go straight into the full flow
+        // (sign-in and paywall are steps within the onboarding itself)
+        if !hasCompletedOnboarding {
+            gateStatus = .needsAuth  // Show landing screen → "Get Started" → onboarding
+            return
+        }
+
+        // Returning users who completed onboarding
         if !isAuthenticated {
             gateStatus = .needsAuth
             return
         }
         if !isSubscribed {
             gateStatus = .needsSubscription
-            return
-        }
-        if !hasCompletedOnboarding {
-            gateStatus = .needsOnboarding
             return
         }
         gateStatus = .ready
@@ -76,7 +98,16 @@ final class AppState {
 
     func completeOnboarding() async {
         hasCompletedOnboarding = true
-        await evaluateGate()
+
+        // Persist to SwiftData so future app launches see the flag
+        if let container = modelContainer {
+            let profileRepo = ProfileRepository(modelContainer: container)
+            try? await profileRepo.markOnboardingComplete()
+        }
+
+        // Skip full evaluateGate — go straight to ready
+        // (auth/sub status doesn't matter for initial entry after onboarding)
+        gateStatus = .ready
     }
 
     #if DEBUG

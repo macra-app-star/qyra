@@ -16,7 +16,7 @@ struct LogView: View {
 
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Image(systemName: "plus.circle")
-                    .font(.system(size: 48))
+                    .font(QyraFont.regular(48))
                     .foregroundStyle(DesignTokens.Colors.textSecondary)
 
                 Text("Log a Meal")
@@ -51,18 +51,26 @@ struct LogView: View {
         .navigationTitle("Log")
         .sheet(isPresented: $showManualEntry) {
             ManualEntryView(modelContainer: modelContext.container)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .fullScreenCover(isPresented: $showCamera) {
             CameraView()
         }
         .sheet(isPresented: $showBarcodeScanner) {
             BarcodeScannerView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showVoiceLog) {
             VoiceLogView(modelContainer: modelContext.container)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showFoodSearch) {
             FoodSearchView(modelContainer: modelContext.container)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
     }
 }

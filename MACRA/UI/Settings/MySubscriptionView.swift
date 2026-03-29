@@ -2,7 +2,7 @@ import SwiftUI
 import StoreKit
 
 struct MySubscriptionView: View {
-    @State private var subscriptionService = SubscriptionService()
+    private let subscriptionService = SubscriptionService.shared
     @State private var subscriptionInfo: SubscriptionInfo?
     @State private var isLoading = true
 
@@ -63,7 +63,7 @@ struct MySubscriptionView: View {
                         Spacer()
 
                         Image(systemName: "arrow.up.forward.square")
-                            .font(.system(size: 12))
+                            .font(QyraFont.regular(12))
                             .foregroundStyle(DesignTokens.Colors.textTertiary)
                     }
                 }
@@ -106,18 +106,18 @@ struct MySubscriptionView: View {
         Text("Active")
             .font(DesignTokens.Typography.caption)
             .fontWeight(.semibold)
-            .foregroundStyle(.black)
+            .foregroundStyle(.white)
             .padding(.horizontal, DesignTokens.Spacing.sm)
             .padding(.vertical, DesignTokens.Spacing.xxs)
-            .background(Color.white)
+            .background(DesignTokens.Colors.brandAccent)
             .clipShape(Capsule())
     }
 
     private func productDisplayName(_ productID: String) -> String {
         switch productID {
-        case "macra.monthly": return "MACRA Monthly"
-        case "macra.yearly": return "MACRA Yearly"
-        default: return "MACRA Premium"
+        case "qyra.monthly": return "Qyra Pro Monthly"
+        case "qyra.yearly": return "Qyra Pro Yearly"
+        default: return "Qyra Pro"
         }
     }
 }

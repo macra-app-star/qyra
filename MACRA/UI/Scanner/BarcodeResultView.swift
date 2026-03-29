@@ -10,7 +10,7 @@ struct BarcodeResultView: View {
                 // Product header
                 VStack(spacing: DesignTokens.Spacing.sm) {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 40))
+                        .font(QyraFont.regular(40))
                         .foregroundStyle(.green.opacity(0.85))
 
                     Text(product.name)
@@ -130,7 +130,7 @@ struct BarcodeResultView: View {
                     if viewModel.quantity > 1 { viewModel.quantity -= 1 }
                 } label: {
                     Image(systemName: "minus.circle.fill")
-                        .font(.system(size: 28))
+                        .font(QyraFont.regular(28))
                         .foregroundStyle(DesignTokens.Colors.textSecondary)
                 }
 
@@ -143,7 +143,7 @@ struct BarcodeResultView: View {
                     if viewModel.quantity < 10 { viewModel.quantity += 1 }
                 } label: {
                     Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 28))
+                        .font(QyraFont.regular(28))
                         .foregroundStyle(DesignTokens.Colors.textSecondary)
                 }
             }

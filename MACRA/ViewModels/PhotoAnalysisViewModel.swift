@@ -28,7 +28,8 @@ final class PhotoAnalysisViewModel {
         errorMessage = nil
 
         do {
-            let results = try await GeminiService.shared.analyzeFoodPhoto(imageData: imageData)
+            // Use hybrid pipeline: CoreML (offline) → local DB → Gemini (cloud)
+            let results = try await FoodAnalysisPipeline.shared.analyze(imageData: imageData)
             items = results
             if items.isEmpty {
                 errorMessage = "No food items detected. Try retaking the photo."
@@ -38,6 +39,52 @@ final class PhotoAnalysisViewModel {
         }
 
         isAnalyzing = false
+    }
+
+    // MARK: - Serving Size Adjustment
+
+    /// Scale nutrition values for a specific item by serving multiplier
+    func adjustServing(at index: Int, multiplier: Double) {
+        guard items.indices.contains(index) else { return }
+        let item = items[index]
+        items[index] = FoodAnalysisResult(
+            name: item.name,
+            calories: item.calories * multiplier,
+            protein: item.protein * multiplier,
+            carbs: item.carbs * multiplier,
+            fat: item.fat * multiplier,
+            fiber: item.fiber.map { $0 * multiplier },
+            sugar: item.sugar.map { $0 * multiplier },
+            sodium: item.sodium.map { $0 * multiplier },
+            servingSize: item.servingSize,
+            confidence: item.confidence,
+            brand: item.brand,
+            barcode: item.barcode,
+            imageURL: item.imageURL
+        )
+    }
+
+    /// Update a specific item's values directly (for manual editing)
+    func updateItem(at index: Int, name: String? = nil, calories: Double? = nil,
+                    protein: Double? = nil, carbs: Double? = nil, fat: Double? = nil,
+                    servingSize: String? = nil) {
+        guard items.indices.contains(index) else { return }
+        let item = items[index]
+        items[index] = FoodAnalysisResult(
+            name: name ?? item.name,
+            calories: calories ?? item.calories,
+            protein: protein ?? item.protein,
+            carbs: carbs ?? item.carbs,
+            fat: fat ?? item.fat,
+            fiber: item.fiber,
+            sugar: item.sugar,
+            sodium: item.sodium,
+            servingSize: servingSize ?? item.servingSize,
+            confidence: item.confidence,
+            brand: item.brand,
+            barcode: item.barcode,
+            imageURL: item.imageURL
+        )
     }
 
     // MARK: - Editing
@@ -76,6 +123,11 @@ final class PhotoAnalysisViewModel {
                 items: newItems
             )
             didSave = true
+            AnalyticsService.shared.track(.mealLogged, properties: [
+                "entry_method": "photo",
+                "meal_type": selectedMealType.rawValue,
+                "item_count": String(newItems.count)
+            ])
         } catch {
             errorMessage = "Failed to save: \(error.localizedDescription)"
         }

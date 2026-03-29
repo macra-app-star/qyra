@@ -1,5 +1,6 @@
 import AuthenticationServices
 import Security
+import os
 
 @Observable
 @MainActor
@@ -11,15 +12,47 @@ final class AuthService: NSObject {
     var currentUserName: String?
     var errorMessage: String?
 
-    private var signInContinuation: CheckedContinuation<Bool, Never>?
+    /// Supabase JWT access token (loaded from Keychain on launch)
+    private(set) var supabaseAccessToken: String?
 
-    private let keychainService = "co.tamras.macra.auth"
+    private var signInContinuation: CheckedContinuation<Bool, Never>?
+    private let logger = Logger(subsystem: "co.tamras.qyra", category: "Auth")
+
+    private let keychainService = "co.tamras.qyra.auth"
     private let userIdKey = "apple_user_id"
     private let userNameKey = "apple_user_name"
 
     override init() {
         super.init()
         loadCredentials()
+        restoreSupabaseSession()
+    }
+
+    // MARK: - Supabase Session Persistence
+
+    /// Persist Supabase access + refresh tokens to Keychain after auth exchange
+    func saveSupabaseTokens(accessToken: String, refreshToken: String) {
+        let keychain = KeychainService.shared
+        keychain.saveToken(accessToken, for: KeychainService.supabaseAccessToken)
+        keychain.saveToken(refreshToken, for: KeychainService.supabaseRefreshToken)
+        supabaseAccessToken = accessToken
+        logger.info("Supabase tokens saved to Keychain")
+    }
+
+    /// Restore Supabase session from Keychain on app launch
+    private func restoreSupabaseSession() {
+        let keychain = KeychainService.shared
+        if let accessToken = keychain.getToken(for: KeychainService.supabaseAccessToken) {
+            supabaseAccessToken = accessToken
+            logger.info("Supabase session restored from Keychain")
+        }
+    }
+
+    /// Clear Supabase tokens (called on sign-out)
+    private func clearSupabaseSession() {
+        KeychainService.shared.clearSupabaseTokens()
+        supabaseAccessToken = nil
+        logger.info("Supabase session cleared")
     }
 
     // MARK: - Sign In
@@ -42,9 +75,14 @@ final class AuthService: NSObject {
     func signOut() {
         deleteKeychain(key: userIdKey)
         deleteKeychain(key: userNameKey)
+        clearSupabaseSession()
         currentUserId = nil
         currentUserName = nil
         isSignedIn = false
+        CurrentUserProvider.shared.clearUser()
+        CurrentUserProvider.clearUserScopedDefaults()
+        UserDefaults.standard.removeObject(forKey: "qyra.lastSyncDate")
+        AnalyticsService.shared.endSession()
     }
 
     // MARK: - Credential Check
@@ -136,6 +174,7 @@ extension AuthService: ASAuthorizationControllerDelegate {
                 }
 
                 isSignedIn = true
+                CurrentUserProvider.shared.setUser(id: userId)
                 signInContinuation?.resume(returning: true)
                 signInContinuation = nil
             }

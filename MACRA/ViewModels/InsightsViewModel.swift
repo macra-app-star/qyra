@@ -29,6 +29,8 @@ final class InsightsViewModel {
     var streakDays: Int = 0
     var weeklyAvgCalories: Int = 0
     var weeklyAvgProtein: Int = 0
+    var weeklyAvgCarbs: Int = 0
+    var weeklyAvgFat: Int = 0
     var isLoading = false
 
     private let mealRepository: MealRepositoryProtocol
@@ -61,7 +63,7 @@ final class InsightsViewModel {
             guard let date = Calendar.current.date(byAdding: .day, value: -offset, to: Date()) else { continue }
 
             let summary = (try? await mealRepository.fetchDailySummary(for: date)) ?? DailySummary(
-                date: date, totalCalories: 0, totalProtein: 0, totalCarbs: 0, totalFat: 0, meals: []
+                date: date, totalCalories: 0, totalProtein: 0, totalCarbs: 0, totalFat: 0, totalFiber: 0, totalSugar: 0, totalSodium: 0, meals: []
             )
 
             let dayData = DayData(
@@ -87,8 +89,11 @@ final class InsightsViewModel {
 
         let daysWithData = days.filter { $0.calories > 0 }
         if !daysWithData.isEmpty {
-            weeklyAvgCalories = Int(daysWithData.reduce(0) { $0 + $1.calories } / Double(daysWithData.count))
-            weeklyAvgProtein = Int(daysWithData.reduce(0) { $0 + $1.protein } / Double(daysWithData.count))
+            let count = Double(daysWithData.count)
+            weeklyAvgCalories = Int(daysWithData.reduce(0) { $0 + $1.calories } / count)
+            weeklyAvgProtein = Int(daysWithData.reduce(0) { $0 + $1.protein } / count)
+            weeklyAvgCarbs = Int(daysWithData.reduce(0) { $0 + $1.carbs } / count)
+            weeklyAvgFat = Int(daysWithData.reduce(0) { $0 + $1.fat } / count)
         }
         streakDays = streak
     }
