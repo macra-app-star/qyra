@@ -250,11 +250,11 @@ struct IntelligenceDetailView: View {
                 PhotosPicker(selection: $vm.selectedPhoto, matching: .images) {
                     ZStack {
                         Circle()
-                            .fill(Color.white.opacity(0.1))
+                            .fill(Color(.systemGray5))
                             .frame(width: 32, height: 32)
                         Image(systemName: "plus")
                             .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(Color.white.opacity(0.8))
+                            .foregroundStyle(Color.secondary)
                     }
                 }
                 .onChange(of: vm.selectedPhoto) { _, _ in
@@ -264,7 +264,7 @@ struct IntelligenceDetailView: View {
                 // Text input
                 TextField("Ask Qyra", text: $vm.inputText, axis: .vertical)
                     .font(.system(size: 15, weight: .regular))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.primary)
                     .lineLimit(1...4)
                     .focused($isInputFocused)
                     .tint(DesignTokens.Colors.brandAccent)
@@ -275,11 +275,11 @@ struct IntelligenceDetailView: View {
                 } label: {
                     ZStack {
                         Circle()
-                            .fill(isEmpty ? Color.white.opacity(0.15) : DesignTokens.Colors.brandAccent)
+                            .fill(isEmpty ? Color(.systemGray5) : DesignTokens.Colors.brandAccent)
                             .frame(width: 32, height: 32)
                         Image(systemName: "arrow.up")
                             .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(isEmpty ? Color.white.opacity(0.3) : .white)
+                            .foregroundStyle(isEmpty ? Color.secondary : .white)
                     }
                 }
                 .disabled(isEmpty || vm.isLoading)
@@ -288,9 +288,9 @@ struct IntelligenceDetailView: View {
             .padding(.vertical, DesignTokens.Spacing.sm + 2)
             .background(
                 ZStack {
-                    // Dark capsule background
+                    // Light material capsule background
                     Capsule()
-                        .fill(Color(red: 0.12, green: 0.14, blue: 0.18))
+                        .fill(.ultraThinMaterial)
 
                     // Blue glow border on focus
                     Capsule()

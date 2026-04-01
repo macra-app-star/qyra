@@ -213,7 +213,7 @@ struct PreferencesView: View {
 
                 Toggle("", isOn: isOn)
                     .labelsHidden()
-                    .tint(Color.green)
+                    .tint(.accentColor)
             }
             .padding(.vertical, DesignTokens.Spacing.md)
 

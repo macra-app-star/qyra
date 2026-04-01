@@ -51,7 +51,7 @@ struct LogCaffeineSheetView: View {
                         .fill(DesignTokens.Colors.ringTrack)
 
                     Capsule()
-                        .fill(DesignTokens.Colors.caffeineAmber)
+                        .fill(Color.accentColor)
                         .frame(width: geo.size.width * caffeineProgress)
                         .animation(DesignTokens.Anim.standard, value: caffeineProgress)
                 }
@@ -143,7 +143,7 @@ struct LogCaffeineSheetView: View {
                 } label: {
                     Image(systemName: "plus.circle.fill")
                         .font(QyraFont.regular(28))
-                        .foregroundStyle(DesignTokens.Colors.caffeineAmber)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .padding(.vertical, DesignTokens.Spacing.sm)
@@ -166,7 +166,7 @@ struct LogCaffeineSheetView: View {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: DesignTokens.Layout.buttonHeight)
-                .background(DesignTokens.Colors.caffeineAmber)
+                .background(Color.accentColor)
                 .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Layout.buttonCornerRadius))
         }
     }

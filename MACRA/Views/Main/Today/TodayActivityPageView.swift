@@ -76,7 +76,7 @@ struct TodayActivityPageView: View {
 
                 Image(systemName: "flame.fill")
                     .font(QyraFont.medium(22))
-                    .foregroundStyle(DesignTokens.Colors.streakOrange)
+                    .foregroundStyle(Color.secondary)
             }
 
             VStack(spacing: 2) {
@@ -226,7 +226,7 @@ struct TodayActivityPageView: View {
                     .frame(height: 8)
 
                 Capsule()
-                    .fill(DesignTokens.Colors.caffeineAmber)
+                    .fill(Color.accentColor)
                     .frame(width: geo.size.width * caffeineProgress, height: 8)
                     .animation(DesignTokens.Anim.standard, value: caffeineProgress)
             }

@@ -151,6 +151,7 @@ struct GroupsTabView: View {
 
                 Section {
                     Toggle("Private Group", isOn: $viewModel.newGroupIsPrivate)
+                        .tint(.accentColor)
                 } header: {
                     Text("Privacy")
                 } footer: {

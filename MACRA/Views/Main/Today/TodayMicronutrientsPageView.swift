@@ -92,6 +92,13 @@ struct TodayMicronutrientsPageView: View {
     // MARK: - Health Score Card
 
     private var healthScoreCard: some View {
+        VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
+            Text("Nutrition Score")
+                .font(.caption)
+                .foregroundStyle(Color.secondary)
+                .textCase(.uppercase)
+                .kerning(0.5)
+
         Group {
             if let score = viewModel.healthScore {
                 HStack(spacing: DesignTokens.Spacing.lg) {
@@ -139,7 +146,7 @@ struct TodayMicronutrientsPageView: View {
                     Text("No Data")
                         .font(.headline)
                         .foregroundStyle(Color(.label))
-                    Text("Log a meal to see your score.")
+                    Text("Log a meal to see your nutrition score.")
                         .font(.subheadline)
                         .foregroundStyle(Color(.secondaryLabel))
                 }
@@ -148,6 +155,7 @@ struct TodayMicronutrientsPageView: View {
                 .background(DesignTokens.Colors.healthScoreBackground)
                 .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.md))
             }
+        }
         }
     }
 

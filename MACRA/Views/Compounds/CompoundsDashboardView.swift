@@ -23,6 +23,7 @@ struct CompoundsDashboardView: View {
     @Query(sort: \CompoundEntry.loggedAt, order: .reverse) private var entries: [CompoundEntry]
     @State private var showAddRegimen = false
     @State private var showLogDose = false
+    @State private var selectedRegimen: CompoundRegimen?
 
     var body: some View {
         ScrollView {
@@ -32,18 +33,23 @@ struct CompoundsDashboardView: View {
                 } else {
                     ForEach(regimens.filter(\.isActive)) { regimen in
                         regimenCard(regimen)
-                    }
-
-                    Button {
-                        showLogDose = true
-                    } label: {
-                        Label("Log Dose", systemImage: "plus.circle.fill")
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.accentColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button {
+                                    selectedRegimen = regimen
+                                    showLogDose = true
+                                } label: {
+                                    Label("Log", systemImage: "checkmark.circle.fill")
+                                }
+                                .tint(.accentColor)
+                            }
+                            .contextMenu {
+                                Button {
+                                    selectedRegimen = regimen
+                                    showLogDose = true
+                                } label: {
+                                    Label("Log Dose", systemImage: "plus.circle")
+                                }
+                            }
                     }
 
                     if !entries.isEmpty {
@@ -92,26 +98,33 @@ struct CompoundsDashboardView: View {
 
     private var emptyState: some View {
         VStack(spacing: 16) {
-            Image(systemName: "pills.circle")
-                .font(.system(size: 48))
-                .foregroundStyle(.secondary)
-            Text("No compounds tracked")
-                .font(.headline)
-            Text("Add supplements, medications, or compounds to track your regimen.")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+            Spacer()
+
+            VStack(spacing: 8) {
+                Text("No compounds tracked")
+                    .font(.system(.headline, weight: .semibold))
+                    .foregroundStyle(Color.primary)
+
+                Text("Add supplements, medications, or compounds to track your regimen.")
+                    .font(.system(.subheadline))
+                    .foregroundStyle(Color.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+            }
+
             Button {
                 showAddRegimen = true
             } label: {
                 Label("Add Compound", systemImage: "plus")
-                    .fontWeight(.semibold)
+                    .font(.system(.headline, weight: .semibold))
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.accentColor)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .padding(.vertical, 16)
+                    .background(Color.accentColor, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    .padding(.horizontal, 24)
             }
+
+            Spacer()
         }
         .padding(.vertical, 40)
     }
@@ -209,6 +222,7 @@ struct AddRegimenView: View {
 
             Section("Reminder") {
                 Toggle("Remind me", isOn: $reminderEnabled)
+                    .tint(.accentColor)
                 if reminderEnabled {
                     DatePicker("Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
                 }

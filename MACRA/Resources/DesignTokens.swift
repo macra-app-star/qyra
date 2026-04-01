@@ -172,7 +172,7 @@ enum DesignTokens {
         // Phase 3 legacy aliases
         static let streakOrange = Color.orange
         static let waterBlue = Color.cyan
-        static let caffeineAmber = Color(red: 0.76, green: 0.53, blue: 0.17)
+
         static let healthGreen = Color.green
         static let chartOrange = Color.orange
 

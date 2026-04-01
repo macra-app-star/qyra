@@ -75,7 +75,7 @@ struct TodayDashboardView: View {
                                 // Opens scanner
                             }
                             .font(.caption.bold())
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(Color.accentColor)
                         }
                         .padding()
                         .background(Color.orange.opacity(0.1))

@@ -105,7 +105,7 @@ struct TodayMacrosPageView: View {
                         color: DesignTokens.Colors.textSecondary
                     )
                     calorieDetailRow(
-                        label: "earned back",
+                        label: "cal earned back",
                         value: "\(viewModel.caloriesBurned)",
                         color: viewModel.caloriesBurned > 0 ? DesignTokens.Colors.accent : Color(.secondaryLabel)
                     )
