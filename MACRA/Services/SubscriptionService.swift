@@ -202,7 +202,7 @@ final class SubscriptionService: SubscriptionServiceProtocol {
             let baseURL = "https://oqjmxdxcwsajawesyspa.supabase.co"
             let anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xam14ZHhjd3NhamF3ZXN5c3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NTAyMTQsImV4cCI6MjA4ODIyNjIxNH0.m5tLk5asnA9Jb-lZ64Tg9RiKNbSk3gH6QE8qbBPBRG4"
 
-            guard let url = URL(string: "\(baseURL)/rest/v1/macra_subscription_events") else { return }
+            guard let url = URL(string: "\(baseURL)/rest/v1/subscription_events") else { return }
 
             var request = URLRequest(url: url)
             request.httpMethod = "POST"

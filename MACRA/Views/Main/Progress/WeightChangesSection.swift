@@ -1,5 +1,14 @@
 import SwiftUI
 
+private extension Double {
+    var cleanWeightString: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = self.truncatingRemainder(dividingBy: 1) == 0 ? 0 : 1
+        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
+    }
+}
+
 struct WeightChangesSection: View {
     let changes: [ProgressViewModel.WeightChange]
 
@@ -46,7 +55,7 @@ struct WeightChangesSection: View {
             Spacer()
 
             if let value = change.change {
-                Text(String(format: "%+.1f lbs", value))
+                Text("\(value > 0 ? "+" : "")\(value.cleanWeightString) lbs")
                     .font(DesignTokens.Typography.medium(15))
                     .foregroundStyle(
                         change.isPositive == true

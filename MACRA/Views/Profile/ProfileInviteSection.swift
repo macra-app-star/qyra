@@ -36,7 +36,7 @@ struct ProfileInviteSection: View {
             Text("Invite Friends")
                 .font(DesignTokens.Typography.medium(13))
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
-                .textCase(.uppercase)
+                .textCase(nil)
         }
         .sheet(isPresented: $showShareSheet) {
             ShareSheet(items: ["Check out Qyra — a smart nutrition tracker that actually works. https://apps.apple.com/app/qyra"])

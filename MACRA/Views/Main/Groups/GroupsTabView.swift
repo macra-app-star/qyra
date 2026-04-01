@@ -67,11 +67,7 @@ struct GroupsTabView: View {
                     }
                 }
 
-                // Discover section
-                Text("Public groups coming soon.")
-                    .font(.subheadline)
-                    .foregroundStyle(Color(.tertiaryLabel))
-                    .padding(.horizontal, DesignTokens.Spacing.md)
+                // Discover section placeholder removed
             }
             .padding(.vertical, DesignTokens.Spacing.md)
             .padding(.bottom, 80)
@@ -212,9 +208,7 @@ struct GroupsTabView: View {
     private var emptyGroupsCard: some View {
         EmptyDataView(
             title: "No Groups",
-            subtitle: "Create a group or join one with an invite code.",
-            actionTitle: "Create Group",
-            action: { viewModel.showCreateGroup = true }
+            subtitle: "Create a group or join one with an invite code."
         )
         .background(DesignTokens.Colors.surface)
         .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.lg))
@@ -246,7 +240,7 @@ struct GroupsTabView: View {
                         .font(DesignTokens.Typography.caption)
                         .foregroundStyle(DesignTokens.Colors.textSecondary)
 
-                    Text("  \(group.inviteCode)")
+                    Text("  \(group.isPrivate ? "Private" : "Public")")
                         .font(DesignTokens.Typography.caption)
                         .foregroundStyle(DesignTokens.Colors.textTertiary)
                 }

@@ -68,7 +68,7 @@ struct ProfileGoalsSection: View {
             Text("Goals & Tracking")
                 .font(DesignTokens.Typography.medium(13))
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
-                .textCase(.uppercase)
+                .textCase(nil)
         }
     }
 }

@@ -55,43 +55,8 @@ struct SaveProgressView: View {
                     }
                 }
 
-                // Sign in with Google
-                authButton(
-                    icon: {
-                        Text("G")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(
-                                .linearGradient(
-                                    colors: [.blue, .red, .yellow, .green],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                    },
-                    label: "Sign in with Google",
-                    labelColor: OnboardingTheme.textPrimary,
-                    background: .white,
-                    borderColor: OnboardingTheme.divider
-                ) {
-                    // Google sign-in — not yet configured, skip to next step
-                    viewModel.advance()
-                }
-
-                // Continue with email
-                authButton(
-                    icon: {
-                        Image(systemName: "envelope")
-                            .font(QyraFont.regular(20))
-                            .foregroundStyle(OnboardingTheme.textPrimary)
-                    },
-                    label: "Continue with email",
-                    labelColor: OnboardingTheme.textPrimary,
-                    background: .white,
-                    borderColor: OnboardingTheme.divider
-                ) {
-                    // Email sign-in — not yet configured, skip to next step
-                    viewModel.advance()
-                }
+                // Google and Email sign-in removed — not yet implemented.
+                // Ship with Apple Sign-In only for v1.0. Add others in v1.1.
             }
             .padding(.horizontal, OnboardingTheme.screenPadding)
 

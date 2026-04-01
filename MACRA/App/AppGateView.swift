@@ -77,7 +77,7 @@ struct PlaceholderView: View {
                     .font(DesignTokens.Typography.title)
                     .foregroundStyle(DesignTokens.Colors.textPrimary)
 
-                Text("Coming soon")
+                Text("")
                     .font(DesignTokens.Typography.callout)
                     .foregroundStyle(DesignTokens.Colors.textTertiary)
             }

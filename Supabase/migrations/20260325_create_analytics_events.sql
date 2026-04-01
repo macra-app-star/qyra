@@ -1,4 +1,4 @@
--- Analytics events table for macra
+-- Analytics events table for Qyra
 CREATE TABLE IF NOT EXISTS public.analytics_events (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -34,4 +34,4 @@ CREATE POLICY "Users can read own events"
     FOR SELECT
     USING (auth.uid() = user_id);
 
-COMMENT ON TABLE public.analytics_events IS 'Client-side analytics events from macra iOS app. Partition by event_timestamp when row count exceeds 10M.';
+COMMENT ON TABLE public.analytics_events IS 'Client-side analytics events from Qyra iOS app. Partition by event_timestamp when row count exceeds 10M.';

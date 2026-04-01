@@ -67,7 +67,7 @@ struct ProfileActionsSection: View {
             Text("Account Actions")
                 .font(DesignTokens.Typography.medium(13))
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
-                .textCase(.uppercase)
+                .textCase(nil)
         }
     }
 

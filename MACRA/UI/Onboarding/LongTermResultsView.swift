@@ -52,19 +52,19 @@ struct LongTermResultsView: View {
                     // Traditional diet fill (not needed per spec, only Qyra line gets fill)
 
                     // Qyra line fill
-                    macraLineFill(width: width, height: height)
+                    qyraLineFill(width: width, height: height)
 
                     // Traditional diet line (red)
                     traditionalDietLine(width: width, height: height)
 
                     // Qyra line (black)
-                    macraLine(width: width, height: height)
+                    qyraLine(width: width, height: height)
 
                     // Start dot
                     startDot(width: width, height: height)
 
                     // End dots
-                    macraEndDot(width: width, height: height)
+                    qyraEndDot(width: width, height: height)
                     traditionalEndDot(width: width, height: height)
                 }
             }
@@ -97,7 +97,7 @@ struct LongTermResultsView: View {
 
     // MARK: - Chart Paths
 
-    private func macraLine(width: CGFloat, height: CGFloat) -> some View {
+    private func qyraLine(width: CGFloat, height: CGFloat) -> some View {
         Path { path in
             let startX: CGFloat = 0
             let startY = height * 0.45
@@ -114,7 +114,7 @@ struct LongTermResultsView: View {
         .stroke(OnboardingTheme.textPrimary, lineWidth: 2.5)
     }
 
-    private func macraLineFill(width: CGFloat, height: CGFloat) -> some View {
+    private func qyraLineFill(width: CGFloat, height: CGFloat) -> some View {
         Path { path in
             let startX: CGFloat = 0
             let startY = height * 0.45
@@ -164,7 +164,7 @@ struct LongTermResultsView: View {
             .position(x: 0, y: height * 0.45)
     }
 
-    private func macraEndDot(width: CGFloat, height: CGFloat) -> some View {
+    private func qyraEndDot(width: CGFloat, height: CGFloat) -> some View {
         Circle()
             .fill(OnboardingTheme.background)
             .frame(width: 10, height: 10)

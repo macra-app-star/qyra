@@ -77,6 +77,10 @@ struct BMICardSection: View {
         }
     }
 
+    // DESIGN SYSTEM EXCEPTION: BMI scale gradient is intentional.
+    // This is a medical visualization standard (underweight → obese range).
+    // Per design system docs: QyraDesignSystem.bmiScaleGradient exception.
+    // Do NOT replace with accentColor — this is not decorative gradient.
     private var bmiGradientBar: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {

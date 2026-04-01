@@ -1,6 +1,15 @@
 import SwiftUI
 import Charts
 
+private extension Double {
+    var cleanWeightString: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = self.truncatingRemainder(dividingBy: 1) == 0 ? 0 : 1
+        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
+    }
+}
+
 struct WeightChartSection: View {
     let weightEntries: [WeightEntry]
     let currentWeight: Double?
@@ -39,14 +48,14 @@ struct WeightChartSection: View {
     private var formattedWeeklyDelta: String {
         guard let delta = weeklyDelta else { return "" }
         let sign = delta >= 0 ? "+" : ""
-        return "This week: \(sign)\(String(format: "%.1f", delta)) lbs"
+        return "This week: \(sign)\(delta.cleanWeightString) lbs"
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             TimeFilterPills(options: filters, selection: $filter)
 
-            if filteredEntries.isEmpty {
+            if filteredEntries.count < 2 {
                 emptyState
             } else {
                 chartContent
@@ -65,7 +74,7 @@ struct WeightChartSection: View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             // Current weight display
             if let weight = currentWeight {
-                Text(String(format: "%.1f lbs", weight))
+                Text("\(weight.cleanWeightString) lbs")
                     .font(DesignTokens.Typography.headline)
                     .foregroundStyle(DesignTokens.Colors.textPrimary)
 
@@ -79,18 +88,25 @@ struct WeightChartSection: View {
             // Chart
             Chart(filteredEntries, id: \.id) { entry in
                 LineMark(
-                    x: .value("Date", entry.timestamp),
+                    x: .value("Date", entry.timestamp, unit: .day),
                     y: .value("Weight", entry.weightLbs)
                 )
+                .interpolationMethod(.catmullRom)
                 .foregroundStyle(Color.accentColor)
                 PointMark(
-                    x: .value("Date", entry.timestamp),
+                    x: .value("Date", entry.timestamp, unit: .day),
                     y: .value("Weight", entry.weightLbs)
                 )
                 .foregroundStyle(Color.accentColor)
             }
             .frame(height: 200)
             .chartYScale(domain: .automatic(includesZero: false))
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day)) { value in
+                    AxisValueLabel(format: .dateTime.month(.abbreviated).day())
+                    AxisGridLine()
+                }
+            }
 
             // Log weight button
             Button {

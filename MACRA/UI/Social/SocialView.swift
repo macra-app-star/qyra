@@ -12,7 +12,7 @@ struct SocialView: View {
                     .foregroundStyle(DesignTokens.Colors.textTertiary)
 
                 VStack(spacing: DesignTokens.Spacing.sm) {
-                    Text("Social is Coming Soon")
+                    Text("Social")
                         .font(DesignTokens.Typography.title2)
                         .foregroundStyle(DesignTokens.Colors.textPrimary)
 

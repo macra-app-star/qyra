@@ -53,11 +53,7 @@ struct GroupsView: View {
                     emptyGroupsCard
                 }
 
-                // Public groups placeholder
-                Text("Public groups coming soon.")
-                    .font(.subheadline)
-                    .foregroundStyle(Color(.tertiaryLabel))
-                    .padding(.horizontal, DesignTokens.Spacing.md)
+                // Public groups section removed
             }
             .padding(.vertical, DesignTokens.Spacing.md)
         }

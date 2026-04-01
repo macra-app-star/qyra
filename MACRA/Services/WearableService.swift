@@ -162,7 +162,7 @@ final class WearableService {
             persistConnections()
         } else {
             // In production, this would launch ASWebAuthenticationSession
-            connectionStates[provider] = .error("Coming soon")
+            connectionStates[provider] = .error("Not available")
         }
     }
 

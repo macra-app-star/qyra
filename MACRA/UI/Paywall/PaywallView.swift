@@ -7,8 +7,8 @@ struct PaywallView: View {
     @State private var showTerms = false
     @State private var showPrivacy = false
 
-    private let termsURL = URL(string: "https://macra-app-star.github.io/macra-landing/terms")!
-    private let privacyURL = URL(string: "https://macra-app-star.github.io/macra-landing/privacy")!
+    private let termsURL = URL(string: "https://qyra.app/terms")!
+    private let privacyURL = URL(string: "https://qyra.app/privacy")!
 
     var body: some View {
         ZStack {

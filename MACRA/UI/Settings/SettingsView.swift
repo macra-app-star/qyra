@@ -4,8 +4,8 @@ struct SettingsView: View {
     @Environment(AppState.self) private var appState
     @State private var showSignOutConfirmation = false
 
-    private let termsURL = URL(string: "https://macra-app-star.github.io/macra-landing/terms.html")!
-    private let privacyURL = URL(string: "https://macra-app-star.github.io/macra-landing/privacy.html")!
+    private let termsURL = URL(string: "https://qyra.app/terms")!
+    private let privacyURL = URL(string: "https://qyra.app/privacy")!
 
     var body: some View {
         List {

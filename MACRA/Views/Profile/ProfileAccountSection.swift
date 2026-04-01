@@ -17,7 +17,7 @@ struct ProfileAccountSection: View {
 
             // Language placeholder
             NavigationLink {
-                Text("Language settings coming soon")
+                Text("Language")
                     .navigationTitle("Language")
             } label: {
                 Label("Language", systemImage: "globe")
@@ -33,7 +33,7 @@ struct ProfileAccountSection: View {
             Text("Account")
                 .font(DesignTokens.Typography.medium(13))
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
-                .textCase(.uppercase)
+                .textCase(nil)
         }
     }
 }

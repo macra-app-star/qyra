@@ -14,7 +14,7 @@ struct ProfileWidgetsSection: View {
             Text("Widgets")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-                .textCase(.uppercase)
+                .textCase(nil)
                 .padding(.horizontal, DesignTokens.Spacing.md)
 
             ScrollView(.horizontal, showsIndicators: false) {

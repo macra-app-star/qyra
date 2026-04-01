@@ -8,11 +8,11 @@
       "localizations" : [
         {
           "description" : "Unlock AI-powered macro tracking",
-          "displayName" : "MACRA Premium",
+          "displayName" : "Qyra Premium",
           "locale" : "en_US"
         }
       ],
-      "name" : "MACRA Premium",
+      "name" : "Qyra Premium",
       "subscriptions" : [
         {
           "adHocOffers" : [],
@@ -30,14 +30,14 @@
           },
           "localizations" : [
             {
-              "description" : "Full access to all MACRA features, billed annually",
-              "displayName" : "MACRA Yearly",
+              "description" : "Full access to all Qyra features, billed annually",
+              "displayName" : "Qyra Yearly",
               "locale" : "en_US"
             }
           ],
-          "productID" : "macra.yearly",
+          "productID" : "qyra.yearly",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "MACRA Yearly",
+          "referenceName" : "Qyra Yearly",
           "subscriptionGroupID" : "21184919",
           "type" : "RecurringSubscription"
         },
@@ -51,14 +51,14 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Full access to all MACRA features, billed monthly",
-              "displayName" : "MACRA Monthly",
+              "description" : "Full access to all Qyra features, billed monthly",
+              "displayName" : "Qyra Monthly",
               "locale" : "en_US"
             }
           ],
-          "productID" : "macra.monthly",
+          "productID" : "qyra.monthly",
           "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "MACRA Monthly",
+          "referenceName" : "Qyra Monthly",
           "subscriptionGroupID" : "21184919",
           "type" : "RecurringSubscription"
         }
