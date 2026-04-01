@@ -53,7 +53,7 @@ struct LogFoodView: View {
             .sorted { $0.count > $1.count }
     }
 
-    private let tabOptions = ["All", "My foods", "My meals", "Saved foods"]
+    private let tabOptions = ["All", "My foods", "Recent", "Saved foods"]
 
     var body: some View {
         VStack(spacing: 0) {
@@ -90,7 +90,7 @@ struct LogFoodView: View {
                 searchContent(vm)
             } else if selectedTab == "Saved foods" {
                 savedFoodsContent
-            } else if selectedTab == "My meals" {
+            } else if selectedTab == "Recent" {
                 recentFoodsContent
             } else {
                 Spacer()
@@ -549,7 +549,7 @@ struct LogFoodView: View {
                 title: "No Custom Foods",
                 subtitle: "Create your own food entries to see them here."
             )
-        case "My meals":
+        case "Recent":
             EmptyDataView(
                 title: "No Saved Meals",
                 subtitle: "Save meal combinations for quick logging."

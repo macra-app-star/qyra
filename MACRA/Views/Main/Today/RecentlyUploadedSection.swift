@@ -60,12 +60,12 @@ struct RecentlyUploadedSection: View {
     private func mealRowContent(_ meal: RecentMealItem) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: DesignTokens.Spacing.sm) {
-                // Emoji
-                Text(meal.emoji)
-                    .font(QyraFont.regular(20))
+                // Food icon
+                Image(systemName: "fork.knife")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 32, height: 32)
-                    .background(DesignTokens.Colors.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.sm))
+                    .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: DesignTokens.Radius.sm, style: .continuous))
 
                 // Name + time
                 VStack(alignment: .leading, spacing: 2) {

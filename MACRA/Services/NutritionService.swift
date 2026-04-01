@@ -55,11 +55,27 @@ final class NutritionService: ObservableObject {
         let deduped = Dictionary(grouping: results) { $0.name.lowercased() }
             .compactMap { $0.value.max(by: { $0.confidence < $1.confidence }) }
 
-        // Sort by relevance
+        // Sort by relevance — prioritize exact/brand matches
+        let queryLower = trimmed.lowercased()
         return deduped.sorted { a, b in
-            let aExact = a.name.lowercased().contains(trimmed.lowercased())
-            let bExact = b.name.lowercased().contains(trimmed.lowercased())
-            if aExact != bExact { return aExact }
+            let aName = a.name.lowercased()
+            let bName = b.name.lowercased()
+
+            // Exact start match wins
+            let aStarts = aName.hasPrefix(queryLower)
+            let bStarts = bName.hasPrefix(queryLower)
+            if aStarts != bStarts { return aStarts }
+
+            // Contains full query
+            let aContains = aName.contains(queryLower)
+            let bContains = bName.contains(queryLower)
+            if aContains != bContains { return aContains }
+
+            // Shorter names are usually more relevant (Big Mac vs Big Mac Meal Deal Combo)
+            if aContains && bContains && aName.count != bName.count {
+                return aName.count < bName.count
+            }
+
             return a.confidence > b.confidence
         }
     }

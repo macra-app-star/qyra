@@ -124,9 +124,9 @@ final class DataExportService {
     ) -> some View {
         let darkText = Color(uiColor: UIColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 1))
         let secondaryText = Color(uiColor: UIColor(red: 0.54, green: 0.54, blue: 0.54, alpha: 1))
-        let proteinColor = Color(uiColor: UIColor(red: 0.91, green: 0.32, blue: 0.29, alpha: 1))
-        let carbsColor = Color(uiColor: UIColor(red: 0.91, green: 0.64, blue: 0.23, alpha: 1))
-        let fatColor = Color(uiColor: UIColor(red: 0.29, green: 0.56, blue: 0.85, alpha: 1))
+        let proteinColor = Color.accentColor
+        let carbsColor = Color.accentColor
+        let fatColor = Color.accentColor
 
         ZStack {
             Color.white

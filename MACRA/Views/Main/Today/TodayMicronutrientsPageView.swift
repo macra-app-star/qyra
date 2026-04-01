@@ -119,9 +119,14 @@ struct TodayMicronutrientsPageView: View {
                             .rotationEffect(.degrees(-90))
                             .animation(.spring(response: 0.6, dampingFraction: 0.8), value: healthScoreProgress)
 
-                        Text(String(format: "%.0f", score))
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                            .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        VStack(spacing: 0) {
+                            Text(String(format: "%.0f", score))
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                            Text("/ 10")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundStyle(Color.secondary)
+                        }
                     }
                     .frame(width: 100, height: 100)
 

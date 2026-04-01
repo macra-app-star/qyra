@@ -43,15 +43,15 @@ enum DesignTokens {
         // MARK: - Tint (single source of truth for ALL interactive blue)
         static let tint = Color.accentColor
 
-        // MARK: - Macro Colors
-        static let protein = Color.red
-        static let carbs = Color.orange
+        // MARK: - Macro Colors (all accentColor — label provides identity)
+        static let protein = Color.accentColor
+        static let carbs = Color.accentColor
         static let fat = Color.accentColor
         static let calories = Color.accentColor
 
         // MARK: - Ring Colors
-        static let ringProtein = Color.red
-        static let ringCarbs = Color.orange
+        static let ringProtein = Color.accentColor
+        static let ringCarbs = Color.accentColor
         static let ringFat = Color.accentColor
         static let ringCalories = Color.accentColor
         static let calorieRing = Color.accentColor

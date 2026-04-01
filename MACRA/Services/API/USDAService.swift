@@ -52,9 +52,9 @@ actor USDAService {
         let requestBody: [String: Any] = [
             "query": query,
             "pageSize": pageSize,
-            "dataType": ["Foundation", "SR Legacy", "Branded"],
+            "dataType": ["Branded", "Foundation", "SR Legacy"],
             "sortBy": "dataType.keyword",
-            "sortOrder": "asc"
+            "sortOrder": "desc"
         ]
 
         let body = try JSONSerialization.data(withJSONObject: requestBody)

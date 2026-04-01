@@ -195,7 +195,7 @@ struct FoodDetailView: View {
                             .font(QyraFont.regular(28))
                             .foregroundStyle(quantity >= Self.quantitySteps.last ?? 3.0
                                              ? DesignTokens.Colors.textTertiary
-                                             : DesignTokens.Colors.textSecondary)
+                                             : Color.accentColor)
                     }
                     .disabled(quantity >= Self.quantitySteps.last ?? 3.0)
                 }
