@@ -21,4 +21,15 @@
 
 ---
 
-*Last updated: 2026-03-31 — 12 functional defects identified*
+| F-013 | Food Scan (Offline) | Scan food → CoreML classifies → no DB match | Show unreliable estimate warning | Logs meal with 0 calories silently | CRITICAL | No validation on zero-calorie results | **FIXED** — caps confidence at 30%, sets needsManualEntry |
+| F-014 | Macro Precision | Log 10 meals across a day → check totals | Totals match sum of items | 3-5% undercount due to truncation | HIGH | Int truncation of Double values | **FIXED** — ViewModel uses Double, rounds at display |
+| F-015 | AI Coach | Open AI coach → no disclaimer | Medical disclaimer shown | No disclaimer anywhere | CRITICAL | Not implemented | **FIXED** — added to chat header + detail view |
+| F-016 | User Data Isolation | Sign out → Sign in as different user | See only new user's data | See ALL previous user's meals/goals | CRITICAL | Missing userId in fetch predicates | Pending (escalated) |
+| F-017 | Gemini Prompt | Type malicious text in AI coach | Input sanitized | Raw user input in prompt template | HIGH | No input sanitization | Pending (escalated) |
+| F-018 | API Key Exposure | Any Gemini API call | Key in auth header | Key in URL query parameter | MEDIUM | URL-based key passing | Pending |
+| F-019 | Serving Size | Barcode scan → product missing servingSizeGrams | Warn about estimate | Assumes 100g serving (may be 30g) | HIGH | Default 100g fallback | Pending |
+| F-020 | Timezone | Log meal at 11:59 PM on DST boundary | Correct date assignment | May assign to wrong day | MEDIUM | Calendar.startOfDay on DST transition | Pending |
+
+---
+
+*Last updated: 2026-04-01 — 20 functional defects identified, 3 fixed*

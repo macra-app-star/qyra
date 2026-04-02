@@ -17,6 +17,7 @@ struct FoodAnalysisResult: Sendable, Identifiable, Equatable {
     var imageURL: String?
     var explanation: String?
     var assumptions: [String]?
+    var needsManualEntry: Bool
 
     init(
         id: UUID = UUID(),
@@ -34,7 +35,8 @@ struct FoodAnalysisResult: Sendable, Identifiable, Equatable {
         barcode: String? = nil,
         imageURL: String? = nil,
         explanation: String? = nil,
-        assumptions: [String]? = nil
+        assumptions: [String]? = nil,
+        needsManualEntry: Bool = false
     ) {
         self.id = id
         self.name = name
@@ -52,6 +54,7 @@ struct FoodAnalysisResult: Sendable, Identifiable, Equatable {
         self.imageURL = imageURL
         self.explanation = explanation
         self.assumptions = assumptions
+        self.needsManualEntry = needsManualEntry
     }
 
     // Food verdict based on macro balance

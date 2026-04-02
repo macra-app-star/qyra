@@ -13,10 +13,24 @@
 - [ ] **Verify #if DEBUG guard on dev skip button** — ensure it never appears in release builds
 - [ ] **Add AI health disclaimer** — "Not medical advice" in AI coach UI
 - [ ] **Add camera permission denial recovery** — guide user to Settings when camera denied
+- [ ] **Add userId predicates to all SwiftData queries** — MealRepository, GoalRepository, ProfileRepository (decision needed)
+- [ ] **Rename Supabase macra_subscription_events table** — or create view (decision needed)
+- [x] ~~**Fix zero-calorie data corruption in FoodAnalysisPipeline**~~ — FIXED: caps confidence, sets needsManualEntry
+- [x] ~~**Add AI health disclaimer**~~ — FIXED: added to AICoachView + AICoachDetailView
+- [x] ~~**Fix Double→Int precision loss**~~ — FIXED: TodayViewModel stores Doubles, rounds at display
 
 ## HIGH PRIORITY
 
-- [ ] **Rename MACRA → Qyra in all user-facing strings** — subscription labels, analytics events
+- [x] ~~**Rename MACRA → Qyra in StoreKit config**~~ — FIXED: all product names/IDs updated
+- [x] ~~**Update all legal URLs to qyra.app**~~ — FIXED: 4 files, 6 URLs updated
+- [x] ~~**Rebrand Fastlane metadata**~~ — FIXED: Appfile, Deliverfile, Fastfile
+- [x] ~~**Remove stub Google/Email sign-in buttons**~~ — FIXED: removed from SaveProgressView
+- [x] ~~**Fix SQL default "macra user"**~~ — FIXED: now "Qyra User"
+- [ ] **Rename MACRA → Qyra in remaining user-facing strings** — analytics events
+- [ ] **Sanitize user input in Gemini prompts** — prompt injection risk
+- [ ] **Add retry logic to API calls** — GeminiService, SupabaseAPIService
+- [ ] **Move Gemini API key from URL to Authorization header** — security
+- [ ] **Add SyncRecord userId** — currently empty string, sync may fail
 - [ ] **Update Supabase migration comments** — remove "macra" references
 - [ ] **Update default profile name** — "macra user" → "Qyra User" in SQL migration
 - [ ] **Update macra_subscription_events table reference** — or create alias/new table

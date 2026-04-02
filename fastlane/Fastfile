@@ -5,7 +5,7 @@ platform :ios do
   desc "Run unit tests"
   lane :test do
     run_tests(
-      scheme: "MACRA",
+      scheme: "Qyra",
       devices: ["iPhone 16"],
       only_testing: ["MACRATests"]
     )
@@ -25,10 +25,10 @@ platform :ios do
   desc "Build and archive for App Store"
   lane :build do
     build_app(
-      scheme: "MACRA",
+      scheme: "Qyra",
       export_method: "app-store",
       output_directory: "./build",
-      output_name: "MACRA.ipa"
+      output_name: "Qyra.ipa"
     )
   end
 

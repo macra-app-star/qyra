@@ -1,9 +1,9 @@
 # App Store metadata
-app_identifier("co.tamras.macra")
+app_identifier("co.tamras.qyra")
 price_tier(0) # Free with IAP
 
 name({
-  "en-US" => "MACRA"
+  "en-US" => "Qyra"
 })
 
 subtitle({
@@ -12,30 +12,32 @@ subtitle({
 
 description({
   "en-US" => <<~DESC
-    MACRA is the macro tracking app built for people who are serious about their nutrition. No ads. No clutter. Just clean, precise tracking with an interface designed to get out of your way.
+    Qyra is the macro tracking app built for people who are serious about their nutrition. No ads. No clutter. Just clean, precise tracking with an interface designed to get out of your way.
 
     Track with precision.
     Log meals manually with exact macro breakdowns — calories, protein, carbs, and fat. See your daily totals update in real time with animated progress rings that show exactly where you stand against your goals.
 
     Smart goals, calculated for you.
-    During onboarding, MACRA calculates your personalized macro targets using the Mifflin-St Jeor equation based on your body composition, activity level, and goals — whether you're cutting, maintaining, or bulking.
+    During onboarding, Qyra calculates your personalized macro targets using the Mifflin-St Jeor equation based on your body composition, activity level, and goals — whether you're cutting, maintaining, or bulking.
 
     See the bigger picture.
     The Insights tab gives you a weekly view of your nutrition adherence with visual charts, streak tracking, and weekly averages. Know exactly how consistent you've been without digging through spreadsheets.
 
     Built for Apple.
-    MACRA integrates with Apple Health to display your daily step count and active calories right on the dashboard. Dark mode only. Designed for the OLED display.
+    Qyra integrates with Apple Health to display your daily step count and active calories right on the dashboard. Dark mode only. Designed for the OLED display.
 
     Your data stays yours.
     All nutrition data is stored on-device using SwiftData with offline-first architecture. No account required for core tracking. Your meals, your macros, your privacy.
 
-    What's included in MACRA Pro:
+    What's included in Qyra Pro:
     • Unlimited meal logging
+    • AI-powered food recognition
     • Personalized macro goal calculation
     • Weekly insights and streak tracking
     • Apple Health integration
     • Meal detail editing and management
-    • Coming soon: Barcode scanning, camera recognition, voice logging, social features
+    • Barcode scanning, camera recognition, voice logging
+    • Social features, groups, and 1v1 challenges
   DESC
 })
 
@@ -48,12 +50,12 @@ promotional_text({
 })
 
 release_notes({
-  "en-US" => "Welcome to MACRA. Your macro tracking journey starts here."
+  "en-US" => "Welcome to Qyra. Your macro tracking journey starts here."
 })
 
-privacy_url("https://tamras.co/macra/privacy")
-support_url("https://tamras.co/macra/support")
-marketing_url("https://tamras.co/macra")
+privacy_url("https://qyra.app/privacy")
+support_url("https://qyra.app/support")
+marketing_url("https://qyra.app")
 
 copyright("2026 Tamras Co.")
 

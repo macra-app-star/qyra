@@ -23,7 +23,7 @@ struct TrackingRemindersView: View {
             VStack(spacing: DesignTokens.Spacing.lg) {
                 // Meal Reminders
                 VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
-                    Text("MEAL REMINDERS")
+                    Text("Meal reminders")
                         .font(DesignTokens.Typography.medium(13))
                         .foregroundStyle(DesignTokens.Colors.textSecondary)
 
@@ -35,7 +35,7 @@ struct TrackingRemindersView: View {
 
                 // End of Day
                 VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
-                    Text("END OF DAY")
+                    Text("End of day")
                         .font(DesignTokens.Typography.medium(13))
                         .foregroundStyle(DesignTokens.Colors.textSecondary)
 

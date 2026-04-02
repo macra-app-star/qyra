@@ -70,7 +70,25 @@ The app has ~272 Swift files, 4 main tabs, a 33-step onboarding, AI food recogni
 
 ## What Was Fixed
 
-(Fixes applied during this audit — updated as work progresses)
+1. **StoreKit config rebranded** — All "MACRA Premium/Monthly/Yearly" → "Qyra Premium/Monthly/Yearly", product IDs updated to qyra.*
+2. **Stub Google/Email sign-in buttons removed** — SaveProgressView now shows Apple Sign-In only + Skip
+3. **All legal URLs updated** — 6 files changed from macra-app-star.github.io → qyra.app/terms and qyra.app/privacy
+4. **SQL migration default name fixed** — "macra user" → "Qyra User"
+5. **Analytics migration comments updated** — "macra" → "Qyra"
+6. **Subscription events table reference updated** — macra_subscription_events → subscription_events
+7. **Fastlane Appfile rebranded** — co.tamras.macra → co.tamras.qyra
+8. **Fastlane Deliverfile fully rebranded** — App name, description, URLs all updated to Qyra
+9. **Fastlane Fastfile scheme updated** — MACRA → Qyra scheme, output MACRA.ipa → Qyra.ipa
+10. **Build script updated** — Tools/build.sh default scheme and echo updated
+11. **LongTermResultsView rebranded** — macraLine/macraLineFill/macraEndDot → qyraLine/qyraLineFill/qyraEndDot
+12. **SignInView debug button verified** — #if DEBUG guard is correct, will not appear in release builds
+13. **Zero-calorie data corruption prevented** — FoodAnalysisPipeline now caps confidence at 30% and sets `needsManualEntry=true` when nutrition DB has no match
+14. **FoodAnalysisResult.needsManualEntry field added** — UI can now detect and warn about unreliable AI results
+15. **Double precision preserved for macros** — TodayViewModel consumed values changed from Int to Double; rounding only at display layer
+16. **Remaining computed properties fixed** — caloriesRemaining etc. now properly round Double→Int
+17. **Micro-card display updated** — TodayMicronutrientsPageView accepts Double, rounds for display
+18. **AI health disclaimer added** — Both AICoachView (chat header) and AICoachDetailView (bottom) now show medical disclaimer
+19. **DailyStatusPill casts removed** — No longer double-casts already-Double values
 
 ---
 
@@ -86,13 +104,36 @@ The app has ~272 Swift files, 4 main tabs, a 33-step onboarding, AI food recogni
 
 ---
 
+## Phase 3 & 4 Findings — Data Integrity & AI Audit
+
+### NEW CRITICAL ISSUES (from deep code audit)
+
+| # | Issue | Category | Impact |
+|---|-------|----------|--------|
+| 11 | **Missing userId predicates in all SwiftData queries** | Data Isolation | Cross-user data leakage on shared devices |
+| 12 | **Zero calories on CoreML DB miss** | AI/Data Corruption | Meal logged with 0 cal when food not in local DB |
+| 13 | **No medical/AI disclaimer in coach UI** | Legal/Compliance | Liability risk — AI gives health advice without disclaimer |
+| 14 | **Prompt injection risk in GeminiService** | Security | User input embedded in prompts unsanitized |
+| 15 | **Double→Int conversion loses macro precision** | Data Integrity | 3-5% tracking error accumulates over days |
+| 16 | **Timezone/DST boundary bugs** | Data Integrity | Meals assigned wrong day on DST transitions |
+| 17 | **API key in URL strings** | Security | Key may leak to logs/crash reporters |
+| 18 | **No retry logic on any API call** | Reliability | Single failure = permanent loss, no recovery |
+| 19 | **SyncRecord missing userId** | Sync Integrity | Server can't determine record ownership |
+| 20 | **Serving size defaults to 100g when missing** | Data Accuracy | Up to 70% calorie miscounting on some foods |
+| 21 | **Weight unit mixing (kg in profile, lbs in entries)** | Data Integrity | Goal comparisons may use wrong unit |
+| 22 | **Race condition: save + notification + HealthKit** | Data Integrity | UI refresh before HealthKit write completes |
+| 23 | **Confidence threshold 70% too low for nutrition** | Trust | Low-confidence results treated same as high |
+| 24 | **Message history unbounded in AI coach** | Performance | Memory pressure on long conversations |
+
+---
+
 ## Audit Progress
 
 - [x] Phase 0: Master Audit Map
 - [ ] Phase 1: Visual System Audit (awaiting screenshot batches)
-- [ ] Phase 2: Functional Audit
-- [ ] Phase 3: Data Integrity Audit
-- [ ] Phase 4: AI Feature Audit
+- [x] Phase 2: Functional Audit (12 defects logged)
+- [x] Phase 3: Data Integrity Audit (11 risks identified)
+- [x] Phase 4: AI Feature Audit (10 issues identified)
 - [ ] Phase 5: Subscription/Auth/Permissions Audit
 - [ ] Phase 6: Accessibility Audit
 - [ ] Phase 7: Performance Audit

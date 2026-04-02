@@ -136,7 +136,10 @@ final class IntelligenceViewModel {
             var profileParts: [String] = []
             if let name = snapshot.displayName { profileParts.append("Name: \(name)") }
             if snapshot.weight > 0 { profileParts.append("Weight: \(Int(snapshot.weight.rounded())) lbs") }
-            if snapshot.height > 0 { profileParts.append("Height: \(Int(snapshot.height.rounded())) in") }
+            if snapshot.height > 0 {
+                let totalIn = Int(snapshot.height.rounded())
+                profileParts.append("Height: \(totalIn / 12)'\(totalIn % 12)\"")
+            }
             if snapshot.age > 0 { profileParts.append("Age: \(snapshot.age)") }
             if let gender = snapshot.gender { profileParts.append("Gender: \(gender)") }
             if let gw = snapshot.goalWeightKg, gw > 0 {

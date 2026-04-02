@@ -119,6 +119,10 @@ struct AICoachView: View {
             Text("AI-powered nutrition guidance")
                 .font(DesignTokens.Typography.caption)
                 .foregroundStyle(DesignTokens.Colors.textSecondary)
+
+            Text("Not a substitute for professional medical advice.")
+                .font(DesignTokens.Typography.bodyFont(11))
+                .foregroundStyle(DesignTokens.Colors.textTertiary)
         }
         .padding(.vertical, DesignTokens.Spacing.md)
     }

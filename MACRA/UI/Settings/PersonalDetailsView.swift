@@ -14,7 +14,7 @@ struct PersonalDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
                 // GOAL section
-                sectionBlock(header: "GOAL") {
+                sectionBlock(header: "Goal") {
                     HStack {
                         Text("Goal Weight")
                             .font(DesignTokens.Typography.bodyFont(16))
@@ -34,7 +34,7 @@ struct PersonalDetailsView: View {
                 }
 
                 // BODY section
-                sectionBlock(header: "BODY") {
+                sectionBlock(header: "Body") {
                     VStack(spacing: 0) {
                         detailRow(title: "Current Weight", value: weight)
                         Divider().padding(.leading, DesignTokens.Spacing.md)
@@ -47,7 +47,7 @@ struct PersonalDetailsView: View {
                 }
 
                 // ACTIVITY section
-                sectionBlock(header: "ACTIVITY") {
+                sectionBlock(header: "Activity") {
                     detailRow(title: "Daily Step Goal", value: stepsTarget)
                 }
             }
@@ -71,7 +71,8 @@ struct PersonalDetailsView: View {
             weight = "\(Int(snapshot.weight.rounded())) lbs"
         }
         if snapshot.height > 0 {
-            height = "\(Int(snapshot.height.rounded())) in"
+            let totalIn = Int(snapshot.height.rounded())
+            height = "\(totalIn / 12)'\(totalIn % 12)\""
         }
         if let bd = snapshot.birthDate {
             let formatter = DateFormatter()

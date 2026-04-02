@@ -90,7 +90,8 @@ final class FoodAnalysisPipeline: ObservableObject {
         let results = await lookupNutrition(for: predictions)
 
         if results.isEmpty {
-            // Model classified but no nutrition data in cache
+            // Model classified but no nutrition data in local cache.
+            // Return results with low confidence so UI prompts user to verify.
             return predictions.map { prediction in
                 FoodAnalysisResult(
                     name: prediction.displayName,
@@ -98,7 +99,7 @@ final class FoodAnalysisPipeline: ObservableObject {
                     protein: 0,
                     carbs: 0,
                     fat: 0,
-                    confidence: prediction.confidencePercent
+                    confidence: min(prediction.confidencePercent, 30)
                 )
             }
         }
@@ -121,7 +122,8 @@ final class FoodAnalysisPipeline: ObservableObject {
                 FoodAnalysisResult(
                     name: p.displayName,
                     calories: 0, protein: 0, carbs: 0, fat: 0,
-                    confidence: p.confidencePercent
+                    confidence: min(p.confidencePercent, 30),
+                    needsManualEntry: true
                 )
             }
         }
@@ -153,7 +155,8 @@ final class FoodAnalysisPipeline: ObservableObject {
                 results.append(FoodAnalysisResult(
                     name: prediction.displayName,
                     calories: 0, protein: 0, carbs: 0, fat: 0,
-                    confidence: prediction.confidencePercent
+                    confidence: min(prediction.confidencePercent, 30),
+                    needsManualEntry: true
                 ))
             }
         }

@@ -14,21 +14,21 @@ struct TodayMacrosPageView: View {
             HStack(spacing: DesignTokens.Spacing.sm) {
                 macroCard(
                     label: "Protein",
-                    consumed: viewModel.proteinConsumed,
+                    consumed: Int(viewModel.proteinConsumed.rounded()),
                     target: viewModel.proteinTarget,
                     ringColor: DesignTokens.Colors.ringProtein
                 )
 
                 macroCard(
                     label: "Carbs",
-                    consumed: viewModel.carbsConsumed,
+                    consumed: Int(viewModel.carbsConsumed.rounded()),
                     target: viewModel.carbsTarget,
                     ringColor: DesignTokens.Colors.ringCarbs
                 )
 
                 macroCard(
                     label: "Fat",
-                    consumed: viewModel.fatConsumed,
+                    consumed: Int(viewModel.fatConsumed.rounded()),
                     target: viewModel.fatTarget,
                     ringColor: DesignTokens.Colors.ringFat
                 )
@@ -63,7 +63,7 @@ struct TodayMacrosPageView: View {
 
                     // Center content — consumed count + "of X budget"
                     VStack(spacing: DesignTokens.Spacing.xxs) {
-                        Text("\(viewModel.caloriesConsumed)")
+                        Text("\(Int(viewModel.caloriesConsumed.rounded()))")
                             .font(.system(size: 48, weight: .bold, design: .rounded))
                             .foregroundStyle(DesignTokens.Colors.textPrimary)
                             .contentTransition(.numericText())
@@ -88,7 +88,7 @@ struct TodayMacrosPageView: View {
                     }
                 }
                 .frame(width: 160, height: 160)
-                .ringPulse(trigger: viewModel.caloriesConsumed)
+                .ringPulse(trigger: Int(viewModel.caloriesConsumed.rounded()))
 
                 Spacer()
 
@@ -96,7 +96,7 @@ struct TodayMacrosPageView: View {
                 VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
                     calorieDetailRow(
                         label: "consumed",
-                        value: "\(viewModel.caloriesConsumed)",
+                        value: "\(Int(viewModel.caloriesConsumed.rounded()))",
                         color: DesignTokens.Colors.textPrimary
                     )
                     calorieDetailRow(
@@ -123,7 +123,7 @@ struct TodayMacrosPageView: View {
         .premiumCard(elevation: .elevated)
         .onChange(of: viewModel.caloriesConsumed) { _, newValue in
             let ratio = viewModel.calorieTarget > 0
-                ? Double(newValue) / Double(viewModel.calorieTarget)
+                ? newValue / Double(viewModel.calorieTarget)
                 : 0
             if ratio >= 1.0 && !hasTriggeredTargetHaptic {
                 hasTriggeredTargetHaptic = true
@@ -151,7 +151,7 @@ struct TodayMacrosPageView: View {
     /// Ring fills clockwise from 0 toward target — overfill up to 150%
     private var budgetRingProgress: Double {
         guard viewModel.calorieTarget > 0 else { return 0 }
-        return min(Double(viewModel.caloriesConsumed) / Double(viewModel.calorieTarget), 1.5)
+        return min(viewModel.caloriesConsumed / Double(viewModel.calorieTarget), 1.5)
     }
 
     // MARK: - Macro Card

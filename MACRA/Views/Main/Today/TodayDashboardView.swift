@@ -229,9 +229,9 @@ struct TodayDashboardView: View {
     @ViewBuilder
     private func dailyStatusPill(_ vm: TodayViewModel) -> some View {
         let status = DailyStatus.evaluate(
-            consumed: Double(vm.caloriesConsumed),
+            consumed: vm.caloriesConsumed,
             target: Double(vm.calorieTarget),
-            protein: Double(vm.proteinConsumed),
+            protein: vm.proteinConsumed,
             proteinTarget: Double(vm.proteinTarget),
             mealsLogged: vm.recentMeals.count,
             hour: Calendar.current.component(.hour, from: Date())

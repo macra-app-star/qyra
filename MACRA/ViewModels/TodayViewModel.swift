@@ -35,13 +35,13 @@ final class TodayViewModel {
 
     // MARK: Consumed Values
 
-    var caloriesConsumed: Int = 0
-    var proteinConsumed: Int = 0
-    var carbsConsumed: Int = 0
-    var fatConsumed: Int = 0
-    var fiberConsumed: Int = 0
-    var sugarConsumed: Int = 0
-    var sodiumConsumed: Int = 0
+    var caloriesConsumed: Double = 0
+    var proteinConsumed: Double = 0
+    var carbsConsumed: Double = 0
+    var fatConsumed: Double = 0
+    var fiberConsumed: Double = 0
+    var sugarConsumed: Double = 0
+    var sodiumConsumed: Double = 0
 
     // MARK: Activity (HealthKit)
 
@@ -73,13 +73,13 @@ final class TodayViewModel {
 
     // MARK: Computed Remaining
 
-    var caloriesRemaining: Int { max(0, calorieTarget - caloriesConsumed) }
-    var proteinRemaining: Int { max(0, proteinTarget - proteinConsumed) }
-    var carbsRemaining: Int { max(0, carbsTarget - carbsConsumed) }
-    var fatRemaining: Int { max(0, fatTarget - fatConsumed) }
-    var fiberRemaining: Int { max(0, fiberTarget - fiberConsumed) }
-    var sugarRemaining: Int { max(0, sugarTarget - sugarConsumed) }
-    var sodiumRemaining: Int { max(0, sodiumTarget - sodiumConsumed) }
+    var caloriesRemaining: Int { max(0, calorieTarget - Int(caloriesConsumed.rounded())) }
+    var proteinRemaining: Int { max(0, proteinTarget - Int(proteinConsumed.rounded())) }
+    var carbsRemaining: Int { max(0, carbsTarget - Int(carbsConsumed.rounded())) }
+    var fatRemaining: Int { max(0, fatTarget - Int(fatConsumed.rounded())) }
+    var fiberRemaining: Int { max(0, fiberTarget - Int(fiberConsumed.rounded())) }
+    var sugarRemaining: Int { max(0, sugarTarget - Int(sugarConsumed.rounded())) }
+    var sodiumRemaining: Int { max(0, sodiumTarget - Int(sodiumConsumed.rounded())) }
 
     // MARK: Recent Meals
 
@@ -140,13 +140,13 @@ final class TodayViewModel {
                 fatTarget = result.goal.dailyFatGoal
 
                 // Consumed totals
-                caloriesConsumed = Int(result.summary.totalCalories)
-                proteinConsumed = Int(result.summary.totalProtein)
-                carbsConsumed = Int(result.summary.totalCarbs)
-                fatConsumed = Int(result.summary.totalFat)
-                fiberConsumed = Int(result.summary.totalFiber)
-                sugarConsumed = Int(result.summary.totalSugar)
-                sodiumConsumed = Int(result.summary.totalSodium)
+                caloriesConsumed = result.summary.totalCalories
+                proteinConsumed = result.summary.totalProtein
+                carbsConsumed = result.summary.totalCarbs
+                fatConsumed = result.summary.totalFat
+                fiberConsumed = result.summary.totalFiber
+                sugarConsumed = result.summary.totalSugar
+                sodiumConsumed = result.summary.totalSodium
 
                 // Map recent meals
                 let topMeals = Array(result.summary.meals.prefix(5))

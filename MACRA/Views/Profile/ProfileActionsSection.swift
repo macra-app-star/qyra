@@ -38,7 +38,7 @@ struct ProfileActionsSection: View {
             } label: {
                 HStack {
                     Label("Delete Account", systemImage: "trash")
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        .foregroundStyle(Color(.systemRed))
                     Spacer()
                     if isDeleting {
                         ProgressView()

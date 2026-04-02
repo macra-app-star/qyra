@@ -41,12 +41,12 @@ struct TodayMicronutrientsPageView: View {
 
     private func microCard(
         label: String,
-        consumed: Int,
+        consumed: Double,
         target: Int,
         unit: String,
         ringColor: Color
     ) -> some View {
-        let progress = target > 0 ? min(Double(consumed) / Double(target), 1.0) : 0
+        let progress = target > 0 ? min(consumed / Double(target), 1.0) : 0
 
         return VStack(spacing: DesignTokens.Spacing.sm) {
             ZStack {
@@ -65,7 +65,7 @@ struct TodayMicronutrientsPageView: View {
                     .rotationEffect(.degrees(-90))
                     .animation(.spring(response: 0.6, dampingFraction: 0.8), value: progress)
 
-                Text("\(consumed)")
+                Text("\(Int(consumed.rounded()))")
                     .font(.system(size: 16, weight: .bold, design: .rounded))
                     .foregroundStyle(DesignTokens.Colors.textPrimary)
                     .contentTransition(.numericText())
@@ -96,7 +96,7 @@ struct TodayMicronutrientsPageView: View {
             Text("Nutrition Score")
                 .font(.caption)
                 .foregroundStyle(Color.secondary)
-                .textCase(.uppercase)
+                .textCase(nil)
                 .kerning(0.5)
 
         Group {

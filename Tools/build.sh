@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-SCHEME="${1:-MACRA}"
+SCHEME="${1:-Qyra}"
 DESTINATION="${2:-platform=iOS Simulator,name=iPhone 16 Pro,OS=latest}"
 LOG_DIR="$(dirname "$0")/../Docs/BuildLogs"
 LOG_FILE="$LOG_DIR/build.log"
@@ -10,7 +10,7 @@ mkdir -p "$LOG_DIR"
 
 cd "$(dirname "$0")/.."
 
-echo "=== MACRA Build ==="
+echo "=== Qyra Build ==="
 echo "Scheme:      $SCHEME"
 echo "Destination: $DESTINATION"
 echo "Log:         $LOG_FILE"

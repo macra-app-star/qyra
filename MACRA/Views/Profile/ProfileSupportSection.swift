@@ -69,7 +69,7 @@ struct ProfileSupportSection: View {
     }
 
     private var lastSyncedText: String {
-        guard let lastSynced else { return "Never" }
+        guard let lastSynced else { return "Never synced" }
         return "Last Synced: \(lastSynced.formatted(.relative(presentation: .named, unitsStyle: .abbreviated)))"
     }
 }

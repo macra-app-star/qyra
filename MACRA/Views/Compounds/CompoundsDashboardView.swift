@@ -80,7 +80,7 @@ struct CompoundsDashboardView: View {
             }
             .padding()
         }
-        .navigationTitle("Supplements & Compounds")
+        .navigationTitle("Compounds")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button { showAddRegimen = true } label: {

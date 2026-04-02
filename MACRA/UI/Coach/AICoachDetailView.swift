@@ -20,6 +20,13 @@ struct AICoachDetailView: View {
 
                 // Smart Alerts
                 smartAlertsSection
+
+                // Disclaimer
+                Text("Qyra AI provides general wellness guidance and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider with questions about your health.")
+                    .font(DesignTokens.Typography.bodyFont(12))
+                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, DesignTokens.Spacing.sm)
             }
             .padding(.horizontal, DesignTokens.Spacing.md)
             .padding(.bottom, DesignTokens.Spacing.xl)

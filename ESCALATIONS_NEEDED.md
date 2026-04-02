@@ -113,4 +113,52 @@
 
 ---
 
-*7 escalations requiring your decision. All are launch-relevant.*
+---
+
+## 8. Missing userId Predicates in SwiftData Queries
+
+**Issue:** All SwiftData fetch queries (MealRepository, GoalRepository, ProfileRepository) lack userId filtering. On a shared device, any signed-in user sees ALL meal/goal data from previous users.
+
+**Why it matters:** Data leakage between users. Also affects streak calculations, nutrition totals, and social features.
+
+**Options:**
+- A) **Add userId to every FetchDescriptor predicate** — comprehensive fix, touches ~10 files
+- B) Accept risk for v1.0 since most iPhones are single-user
+
+**Recommendation:** Option A. This is a data privacy issue. Even on single-user devices, signing out and back in with a different account should not leak data.
+
+**Launch impact if ignored:** Data privacy violation. If Apple tests with two accounts, they'll see the leak.
+
+---
+
+## 9. Supabase Table Rename: macra_subscription_events
+
+**Issue:** Code now references `subscription_events` table (I updated the client), but the Supabase table is still named `macra_subscription_events`.
+
+**Options:**
+- A) **Rename the table in Supabase** — run `ALTER TABLE macra_subscription_events RENAME TO subscription_events;`
+- B) **Revert the code change** — use old table name
+- C) **Create a view** — `CREATE VIEW subscription_events AS SELECT * FROM macra_subscription_events;`
+
+**Recommendation:** Option A. Clean break. Run the migration before deploying the new app build.
+
+**Launch impact if ignored:** Subscription events silently fail to record. No crash, but you lose purchase telemetry.
+
+---
+
+## 10. Prompt Injection in AI Features
+
+**Issue:** User messages are embedded directly into Gemini prompts without sanitization. An attacker could inject instructions to manipulate nutrition estimates.
+
+**Options:**
+- A) **Sanitize user input** — strip special characters, limit length
+- B) **Use structured API** — separate system/user messages (Gemini supports this)
+- C) Accept risk for v1.0 (low likelihood, high impact)
+
+**Recommendation:** Option B is cleanest. Option A is fastest. At minimum, add input length limits.
+
+**Launch impact if ignored:** Low probability, high severity. A motivated user could get the AI to return false nutrition data.
+
+---
+
+*10 escalations requiring your decision. All are launch-relevant.*
