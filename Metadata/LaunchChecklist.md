@@ -1,23 +1,23 @@
-# MACRA — Launch Checklist
+# Qyra — Launch Checklist
 
 ## Pre-Submission
 
 ### Apple Developer Account
 - [ ] Enroll in Apple Developer Program ($99/year) at developer.apple.com
-- [ ] Create App ID: `co.tamras.macra`
+- [ ] Create App ID: `co.tamras.qyra`
 - [ ] Enable capabilities: HealthKit, In-App Purchases, Sign in with Apple
-- [ ] Create App Group: `group.co.tamras.macra`
+- [ ] Create App Group: `group.co.tamras.qyra`
 
 ### App Store Connect Setup
 - [ ] Create new app in App Store Connect
-- [ ] Set bundle ID: `co.tamras.macra`
+- [ ] Set bundle ID: `co.tamras.qyra`
 - [ ] Set primary language: English (US)
 - [ ] Set category: Health & Fitness (primary), Food & Drink (secondary)
 
 ### Subscription Configuration
-- [ ] Create subscription group: "MACRA Pro"
-- [ ] Create Monthly product: `co.tamras.macra.pro.monthly` — $9.99
-- [ ] Create Annual product: `co.tamras.macra.pro.annual` — $79.99
+- [ ] Create subscription group: "Qyra Pro"
+- [ ] Create Monthly product: `co.tamras.qyra.pro.monthly` — $9.99
+- [ ] Create Annual product: `co.tamras.qyra.pro.annual` — $79.99
 - [ ] Add subscription descriptions and review screenshots
 - [ ] Set up Sandbox tester accounts for review
 
@@ -45,7 +45,7 @@
 ### Build
 - [ ] Set DEVELOPMENT_TEAM in project.yml
 - [ ] Increment build number if needed
-- [ ] Archive: `xcodebuild archive -scheme MACRA -archivePath MACRA.xcarchive`
+- [ ] Archive: `xcodebuild archive -scheme Qyra -archivePath Qyra.xcarchive`
 - [ ] Export for App Store: `xcodebuild -exportArchive`
 - [ ] Upload via Xcode Organizer or `xcrun altool`
 
@@ -54,14 +54,14 @@
 - [ ] Add keywords
 - [ ] Upload screenshots for all required device sizes
 - [ ] Set pricing (Free with IAP)
-- [ ] Add privacy policy URL: https://tamras.co/macra/privacy
-- [ ] Add support URL: https://tamras.co/macra/support
+- [ ] Add privacy policy URL: https://qyra.app/privacy
+- [ ] Add support URL: https://qyra.app/support
 - [ ] Submit for review
 
 ## Post-Launch
 
 ### Website
-- [ ] Deploy landing page to tamras.co/macra
+- [ ] Deploy landing page to qyra.app
 - [ ] Deploy privacy policy page
 - [ ] Deploy terms of service page
 - [ ] Update App Store link in landing page with real URL

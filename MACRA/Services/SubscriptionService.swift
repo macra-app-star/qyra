@@ -97,14 +97,17 @@ final class SubscriptionService: SubscriptionServiceProtocol {
 
         for await result in StoreKit.Transaction.currentEntitlements {
             if case .verified(let transaction) = result {
-                if productIDs.contains(transaction.productID) &&
-                   transaction.revocationDate == nil {
+                let isActive = productIDs.contains(transaction.productID)
+                    && transaction.revocationDate == nil
+                    && (transaction.expirationDate == nil || transaction.expirationDate! > Date())
+
+                if isActive {
                     activeIDs.insert(transaction.productID)
 
                     latestInfo = SubscriptionInfo(
                         productID: transaction.productID,
                         expirationDate: transaction.expirationDate,
-                        isInGracePeriod: transaction.isUpgraded,
+                        isInGracePeriod: false,
                         willAutoRenew: true
                     )
                 }

@@ -97,6 +97,30 @@ actor SupabaseAPIService {
         return try JSONDecoder().decode(ListResponse.self, from: data).groups
     }
 
+    // MARK: - Username Check
+
+    func isUsernameAvailable(_ username: String) async -> Bool {
+        let encoded = username.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? username
+        guard let url = URL(string: "\(baseURL)/rest/v1/profiles?username=eq.\(encoded)&select=id&limit=1") else { return false }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(anonKey, forHTTPHeaderField: "apikey")
+        request.timeoutInterval = 5
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { return false }
+            // Empty array = no match = available
+            let json = try JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+            return json?.isEmpty ?? true
+        } catch {
+            // Network failure — assume available to not block onboarding, will validate on save
+            return true
+        }
+    }
+
     // MARK: - Profile
 
     func upsertProfile(userId: String, username: String, displayName: String) async throws {

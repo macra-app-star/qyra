@@ -62,13 +62,13 @@ Welcome to Qyra. Your macro tracking journey starts here.
 ---
 
 ## Support URL
-https://tamras.co/macra/support
+https://qyra.app/support
 
 ## Marketing URL
-https://tamras.co/macra
+https://qyra.app
 
 ## Privacy Policy URL
-https://tamras.co/macra/privacy
+https://qyra.app/privacy
 
 ---
 

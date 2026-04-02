@@ -1,9 +1,9 @@
-# MACRA — Launch Copy
+# Qyra — Launch Copy
 
 ## Twitter/X Launch Thread
 
 **Tweet 1 (Launch announcement):**
-I just shipped MACRA — a macro tracking app for people who are actually serious about their nutrition.
+I just shipped Qyra — a macro tracking app for people who are actually serious about their nutrition.
 
 No ads. No clutter. No light mode.
 
@@ -53,7 +53,7 @@ Built as a solo dev. 42 Swift files. 4,400+ lines of code. Ships with:
 Precision macro tracking. No ads, no clutter.
 
 **Description:**
-MACRA is a macro tracking app for people who take their nutrition seriously.
+Qyra is a macro tracking app for people who take their nutrition seriously.
 
 It calculates your personalized macro goals during onboarding using the Mifflin-St Jeor equation — factoring in your body composition, activity level, and goals (cut, maintain, or bulk).
 
@@ -64,9 +64,9 @@ All data is stored on-device. No analytics. No third-party SDKs. No light mode.
 Built as a solo dev project using SwiftUI, SwiftData, StoreKit 2, and HealthKit.
 
 **Maker Comment:**
-Hey PH! I built MACRA because every macro tracking app I tried was either bloated with features I didn't need, plastered with ads, or designed by people who've never counted a macro in their life.
+Hey PH! I built Qyra because every macro tracking app I tried was either bloated with features I didn't need, plastered with ads, or designed by people who've never counted a macro in their life.
 
-MACRA is what I wanted: open the app, see your rings, log your food, close the app. That's it. No social features pushing engagement. No AI food recognition hallucinating your calories. Just honest tracking.
+Qyra is what I wanted: open the app, see your rings, log your food, close the app. That's it. No social features pushing engagement. No AI food recognition hallucinating your calories. Just honest tracking.
 
 The entire app is 42 Swift files and stores everything on-device. Your nutrition data never leaves your phone.
 
@@ -77,7 +77,7 @@ If you're into the monochrome design aesthetic or you're a fellow SwiftUI dev, I
 ## Instagram / Threads
 
 **Post 1 (Launch):**
-MACRA is live on the App Store.
+Qyra is live on the App Store.
 
 Precision macro tracking with zero clutter. Personalized goals. Weekly insights. Apple Health integration.
 
@@ -88,7 +88,7 @@ Link in bio.
 **Post 2 (Feature highlight):**
 Your macros calculated for you.
 
-During onboarding, MACRA uses the Mifflin-St Jeor equation to calculate your exact calorie, protein, carb, and fat targets based on your body, activity level, and goals.
+During onboarding, Qyra uses the Mifflin-St Jeor equation to calculate your exact calorie, protein, carb, and fat targets based on your body, activity level, and goals.
 
 Stop guessing. Start tracking.
 
@@ -96,14 +96,14 @@ Stop guessing. Start tracking.
 
 ## Press Kit / Email Pitch
 
-**Subject:** MACRA: A privacy-first macro tracking app for serious nutrition tracking
+**Subject:** Qyra: A privacy-first macro tracking app for serious nutrition tracking
 
 **Body:**
 Hi [Name],
 
-I just launched MACRA — a macro tracking app built for people who are serious about their nutrition.
+I just launched Qyra — a macro tracking app built for people who are serious about their nutrition.
 
-Unlike most nutrition apps, MACRA stores all data on-device with zero analytics and zero third-party SDKs. It calculates personalized macro goals using the Mifflin-St Jeor equation during onboarding and provides weekly adherence insights.
+Unlike most nutrition apps, Qyra stores all data on-device with zero analytics and zero third-party SDKs. It calculates personalized macro goals using the Mifflin-St Jeor equation during onboarding and provides weekly adherence insights.
 
 Key differentiators:
 - Privacy-first: All data on-device, no tracking
@@ -112,24 +112,24 @@ Key differentiators:
 - Apple native: SwiftUI, SwiftData, StoreKit 2, HealthKit
 - Solo dev: Built entirely by one person
 
-Pricing: Free download, $9.99/month or $79.99/year for MACRA Pro.
+Pricing: Free download, $9.99/month or $79.99/year for Qyra Pro.
 
 Happy to provide a promo code for review, screenshots, or answer any questions.
 
 Best,
 [Your Name]
 Tamras Co.
-https://tamras.co/macra
+https://qyra.app
 
 ---
 
 ## App Store Review Response Templates
 
 **5-star review:**
-Thank you! Glad MACRA fits your tracking workflow. If you have any feature requests, reach out at support@tamras.co — this app is built by one person and I read every message.
+Thank you! Glad Qyra fits your tracking workflow. If you have any feature requests, reach out at support@tamras.co — this app is built by one person and I read every message.
 
 **Feature request:**
-Thanks for the suggestion! I'm actively building out new features for MACRA. [Feature] is on the roadmap for a future update. Stay tuned.
+Thanks for the suggestion! I'm actively building out new features for Qyra. [Feature] is on the roadmap for a future update. Stay tuned.
 
 **Bug report:**
 Sorry about that! Could you email support@tamras.co with details about what happened? I'll investigate and get a fix out as quickly as possible.

@@ -1,4 +1,4 @@
-# MACRA — Product Roadmap
+# Qyra — Product Roadmap
 
 ## v1.0 (Launch) ✅
 - Manual meal entry with full macro breakdown
@@ -30,10 +30,10 @@
 - Suggested foods based on time of day
 
 ### Technical
-- `MACRA/Services/FoodDatabaseService.swift` — API client for OpenFoodFacts
-- `MACRA/UI/Scanner/BarcodeScannerView.swift` — Camera preview + scanner
-- `MACRA/UI/Logging/FoodSearchView.swift` — Search interface
-- `MACRA/Data/Local/FoodCacheRepository.swift` — Offline barcode cache
+- `Qyra/Services/FoodDatabaseService.swift` — API client for OpenFoodFacts
+- `Qyra/UI/Scanner/BarcodeScannerView.swift` — Camera preview + scanner
+- `Qyra/UI/Logging/FoodSearchView.swift` — Search interface
+- `Qyra/Data/Local/FoodCacheRepository.swift` — Offline barcode cache
 
 ---
 
@@ -47,9 +47,9 @@
 - Save recognized items for faster future logging
 
 ### Technical
-- `MACRA/Services/FoodRecognitionService.swift` — Core ML + optional API
-- `MACRA/UI/Camera/CameraCaptureView.swift` — Photo capture
-- `MACRA/UI/Camera/FoodConfirmationView.swift` — Review + edit before saving
+- `Qyra/Services/FoodRecognitionService.swift` — Core ML + optional API
+- `Qyra/UI/Camera/CameraCaptureView.swift` — Photo capture
+- `Qyra/UI/Camera/FoodConfirmationView.swift` — Review + edit before saving
 
 ---
 
@@ -63,9 +63,9 @@
 - Works offline for transcription, optional cloud for NLP
 
 ### Technical
-- `MACRA/Services/VoiceTranscriptionService.swift` — SFSpeechRecognizer
-- `MACRA/Services/MealParsingService.swift` — Text → food items
-- `MACRA/UI/Voice/VoiceLogView.swift` — Recording interface
+- `Qyra/Services/VoiceTranscriptionService.swift` — SFSpeechRecognizer
+- `Qyra/Services/MealParsingService.swift` — Text → food items
+- `Qyra/UI/Voice/VoiceLogView.swift` — Recording interface
 
 ---
 

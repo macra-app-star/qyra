@@ -105,9 +105,9 @@ final class AppState {
             try? await profileRepo.markOnboardingComplete()
         }
 
-        // Skip full evaluateGate — go straight to ready
-        // (auth/sub status doesn't matter for initial entry after onboarding)
-        gateStatus = .ready
+        // Re-evaluate gate — checks auth and subscription status
+        // before granting access to the main app
+        await evaluateGate()
     }
 
     #if DEBUG

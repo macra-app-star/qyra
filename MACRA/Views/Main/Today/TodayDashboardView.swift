@@ -37,18 +37,38 @@ struct TodayDashboardView: View {
                     // Header: apple emoji + Qyra, streak pill
                     headerRow(vm)
 
-                    // Week calendar strip
-                    WeeklyDateStripView(
-                        selectedDate: Binding(
-                            get: { vm.selectedDate },
-                            set: { newDate in
-                                vm.selectedDate = newDate
-                                Task { await vm.loadDay(newDate) }
-                            }
-                        ),
-                        dayCalories: vm.weekCalories
-                    )
+                    // Week calendar strip with expand chevron
+                    HStack(spacing: 0) {
+                        WeeklyDateStripView(
+                            selectedDate: Binding(
+                                get: { vm.selectedDate },
+                                set: { newDate in
+                                    vm.selectedDate = newDate
+                                    Task { await vm.loadDay(newDate) }
+                                }
+                            ),
+                            dayCalories: vm.weekCalories
+                        )
+
+                        // Chevron toggle for expanded calendar
+                        Button {
+                            vm.toggleCalendar()
+                        } label: {
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(Color(.tertiaryLabel))
+                                .rotationEffect(.degrees(vm.isCalendarExpanded ? 180 : 0))
+                                .animation(.spring(response: 0.35, dampingFraction: 0.85), value: vm.isCalendarExpanded)
+                                .frame(width: 44, height: 44)
+                        }
+                    }
                     .padding(.horizontal, -DesignTokens.Spacing.md)
+
+                    // Expanded monthly calendar
+                    if vm.isCalendarExpanded {
+                        ExpandedCalendarView(viewModel: vm)
+                            .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
 
                     // Paged card carousel + page indicator (grouped tight)
                     VStack(spacing: DesignTokens.Spacing.sm) {

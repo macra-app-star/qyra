@@ -71,6 +71,13 @@ final class TodayViewModel {
     var isLoadingInsight: Bool = false
     private var lastInsightFetch: Date? = nil
 
+    // MARK: Expanded Calendar
+
+    var isCalendarExpanded: Bool = false
+    var calendarDisplayMonth: Date = Date()
+    var calendarDayStatuses: [Date: DayStatus] = [:]
+    var longestStreak: Int = 0
+
     // MARK: Computed Remaining
 
     var caloriesRemaining: Int { max(0, calorieTarget - Int(caloriesConsumed.rounded())) }
@@ -362,6 +369,113 @@ final class TodayViewModel {
         default:
             return "Consistency is key. Small daily choices add up to big results over time."
         }
+    }
+
+    // MARK: - Expanded Calendar
+
+    func toggleCalendar() {
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
+            isCalendarExpanded.toggle()
+        }
+        if isCalendarExpanded {
+            Task { await loadCalendarDayStatuses(for: calendarDisplayMonth) }
+            Task { await calculateLongestStreak() }
+        }
+    }
+
+    func navigateMonth(by offset: Int) {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            if let newMonth = Calendar.current.date(byAdding: .month, value: offset, to: calendarDisplayMonth) {
+                calendarDisplayMonth = newMonth
+            }
+        }
+        Task { await loadCalendarDayStatuses(for: calendarDisplayMonth) }
+    }
+
+    func selectDate(_ date: Date) {
+        selectedDate = date
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+            isCalendarExpanded = false
+        }
+        Task { await loadDay(date) }
+    }
+
+    func loadCalendarDayStatuses(for month: Date) async {
+        let calendar = Calendar.current
+        guard let monthInterval = calendar.dateInterval(of: .month, for: month),
+              let container = modelContainer else { return }
+
+        let today = calendar.startOfDay(for: Date())
+        let startDate = monthInterval.start
+        let endDate = monthInterval.end
+
+        // Fetch all meals for the month
+        let context = ModelContext(container)
+        let predicate = #Predicate<MealLog> { meal in
+            meal.date >= startDate && meal.date < endDate
+        }
+        let descriptor = FetchDescriptor<MealLog>(predicate: predicate)
+        let meals = (try? context.fetch(descriptor)) ?? []
+
+        // Build set of days that have meals
+        var loggedDays = Set<Date>()
+        for meal in meals {
+            loggedDays.insert(calendar.startOfDay(for: meal.date))
+        }
+
+        var statuses: [Date: DayStatus] = [:]
+        var currentDate = startDate
+        while currentDate < endDate {
+            let dayStart = calendar.startOfDay(for: currentDate)
+
+            if dayStart > today {
+                statuses[dayStart] = .future
+            } else if loggedDays.contains(dayStart) {
+                statuses[dayStart] = .logged
+            } else if dayStart == today {
+                // Today but no meals yet — not missed yet
+                statuses[dayStart] = .future
+            } else {
+                statuses[dayStart] = .missed
+            }
+
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? endDate
+        }
+
+        self.calendarDayStatuses = statuses
+    }
+
+    func calculateLongestStreak() async {
+        guard let container = modelContainer else { return }
+        let context = ModelContext(container)
+        let descriptor = FetchDescriptor<MealLog>(sortBy: [SortDescriptor(\.date, order: .reverse)])
+        guard let meals = try? context.fetch(descriptor), !meals.isEmpty else {
+            longestStreak = max(dayStreak, 0)
+            return
+        }
+
+        let calendar = Calendar.current
+        var uniqueDates = Set<Date>()
+        for meal in meals {
+            uniqueDates.insert(calendar.startOfDay(for: meal.date))
+        }
+
+        let sortedDates = uniqueDates.sorted()
+        var longest = 0
+        var current = 1
+
+        for i in 1..<sortedDates.count {
+            if let expected = calendar.date(byAdding: .day, value: 1, to: sortedDates[i - 1]),
+               calendar.isDate(expected, inSameDayAs: sortedDates[i]) {
+                current += 1
+            } else {
+                longest = max(longest, current)
+                current = 1
+            }
+        }
+        longest = max(longest, current)
+
+        longestStreak = max(longest, dayStreak)
     }
 
     // MARK: - Private

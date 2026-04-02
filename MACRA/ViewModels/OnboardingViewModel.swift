@@ -479,9 +479,9 @@ final class OnboardingViewModel {
             return
         }
 
-        // Simulate network check delay (replace with real Supabase check later)
-        try? await Task.sleep(for: .milliseconds(500))
-        isUsernameAvailable = true
+        // Check against Supabase profiles table
+        let available = await SupabaseAPIService.shared.isUsernameAvailable(trimmed)
+        isUsernameAvailable = available
         isCheckingUsername = false
     }
 

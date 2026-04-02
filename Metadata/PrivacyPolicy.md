@@ -1,9 +1,9 @@
 # Privacy Policy
 
-**MACRA — Privacy Policy**
+**Qyra — Privacy Policy**
 *Last updated: March 4, 2026*
 
-Tamras Co. ("we", "us", or "our") operates the MACRA mobile application (the "App"). This Privacy Policy explains how we collect, use, and protect your information when you use the App.
+Tamras Co. ("we", "us", or "our") operates the Qyra mobile application (the "App"). This Privacy Policy explains how we collect, use, and protect your information when you use the App.
 
 ## 1. Information We Collect
 
@@ -69,4 +69,4 @@ If you have questions about this Privacy Policy, please contact us at:
 
 **Tamras Co.**
 Email: privacy@tamras.co
-Website: https://tamras.co/macra
+Website: https://qyra.app

@@ -41,6 +41,8 @@ struct FABMenuOverlay: View {
                 .onTapGesture {
                     dismissOverlay()
                 }
+                .accessibilityLabel("Close menu")
+                .accessibilityAddTraits(.isButton)
 
             VStack(spacing: DesignTokens.Spacing.md) {
                 // Scan Food primary CTA — top position
@@ -56,6 +58,8 @@ struct FABMenuOverlay: View {
                         .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.md))
                 }
                 .buttonStyle(ScaleButtonStyle())
+                .accessibilityLabel("Scan food with camera")
+                .accessibilityHint("Opens camera to photograph and analyze your meal")
                 .frame(width: DesignTokens.FAB.menuItemSize * 3 + DesignTokens.Spacing.sm * 2)
                 .opacity(isShowing ? 1.0 : 0.0)
                 .animation(
@@ -105,6 +109,7 @@ struct FABMenuOverlay: View {
             .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.lg))
         }
         .buttonStyle(ScaleButtonStyle())
+        .accessibilityLabel(item.title)
         .opacity(isShowing ? 1.0 : 0.0)
         .animation(
             DesignTokens.Anim.spring,

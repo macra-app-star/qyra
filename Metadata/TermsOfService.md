@@ -1,9 +1,9 @@
 # Terms of Service
 
-**MACRA — Terms of Service**
+**Qyra — Terms of Service**
 *Last updated: March 4, 2026*
 
-Please read these Terms of Service ("Terms") carefully before using the MACRA mobile application ("App") operated by Tamras Co. ("we", "us", or "our").
+Please read these Terms of Service ("Terms") carefully before using the Qyra mobile application ("App") operated by Tamras Co. ("we", "us", or "our").
 
 ## 1. Acceptance of Terms
 
@@ -11,7 +11,7 @@ By downloading, installing, or using the App, you agree to be bound by these Ter
 
 ## 2. Description of Service
 
-MACRA is a macro nutrient tracking application that allows you to:
+Qyra is a macro nutrient tracking application that allows you to:
 - Log meals with calorie and macronutrient data
 - Set and track personalized nutrition goals
 - View weekly insights and adherence trends
@@ -35,7 +35,7 @@ If offered, any unused portion of a free trial period is forfeited when you purc
 
 ## 4. Health Disclaimer
 
-**MACRA is not a medical device and does not provide medical advice.**
+**Qyra is not a medical device and does not provide medical advice.**
 
 The macro nutrient calculations, goals, and insights provided by the App are for informational and tracking purposes only. They are based on general nutritional formulas (Mifflin-St Jeor equation) and are not a substitute for professional medical advice, diagnosis, or treatment.
 
@@ -55,7 +55,7 @@ The App, including its design, code, graphics, and content, is owned by Tamras C
 
 ## 7. Data and Privacy
 
-Your use of the App is also governed by our Privacy Policy, available at https://tamras.co/macra/privacy. All data is stored locally on your device.
+Your use of the App is also governed by our Privacy Policy, available at https://qyra.app/privacy. All data is stored locally on your device.
 
 ## 8. Limitation of Liability
 
@@ -85,4 +85,4 @@ For questions about these Terms:
 
 **Tamras Co.**
 Email: support@tamras.co
-Website: https://tamras.co/macra
+Website: https://qyra.app

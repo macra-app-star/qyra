@@ -35,6 +35,14 @@ struct WeekCalendarStrip: View {
         "\(calendar.component(.day, from: date))"
     }
 
+    private func accessibilityDateLabel(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        let label = formatter.string(from: date)
+        if isToday(date) { return "Today, \(label)" }
+        return label
+    }
+
     /// Resolve the DayStatus for a given date from the streak service data.
     private func statusForDate(_ date: Date) -> DayStatus? {
         let startOfDay = calendar.startOfDay(for: date)
@@ -53,6 +61,9 @@ struct WeekCalendarStrip: View {
                 }
                 .buttonStyle(.plain)
                 .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
+                .accessibilityLabel(accessibilityDateLabel(date))
+                .accessibilityAddTraits(isSelected(date) ? [.isSelected] : [])
             }
         }
         .padding(.horizontal, DesignTokens.Spacing.md)

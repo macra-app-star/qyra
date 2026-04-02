@@ -121,6 +121,8 @@ struct TodayMacrosPageView: View {
             }
         }
         .premiumCard(elevation: .elevated)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Calories: \(Int(viewModel.caloriesConsumed.rounded())) consumed of \(viewModel.calorieTarget) target, \(viewModel.caloriesBurned) earned back")
         .onChange(of: viewModel.caloriesConsumed) { _, newValue in
             let ratio = viewModel.calorieTarget > 0
                 ? newValue / Double(viewModel.calorieTarget)

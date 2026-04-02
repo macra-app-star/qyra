@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24563627173BD579D5317448 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09CFE54A057F3AD434CC7E /* CalendarHelper.swift */; };
+		7BB9ABDE27DDF13D7928DAC7 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D3C9D7C303BBC9AB1E3D23 /* CalendarDayCell.swift */; };
+		17D22ADAD17314D13E9E3BCA /* StreakCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335CAB1B5D2C44DB06851581 /* StreakCardView.swift */; };
+		802B95E90A4EDA46D33B805C /* ExpandedCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D871FE0FCAF85035C8E81EC2 /* ExpandedCalendarView.swift */; };
 		003DD5A9E423B9ECF61332F6 /* MacroGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC728C501AD5FD454893E4 /* MacroGoal.swift */; };
 		03717BB1CFFC46F5DC827076 /* WeightChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340E22BF39FC2F2DF04581CB /* WeightChartSection.swift */; };
 		039FD14AAE03353A23010179 /* WearableConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF160970C074FC78F9CD7708 /* WearableConnectionView.swift */; };
@@ -300,6 +304,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C09CFE54A057F3AD434CC7E /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
+		F1D3C9D7C303BBC9AB1E3D23 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
+		335CAB1B5D2C44DB06851581 /* StreakCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakCardView.swift; sourceTree = "<group>"; };
+		D871FE0FCAF85035C8E81EC2 /* ExpandedCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedCalendarView.swift; sourceTree = "<group>"; };
 		002A0AE9D8EBD34333DC22A7 /* WorkoutSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionView.swift; sourceTree = "<group>"; };
 		01D3A7FC8ABC1BAA83001F54 /* TodayActivityPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayActivityPageView.swift; sourceTree = "<group>"; };
 		03C81E86C86E46869C9A56DC /* SpeedSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedSelectionView.swift; sourceTree = "<group>"; };
@@ -1114,6 +1122,10 @@
 			isa = PBXGroup;
 			children = (
 				574043163305B6AE7AB2B6E0 /* CarouselPageView.swift */,
+				2C09CFE54A057F3AD434CC7E /* CalendarHelper.swift */,
+				F1D3C9D7C303BBC9AB1E3D23 /* CalendarDayCell.swift */,
+				335CAB1B5D2C44DB06851581 /* StreakCardView.swift */,
+				D871FE0FCAF85035C8E81EC2 /* ExpandedCalendarView.swift */,
 				FDF25433A7E90B2117BA40F5 /* LogCaffeineSheetView.swift */,
 				730D476921964415E8DA0526 /* LogWaterSheetView.swift */,
 				2BEC01B07E239C83938CD2E7 /* RecentlyUploadedSection.swift */,
@@ -1629,6 +1641,10 @@
 				285387619D619B3495A0E465 /* QuickMealDetector.swift in Sources */,
 				695D667990FB288862D552A0 /* RatingPromptView.swift in Sources */,
 				CCF07D9D55706626AB1E62CF /* RecentlyUploadedSection.swift in Sources */,
+				24563627173BD579D5317448 /* CalendarHelper.swift in Sources */,
+				7BB9ABDE27DDF13D7928DAC7 /* CalendarDayCell.swift in Sources */,
+				17D22ADAD17314D13E9E3BCA /* StreakCardView.swift in Sources */,
+				802B95E90A4EDA46D33B805C /* ExpandedCalendarView.swift in Sources */,
 				21B7B89B1999ECE1E91127D2 /* ReconcileDayUseCase.swift in Sources */,
 				A03225AFABC1E9A204F51F08 /* ReferralCodeView.swift in Sources */,
 				FB397ED172F6CF388E5D68BC /* RestaurantOrderView.swift in Sources */,
