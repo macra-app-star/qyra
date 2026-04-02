@@ -45,7 +45,7 @@ struct ProfileSupportSection: View {
             NavigationLink {
                 WebContentView(
                     title: "Terms and Conditions",
-                    url: URL(string: "https://qyra.app/terms")!
+                    url: URL(string: "https://qyra-web.vercel.app/terms")!
                 )
             } label: {
                 Label("Terms and Conditions", systemImage: "doc.text")
@@ -54,7 +54,7 @@ struct ProfileSupportSection: View {
             NavigationLink {
                 WebContentView(
                     title: "Privacy Policy",
-                    url: URL(string: "https://qyra.app/privacy")!
+                    url: URL(string: "https://qyra-web.vercel.app/privacy")!
                 )
             } label: {
                 Label("Privacy Policy", systemImage: "hand.raised.fill")

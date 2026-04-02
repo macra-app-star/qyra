@@ -199,6 +199,9 @@ struct MainTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: .openFoodDatabase)) { _ in
             showFoodDatabase = true
         }
+        .onReceive(NotificationCenter.default.publisher(for: .openFoodScanner)) { _ in
+            showCamera = true
+        }
     }
 
     // MARK: - Custom Floating Tab Bar

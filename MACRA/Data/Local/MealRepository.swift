@@ -9,6 +9,7 @@ extension Notification.Name {
     static let weightLogged = Notification.Name("weightLogged")
     static let appBecameActive = Notification.Name("appBecameActive")
     static let openFoodDatabase = Notification.Name("openFoodDatabase")
+    static let openFoodScanner = Notification.Name("openFoodScanner")
 }
 
 @ModelActor

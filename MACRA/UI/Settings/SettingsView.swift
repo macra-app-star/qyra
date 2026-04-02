@@ -4,8 +4,8 @@ struct SettingsView: View {
     @Environment(AppState.self) private var appState
     @State private var showSignOutConfirmation = false
 
-    private let termsURL = URL(string: "https://qyra.app/terms")!
-    private let privacyURL = URL(string: "https://qyra.app/privacy")!
+    private let termsURL = URL(string: "https://qyra-web.vercel.app/terms")!
+    private let privacyURL = URL(string: "https://qyra-web.vercel.app/privacy")!
 
     var body: some View {
         List {

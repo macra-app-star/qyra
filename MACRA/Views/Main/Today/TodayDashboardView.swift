@@ -157,7 +157,7 @@ struct TodayDashboardView: View {
                             Task { await vm.refresh() }
                         },
                         onLogMeal: {
-                            NotificationCenter.default.post(name: .openFoodDatabase, object: nil)
+                            NotificationCenter.default.post(name: .openFoodScanner, object: nil)
                         }
                     )
                 }
