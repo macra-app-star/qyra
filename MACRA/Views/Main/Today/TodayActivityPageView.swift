@@ -76,7 +76,7 @@ struct TodayActivityPageView: View {
 
                 Image(systemName: "flame.fill")
                     .font(QyraFont.medium(22))
-                    .foregroundStyle(Color.secondary)
+                    .foregroundStyle(Color.accentColor)
             }
 
             VStack(spacing: 2) {
@@ -104,7 +104,7 @@ struct TodayActivityPageView: View {
             HStack(spacing: DesignTokens.Spacing.sm) {
                 Image(systemName: "drop.fill")
                     .font(QyraFont.regular(22))
-                    .foregroundStyle(DesignTokens.Colors.waterBlue)
+                    .foregroundStyle(Color.accentColor)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(format: "%.0f oz", viewModel.waterOz))
@@ -157,7 +157,7 @@ struct TodayActivityPageView: View {
                     .frame(height: 8)
 
                 Capsule()
-                    .fill(DesignTokens.Colors.waterBlue)
+                    .fill(Color.accentColor)
                     .frame(width: geo.size.width * waterProgress, height: 8)
                     .animation(DesignTokens.Anim.standard, value: waterProgress)
             }
@@ -173,7 +173,7 @@ struct TodayActivityPageView: View {
             HStack(spacing: DesignTokens.Spacing.sm) {
                 Image(systemName: "cup.and.saucer.fill")
                     .font(QyraFont.regular(20))
-                    .foregroundStyle(Color.secondary)
+                    .foregroundStyle(Color.accentColor)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("\(Int(viewModel.caffeineMg)) mg")
