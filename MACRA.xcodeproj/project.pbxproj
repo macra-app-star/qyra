@@ -284,6 +284,10 @@
 		FF296199D1898690DA1E5A0B /* FamilyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECF2E52606583F9BE178F9E /* FamilyPlanView.swift */; };
 		FFE24976C3879B5C9B3224AA /* HealthKitConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE9EDDDE173BA912CEDB155 /* HealthKitConnectView.swift */; };
 		FFE32FB1A628586AD4E10933 /* ProfileTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87C97B2483E07F5C4B40F9 /* ProfileTabView.swift */; };
+		7F22202UMXJHUY7U9O3NFKSQ /* AIConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = VPYK73GUM8TSTJJZX2KFZGE1 /* AIConversation.swift */; };
+		6FXSQDI7124B8CSF4XZJUJ9E /* AIConversationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FHOPECFIIMZ7CM5TTPDK1RE /* AIConversationMessage.swift */; };
+		QYTWENJLPY8G24I6AGTYXW50 /* AIChatHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EU1P61XHB8V7WG8RPC41H8MQ /* AIChatHistoryView.swift */; };
+		16XOK159OW2BFTMUM4LN6QRR /* AIChatHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = SW8B12N8JYLG7DLEATHOD83D /* AIChatHistoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -585,6 +589,10 @@
 		FDF25433A7E90B2117BA40F5 /* LogCaffeineSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCaffeineSheetView.swift; sourceTree = "<group>"; };
 		FE45A3D2210DC578DB28A82D /* FABMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FABMenuOverlay.swift; sourceTree = "<group>"; };
 		FF55C0AB3B8697BA9B45AA3E /* ProgressPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPhoto.swift; sourceTree = "<group>"; };
+		VPYK73GUM8TSTJJZX2KFZGE1 /* AIConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIConversation.swift; sourceTree = "<group>"; };
+		0FHOPECFIIMZ7CM5TTPDK1RE /* AIConversationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIConversationMessage.swift; sourceTree = "<group>"; };
+		EU1P61XHB8V7WG8RPC41H8MQ /* AIChatHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatHistoryView.swift; sourceTree = "<group>"; };
+		SW8B12N8JYLG7DLEATHOD83D /* AIChatHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatHistoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -593,6 +601,7 @@
 			children = (
 				D9670D86ACF2C683E3F56B39 /* AICoachDetailView.swift */,
 				2B48A986A86EAD43B5C349EA /* AICoachView.swift */,
+				EU1P61XHB8V7WG8RPC41H8MQ /* AIChatHistoryView.swift */,
 			);
 			path = Coach;
 			sourceTree = "<group>";
@@ -601,6 +610,7 @@
 			isa = PBXGroup;
 			children = (
 				AB4FA775A16A6A5BFE3E7AEC /* AICoachViewModel.swift */,
+				SW8B12N8JYLG7DLEATHOD83D /* AIChatHistoryViewModel.swift */,
 				32AEE9F43FB0BA991A8625B1 /* BarcodeScannerViewModel.swift */,
 				CD5F40826C5B8D29BDC11596 /* DashboardViewModel.swift */,
 				F06B0D626E4999E3B0586EB2 /* ExerciseViewModel.swift */,
@@ -948,6 +958,8 @@
 				D90FA64C88E2267585D1E3B5 /* WaterEntry.swift */,
 				0C009B42937E9DBAC1EDA989 /* WeeklyDebrief.swift */,
 				93FC3F821090B9B020E131D9 /* WeightEntry.swift */,
+				0FHOPECFIIMZ7CM5TTPDK1RE /* AIConversationMessage.swift */,
+				VPYK73GUM8TSTJJZX2KFZGE1 /* AIConversation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1714,6 +1726,10 @@
 				452F42A8495E9112AF817672 /* WorkoutFrequencyView.swift in Sources */,
 				BC45B41B8F522DD27D0D9E66 /* WorkoutPlannerView.swift in Sources */,
 				B01C028BF7FBBABD28BBF06C /* WorkoutSessionView.swift in Sources */,
+				7F22202UMXJHUY7U9O3NFKSQ /* AIConversation.swift in Sources */,
+				6FXSQDI7124B8CSF4XZJUJ9E /* AIConversationMessage.swift in Sources */,
+				QYTWENJLPY8G24I6AGTYXW50 /* AIChatHistoryView.swift in Sources */,
+				16XOK159OW2BFTMUM4LN6QRR /* AIChatHistoryViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

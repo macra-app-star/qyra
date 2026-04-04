@@ -10,11 +10,56 @@ final class IntelligenceViewModel {
     var selectedPhoto: PhotosPickerItem? = nil
     var attachedImage: UIImage? = nil
 
-    private let modelContainer: ModelContainer
+    var conversationId: UUID?
+    var initialPrompt: String?
 
-    init(modelContainer: ModelContainer) {
+    private let modelContainer: ModelContainer
+    private var hasLoadedHistory = false
+
+    init(modelContainer: ModelContainer, conversationId: UUID? = nil, initialPrompt: String? = nil) {
         self.modelContainer = modelContainer
-        addWelcomeMessage()
+        self.conversationId = conversationId
+        self.initialPrompt = initialPrompt
+    }
+
+    /// Load existing messages from SwiftData if a conversationId is provided.
+    /// If no messages exist, show welcome message. Then fire initialPrompt if provided.
+    func loadConversation() async {
+        guard !hasLoadedHistory else { return }
+        hasLoadedHistory = true
+
+        if let conversationId {
+            let context = ModelContext(modelContainer)
+            let predicate = #Predicate<AIConversationMessage> { msg in
+                msg.conversationId == conversationId
+            }
+            var descriptor = FetchDescriptor<AIConversationMessage>(
+                predicate: predicate,
+                sortBy: [SortDescriptor(\.createdAt, order: .forward)]
+            )
+            descriptor.fetchLimit = 500
+
+            if let savedMessages = try? context.fetch(descriptor), !savedMessages.isEmpty {
+                messages = savedMessages.map { msg in
+                    CoachMessage(
+                        role: msg.role == "user" ? .user : .assistant,
+                        content: msg.content,
+                        timestamp: msg.createdAt
+                    )
+                }
+            } else {
+                addWelcomeMessage()
+            }
+        } else {
+            addWelcomeMessage()
+        }
+
+        // Fire initial prompt if provided
+        if let prompt = initialPrompt, !prompt.isEmpty {
+            initialPrompt = nil
+            inputText = prompt
+            await send()
+        }
     }
 
     private func addWelcomeMessage() {
@@ -35,6 +80,11 @@ final class IntelligenceViewModel {
         inputText = ""
         isLoading = true
 
+        // Ensure we have a conversationId
+        if conversationId == nil {
+            conversationId = UUID()
+        }
+
         let context = await buildContext()
 
         do {
@@ -43,6 +93,9 @@ final class IntelligenceViewModel {
             )
             let assistantMessage = CoachMessage(role: .assistant, content: response, timestamp: .now)
             messages.append(assistantMessage)
+
+            // Persist both messages to SwiftData
+            await persistMessages(userContent: text, assistantContent: response)
         } catch {
             #if DEBUG
             print("[Qyra AI] Error: \(error)")
@@ -88,9 +141,14 @@ final class IntelligenceViewModel {
         attachedImage = image
         self.selectedPhoto = nil
 
-        let userMessage = CoachMessage(role: .user, content: "📎 [Uploaded an image for analysis]", timestamp: .now)
+        let userMessage = CoachMessage(role: .user, content: "\u{1F4CE} [Uploaded an image for analysis]", timestamp: .now)
         messages.append(userMessage)
         isLoading = true
+
+        // Ensure we have a conversationId
+        if conversationId == nil {
+            conversationId = UUID()
+        }
 
         let context = await buildContext()
 
@@ -100,6 +158,9 @@ final class IntelligenceViewModel {
             )
             let assistantMessage = CoachMessage(role: .assistant, content: response, timestamp: .now)
             messages.append(assistantMessage)
+
+            // Persist
+            await persistMessages(userContent: "\u{1F4CE} [Uploaded an image for analysis]", assistantContent: response)
         } catch {
             #if DEBUG
             print("[Qyra AI] Photo error: \(error)")
@@ -115,6 +176,84 @@ final class IntelligenceViewModel {
         attachedImage = nil
         isLoading = false
     }
+
+    // MARK: - Persistence
+
+    private func persistMessages(userContent: String, assistantContent: String) async {
+        guard let conversationId else { return }
+
+        let context = ModelContext(modelContainer)
+
+        // Find or create the conversation
+        let predicate = #Predicate<AIConversation> { convo in
+            convo.id == conversationId
+        }
+        let descriptor = FetchDescriptor<AIConversation>(predicate: predicate)
+        var conversation: AIConversation
+
+        if let existing = try? context.fetch(descriptor).first {
+            conversation = existing
+        } else {
+            // Generate a title from the first user message
+            let title = generateTitle(from: userContent)
+            conversation = AIConversation(
+                id: conversationId,
+                userId: "", // Will be set if auth is available
+                title: title,
+                preview: String(userContent.prefix(80)),
+                createdAt: .now,
+                updatedAt: .now,
+                messageCount: 0,
+                isArchived: false
+            )
+            context.insert(conversation)
+        }
+
+        // Save user message
+        let userMsg = AIConversationMessage(
+            conversationId: conversationId,
+            role: "user",
+            content: userContent
+        )
+        userMsg.conversation = conversation
+        context.insert(userMsg)
+
+        // Save assistant message
+        let assistantMsg = AIConversationMessage(
+            conversationId: conversationId,
+            role: "assistant",
+            content: assistantContent
+        )
+        assistantMsg.conversation = conversation
+        context.insert(assistantMsg)
+
+        // Update conversation metadata
+        conversation.updatedAt = .now
+        conversation.messageCount += 2
+
+        // Update preview if this is the first exchange
+        if conversation.preview == nil || conversation.preview?.isEmpty == true {
+            conversation.preview = String(userContent.prefix(80))
+        }
+
+        try? context.save()
+    }
+
+    private func generateTitle(from text: String) -> String {
+        // Take first ~40 chars of the user's first message as the title
+        let cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if cleaned.count <= 40 {
+            return cleaned
+        }
+        let truncated = String(cleaned.prefix(40))
+        // Try to break at a word boundary
+        if let lastSpace = truncated.lastIndex(of: " ") {
+            return String(truncated[truncated.startIndex..<lastSpace]) + "..."
+        }
+        return truncated + "..."
+    }
+
+    // MARK: - Context Building
 
     private func buildContext() async -> String {
         let context = ModelContext(modelContainer)

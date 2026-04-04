@@ -28,6 +28,8 @@ struct MACRAApp: App {
             FastingSession.self,
             AnalyticsEvent.self,
             UnlockedAchievement.self,
+            AIConversation.self,
+            AIConversationMessage.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

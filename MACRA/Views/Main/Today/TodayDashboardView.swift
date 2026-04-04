@@ -105,7 +105,7 @@ struct TodayDashboardView: View {
 
                     // AI Coach Insight Card
                     if let insight = vm.coachInsight {
-                        NavigationLink(destination: IntelligenceDetailView()) {
+                        NavigationLink(destination: AIChatHistoryView()) {
                             coachInsightCard(insight)
                         }
                         .buttonStyle(.plain)

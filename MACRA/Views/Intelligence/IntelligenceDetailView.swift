@@ -9,6 +9,14 @@ struct IntelligenceDetailView: View {
     @State private var isSubscribed = false
     @State private var showPaywall = false
 
+    var conversationId: UUID?
+    var initialPrompt: String?
+
+    init(conversationId: UUID? = nil, initialPrompt: String? = nil) {
+        self.conversationId = conversationId
+        self.initialPrompt = initialPrompt
+    }
+
     var body: some View {
         Group {
             if isSubscribed {
@@ -52,7 +60,19 @@ struct IntelligenceDetailView: View {
         .onDisappear { tabBarState.isVisible = true }
         .task {
             if viewModel == nil {
-                viewModel = IntelligenceViewModel(modelContainer: modelContext.container)
+                // Check for initial prompt from UserDefaults (from quick action buttons)
+                let storedPrompt = UserDefaults.standard.string(forKey: "qyra.initialPrompt")
+                UserDefaults.standard.removeObject(forKey: "qyra.initialPrompt")
+
+                let effectivePrompt = initialPrompt ?? storedPrompt
+
+                let vm = IntelligenceViewModel(
+                    modelContainer: modelContext.container,
+                    conversationId: conversationId,
+                    initialPrompt: effectivePrompt
+                )
+                viewModel = vm
+                await vm.loadConversation()
             }
         }
     }
@@ -63,7 +83,10 @@ struct IntelligenceDetailView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVStack(spacing: DesignTokens.Spacing.md) {
-                    coachHeader
+                    // Show header only for new conversations with no messages yet
+                    if vm.messages.count <= 1 && conversationId == nil {
+                        coachHeader
+                    }
 
                     // Welcome message first (above prompts)
                     if let firstMessage = vm.messages.first {
