@@ -109,6 +109,7 @@ struct TodayDashboardView: View {
                             coachInsightCard(insight)
                         }
                         .buttonStyle(.plain)
+                        .padding(.horizontal, DesignTokens.Layout.screenMargin)
                     }
 
                     // Supplements & Compounds card
@@ -349,29 +350,27 @@ struct TodayDashboardView: View {
     // MARK: - Coach Insight Card
 
     private func coachInsightCard(_ insight: String) -> some View {
-        HStack(spacing: DesignTokens.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignTokens.Colors.aiAccent.opacity(0.15))
-                    .frame(width: 36, height: 36)
-
-                Image(systemName: "sparkles")
-                    .font(QyraFont.regular(16))
-                    .foregroundStyle(DesignTokens.Colors.aiAccent)
+        HStack(spacing: 12) {
+            Image(systemName: "sparkles")
+                .font(.title3)
+                .foregroundStyle(Color.accentColor)
+                .frame(width: 36)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Qyra AI")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                Text("Your personal AI health specialist")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
-
-            Text("Qyra AI")
-                .font(DesignTokens.Typography.semibold(15))
-                .foregroundStyle(DesignTokens.Colors.aiAccent)
-
             Spacer()
-
             Image(systemName: "chevron.right")
-                .font(QyraFont.regular(14))
-                .foregroundStyle(DesignTokens.Colors.textSecondary)
+                .font(.caption)
+                .foregroundStyle(.tertiary)
         }
         .padding(DesignTokens.Spacing.md)
-        .premiumCard(elevation: .subtle)
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
     // MARK: - Paged Carousel
