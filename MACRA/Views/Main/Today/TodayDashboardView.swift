@@ -297,7 +297,7 @@ struct TodayDashboardView: View {
                 HStack(spacing: 0) {
                     Text("Qyra.")
                         .font(.system(size: 24, weight: .heavy))
-                        .foregroundStyle(Color(.label))
+                        .foregroundStyle(Color.accentColor)
                         .tracking(-0.8)
 
                     Text("®")
