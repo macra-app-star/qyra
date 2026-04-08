@@ -3,31 +3,39 @@ import Foundation
 actor GeminiService {
     static let shared = GeminiService()
 
-    private let baseURL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
+    // All Gemini calls now proxy through Supabase Edge Function (API key stays server-side)
+    private var proxyURL: String { SupabaseConfig.functionsURL("gemini-proxy") }
+
+    // MARK: - Edge Function Request Helper
+
+    private func proxyRequest(action: String, payload: [String: Any]) async throws -> Data {
+        guard var request = SupabaseConfig.configuredRequest(url: proxyURL) else {
+            throw APIError.unauthorized
+        }
+        let token = await SupabaseConfig.authToken ?? ""
+        if !token.isEmpty {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        let body: [String: Any] = ["action": action, "payload": payload]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let http = response as? HTTPURLResponse, http.statusCode >= 400 {
+            throw APIError.invalidResponse(statusCode: http.statusCode)
+        }
+        return data
+    }
 
     // MARK: - Analyze Food Photo
 
     func analyzeFoodPhoto(imageData: Data) async throws -> [FoodAnalysisResult] {
-        let apiKey = Secrets.geminiAPIKey
-        guard !apiKey.isEmpty else {
-            throw APIError.unauthorized
-        }
-
         let base64Image = imageData.base64EncodedString()
 
-        let requestBody: [String: Any] = [
+        let payload: [String: Any] = [
             "contents": [
                 [
                     "parts": [
-                        [
-                            "text": foodPhotoPrompt
-                        ],
-                        [
-                            "inlineData": [
-                                "mimeType": "image/jpeg",
-                                "data": base64Image
-                            ]
-                        ]
+                        ["text": foodPhotoPrompt],
+                        ["inlineData": ["mimeType": "image/jpeg", "data": base64Image]]
                     ]
                 ]
             ],
@@ -38,28 +46,18 @@ actor GeminiService {
             ]
         ]
 
-        let body = try JSONSerialization.data(withJSONObject: requestBody)
-        let url = "\(baseURL)?key=\(apiKey)"
-
-        let responseData = try await APIClient.shared.postRaw(url: url, body: body)
+        let responseData = try await proxyRequest(action: "food_photo", payload: payload)
         return try parseGeminiResponse(responseData)
     }
 
     // MARK: - Parse Natural Language
 
     func parseNaturalLanguage(text: String) async throws -> [FoodAnalysisResult] {
-        let apiKey = Secrets.geminiAPIKey
-        guard !apiKey.isEmpty else {
-            throw APIError.unauthorized
-        }
-
-        let requestBody: [String: Any] = [
+        let payload: [String: Any] = [
             "contents": [
                 [
                     "parts": [
-                        [
-                            "text": naturalLanguagePrompt(for: text)
-                        ]
+                        ["text": naturalLanguagePrompt(for: text)]
                     ]
                 ]
             ],
@@ -70,24 +68,14 @@ actor GeminiService {
             ]
         ]
 
-        let body = try JSONSerialization.data(withJSONObject: requestBody)
-        let url = "\(baseURL)?key=\(apiKey)"
-
-        let responseData = try await APIClient.shared.postRaw(url: url, body: body)
+        let responseData = try await proxyRequest(action: "natural_language", payload: payload)
         return try parseGeminiResponse(responseData)
     }
 
     // MARK: - Chat (AI Coach)
 
     func chat(userMessage: String, systemContext: String) async throws -> String {
-        let apiKey = Secrets.geminiAPIKey
-        guard !apiKey.isEmpty else {
-            throw APIError.unauthorized
-        }
-
-        let chatURL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=\(apiKey)"
-
-        let requestBody: [String: Any] = [
+        let payload: [String: Any] = [
             "contents": [
                 [
                     "parts": [
@@ -101,8 +89,7 @@ actor GeminiService {
             ]
         ]
 
-        let body = try JSONSerialization.data(withJSONObject: requestBody)
-        let responseData = try await APIClient.shared.postRaw(url: chatURL, body: body)
+        let responseData = try await proxyRequest(action: "chat", payload: payload)
 
         guard let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any] else {
             let raw = String(data: responseData, encoding: .utf8) ?? "<binary>"

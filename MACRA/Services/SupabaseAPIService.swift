@@ -18,6 +18,15 @@ enum SupabaseConfig {
     static var authToken: String? {
         AuthService.shared.supabaseAccessToken
     }
+
+    static func configuredRequest(url: String, method: String = "POST") -> URLRequest? {
+        guard let url = URL(string: url) else { return nil }
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(anonKey, forHTTPHeaderField: "apikey")
+        return request
+    }
 }
 
 actor SupabaseAPIService {
