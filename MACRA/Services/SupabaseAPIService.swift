@@ -1,12 +1,31 @@
 import Foundation
 import os
 
+// MARK: - Centralized Supabase Configuration (single source of truth)
+enum SupabaseConfig {
+    static let projectURL = "https://oqjmxdxcwsajawesyspa.supabase.co"
+    static let anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xam14ZHhjd3NhamF3ZXN5c3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NTAyMTQsImV4cCI6MjA4ODIyNjIxNH0.m5tLk5asnA9Jb-lZ64Tg9RiKNbSk3gH6QE8qbBPBRG4"
+
+    static func functionsURL(_ name: String) -> String {
+        "\(projectURL)/functions/v1/\(name)"
+    }
+
+    static func restURL(_ table: String) -> String {
+        "\(projectURL)/rest/v1/\(table)"
+    }
+
+    @MainActor
+    static var authToken: String? {
+        AuthService.shared.supabaseAccessToken
+    }
+}
+
 actor SupabaseAPIService {
 
     static let shared = SupabaseAPIService()
 
-    private let baseURL = "https://oqjmxdxcwsajawesyspa.supabase.co"
-    private let anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xam14ZHhjd3NhamF3ZXN5c3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NTAyMTQsImV4cCI6MjA4ODIyNjIxNH0.m5tLk5asnA9Jb-lZ64Tg9RiKNbSk3gH6QE8qbBPBRG4"
+    private var baseURL: String { SupabaseConfig.projectURL }
+    private var anonKey: String { SupabaseConfig.anonKey }
     private let logger = Logger(subsystem: "co.tamras.qyra", category: "API")
 
     // MARK: - Auth Token
@@ -124,7 +143,7 @@ actor SupabaseAPIService {
     // MARK: - Profile
 
     func upsertProfile(userId: String, username: String, displayName: String) async throws {
-        let url = URL(string: "\(baseURL)/rest/v1/profiles")!
+        guard let url = URL(string: "\(baseURL)/rest/v1/profiles") else { throw APIError.invalidURL }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -150,7 +169,7 @@ actor SupabaseAPIService {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
-        let url = URL(string: "\(baseURL)/rest/v1/daily_stats")!
+        guard let url = URL(string: "\(baseURL)/rest/v1/daily_stats") else { throw APIError.invalidURL }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

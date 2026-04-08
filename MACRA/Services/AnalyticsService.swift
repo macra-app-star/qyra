@@ -129,16 +129,15 @@ final class AnalyticsService: ObservableObject {
 
             let body = try JSONSerialization.data(withJSONObject: ["events": payload])
 
-            let url = URL(string: "https://oqjmxdxcwsajawesyspa.supabase.co/functions/v1/analytics-ingest")!
+            guard let url = URL(string: SupabaseConfig.functionsURL("analytics-ingest")) else { return }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.httpBody = body
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue(SupabaseConfig.anonKey, forHTTPHeaderField: "apikey")
 
-            // Auth token from AuthService (Apple Sign In stores userId in Keychain)
-            // Supabase auth not yet wired — events queue locally until auth is connected
-            if let userId = AuthService.shared.currentUserId {
-                request.setValue("Bearer \(userId)", forHTTPHeaderField: "Authorization")
+            if let token = SupabaseConfig.authToken {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
 
             let (_, response) = try await URLSession.shared.data(for: request)

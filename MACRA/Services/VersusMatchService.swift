@@ -13,8 +13,8 @@ final class VersusMatchService: ObservableObject {
     @Published var isLoading = false
     @Published var error: String?
 
-    private let baseURL = "https://oqjmxdxcwsajawesyspa.supabase.co"
-    private let anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xam14ZHhjd3NhamF3ZXN5c3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NTAyMTQsImV4cCI6MjA4ODIyNjIxNH0.m5tLk5asnA9Jb-lZ64Tg9RiKNbSk3gH6QE8qbBPBRG4"
+    private var baseURL: String { SupabaseConfig.projectURL }
+    private var anonKey: String { SupabaseConfig.anonKey }
     private let logger = Logger(subsystem: "co.tamras.qyra", category: "VersusMatch")
 
     // MARK: - REST Model
@@ -76,7 +76,7 @@ final class VersusMatchService: ObservableObject {
         request.setValue(anonKey, forHTTPHeaderField: "apikey")
         request.setValue("return=representation", forHTTPHeaderField: "Prefer")
 
-        if let token = AuthService.shared.currentUserId {
+        if let token = SupabaseConfig.authToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
 
@@ -125,7 +125,7 @@ final class VersusMatchService: ObservableObject {
         findReq.httpMethod = "GET"
         findReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
         findReq.setValue(anonKey, forHTTPHeaderField: "apikey")
-        if let token = AuthService.shared.currentUserId {
+        if let token = SupabaseConfig.authToken {
             findReq.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
 
@@ -156,7 +156,7 @@ final class VersusMatchService: ObservableObject {
         patchReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
         patchReq.setValue(anonKey, forHTTPHeaderField: "apikey")
         patchReq.setValue("return=representation", forHTTPHeaderField: "Prefer")
-        if let token = AuthService.shared.currentUserId {
+        if let token = SupabaseConfig.authToken {
             patchReq.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
 
@@ -197,7 +197,7 @@ final class VersusMatchService: ObservableObject {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(anonKey, forHTTPHeaderField: "apikey")
-        if let token = AuthService.shared.currentUserId {
+        if let token = SupabaseConfig.authToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
 
@@ -230,7 +230,7 @@ final class VersusMatchService: ObservableObject {
         request.httpMethod = "PATCH"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(anonKey, forHTTPHeaderField: "apikey")
-        if let token = AuthService.shared.currentUserId {
+        if let token = SupabaseConfig.authToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
 

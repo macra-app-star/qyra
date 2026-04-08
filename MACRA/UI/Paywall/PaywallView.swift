@@ -7,8 +7,8 @@ struct PaywallView: View {
     @State private var showTerms = false
     @State private var showPrivacy = false
 
-    private let termsURL = URL(string: "https://qyra-web.vercel.app/terms")!
-    private let privacyURL = URL(string: "https://qyra-web.vercel.app/privacy")!
+    private let termsURL = URL(string: "https://qyra-web.vercel.app/terms")
+    private let privacyURL = URL(string: "https://qyra-web.vercel.app/privacy")
 
     var body: some View {
         ZStack {
@@ -35,30 +35,34 @@ struct PaywallView: View {
             await viewModel.loadProducts()
         }
         .sheet(isPresented: $showTerms) {
-            NavigationStack {
-                WebContentView(title: "Terms of Service", url: termsURL)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Done") { showTerms = false }
-                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+            if let termsURL {
+                NavigationStack {
+                    WebContentView(title: "Terms of Service", url: termsURL)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button("Done") { showTerms = false }
+                                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                            }
                         }
-                    }
+                }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
             }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showPrivacy) {
-            NavigationStack {
-                WebContentView(title: "Privacy Policy", url: privacyURL)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Done") { showPrivacy = false }
-                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+            if let privacyURL {
+                NavigationStack {
+                    WebContentView(title: "Privacy Policy", url: privacyURL)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button("Done") { showPrivacy = false }
+                                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                            }
                         }
-                    }
+                }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
             }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
         }
     }
 

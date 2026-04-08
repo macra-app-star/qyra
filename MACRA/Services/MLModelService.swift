@@ -16,7 +16,9 @@ final class MLModelService: ObservableObject {
             isModelAvailable = true
         } else {
             isModelAvailable = false
+            #if DEBUG
             print("[MLModelService] CoreML model not bundled — camera classification disabled, falling back to cloud AI")
+            #endif
         }
     }
 }

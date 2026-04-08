@@ -42,22 +42,26 @@ struct ProfileSupportSection: View {
                 }
             }
 
-            NavigationLink {
-                WebContentView(
-                    title: "Terms and Conditions",
-                    url: URL(string: "https://qyra-web.vercel.app/terms")!
-                )
-            } label: {
-                Label("Terms and Conditions", systemImage: "doc.text")
+            if let termsURL = URL(string: "https://qyra-web.vercel.app/terms") {
+                NavigationLink {
+                    WebContentView(
+                        title: "Terms and Conditions",
+                        url: termsURL
+                    )
+                } label: {
+                    Label("Terms and Conditions", systemImage: "doc.text")
+                }
             }
 
-            NavigationLink {
-                WebContentView(
-                    title: "Privacy Policy",
-                    url: URL(string: "https://qyra-web.vercel.app/privacy")!
-                )
-            } label: {
-                Label("Privacy Policy", systemImage: "hand.raised.fill")
+            if let privacyURL = URL(string: "https://qyra-web.vercel.app/privacy") {
+                NavigationLink {
+                    WebContentView(
+                        title: "Privacy Policy",
+                        url: privacyURL
+                    )
+                } label: {
+                    Label("Privacy Policy", systemImage: "hand.raised.fill")
+                }
             }
 
             NavigationLink {

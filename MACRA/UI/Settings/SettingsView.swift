@@ -4,8 +4,8 @@ struct SettingsView: View {
     @Environment(AppState.self) private var appState
     @State private var showSignOutConfirmation = false
 
-    private let termsURL = URL(string: "https://qyra-web.vercel.app/terms")!
-    private let privacyURL = URL(string: "https://qyra-web.vercel.app/privacy")!
+    private let termsURL = URL(string: "https://qyra-web.vercel.app/terms")
+    private let privacyURL = URL(string: "https://qyra-web.vercel.app/privacy")
 
     var body: some View {
         List {
@@ -111,16 +111,20 @@ struct SettingsView: View {
             }
 
             Section("About") {
-                NavigationLink {
-                    WebContentView(title: "Terms of Service", url: termsURL)
-                } label: {
-                    settingsLabel(icon: "doc.text", title: "Terms of Service")
+                if let termsURL {
+                    NavigationLink {
+                        WebContentView(title: "Terms of Service", url: termsURL)
+                    } label: {
+                        settingsLabel(icon: "doc.text", title: "Terms of Service")
+                    }
                 }
 
-                NavigationLink {
-                    WebContentView(title: "Privacy Policy", url: privacyURL)
-                } label: {
-                    settingsLabel(icon: "hand.raised.fill", title: "Privacy Policy")
+                if let privacyURL {
+                    NavigationLink {
+                        WebContentView(title: "Privacy Policy", url: privacyURL)
+                    } label: {
+                        settingsLabel(icon: "hand.raised.fill", title: "Privacy Policy")
+                    }
                 }
 
                 settingsRow(icon: "info.circle", title: "Version 1.0.0")
